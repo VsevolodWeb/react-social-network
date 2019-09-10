@@ -1,0 +1,24 @@
+.title {
+    font-size: 19px;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+.list {
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 30px;
+    grid-template-columns: repeat(3, minmax(55px, 1fr));
+    list-style-type: none;
+    text-align: center;
+}
+
+.image {
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    background-color: #a01f52;
+    display: inline-block;
+    margin-bottom: 5px;
+}

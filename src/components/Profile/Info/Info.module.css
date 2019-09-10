@@ -1,0 +1,12 @@
+.info {
+    grid-area: info;
+    display: flex;
+}
+
+.avatar {
+	width: 150px;
+	height: 150px;
+	background-size: cover;
+    grid-area: avatar;
+    margin-right: 30px;
+}

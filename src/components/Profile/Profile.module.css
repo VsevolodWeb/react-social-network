@@ -1,0 +1,9 @@
+.profile {
+	grid-template-columns: 1fr;
+	grid-area: content;
+	display: grid;
+    grid-template-areas: "banner"
+                         "info"
+                         "posts";
+	grid-gap: 50px;
+}
