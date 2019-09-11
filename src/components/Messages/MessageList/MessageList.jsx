@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './MessageList.module.css';
 
-import {addMessageActionCreator, messageChangeActionCreator} from '../../../redux/state'
+import {addMessageActionCreator, messageChangeActionCreator} from '../../../redux/dialogs-reducer'
 
 
 const MessageList = (props) => {

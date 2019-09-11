@@ -1,7 +1,5 @@
-const ADD_POST = 'ADD-POST';
-const POST_CHANGE = 'POST-CHANGE';
-const ADD_MESSAGE = 'ADD-MESSAGE';
-const MESSAGE_CHANGE = 'MESSAGE-CHANGE';
+import dialogsReducer from './dialogs-reducer'
+import profileReducer from './profile-reducer'
 
 let store = {
     _state: {
@@ -52,53 +50,11 @@ let store = {
     },
 
     dispatch(action) {
-        switch (action.type) {
+        this._state.dialogs = dialogsReducer(this._state.dialogs, action);
+        this._state.profile = profileReducer(this._state.profile, action);
 
-            case ADD_POST:
-                let newPost = {
-                    id: this._state.profile.postsData.length + 1,
-                    text: this._state.profile.newPostValue,
-                    name: 'Vsevolod',
-                    likeCount: 0
-                };
-            
-                this._state.profile.postsData.push(newPost);
-                this._state.profile.newPostValue = '';
-                this._callSubscriber(this._state);
-                break;
-
-            case POST_CHANGE:
-                this._state.profile.newPostValue = action.value;
-                this._callSubscriber(this._state);
-                break;
-
-            case ADD_MESSAGE:
-                let newMessage = {
-                    id: this._state.dialogs.dialogsData[action.id - 1].messages.length + 1,
-                    text: this._state.dialogs.newMessageValue,
-                    from: 'Vsevolod'
-                };
-                
-                this._state.dialogs.dialogsData[action.id - 1].messages.push(newMessage);
-                this._state.dialogs.newMessageValue = '';
-                this._callSubscriber(this._state);
-                break;
-
-            case MESSAGE_CHANGE:
-                this._state.dialogs.newMessageValue = action.value;
-                this._callSubscriber(this._state);
-                break;
-
-            default:
-                console.log(`К сожалению, такого action (${action.type}) нет в store`);
-        }
+        this._callSubscriber(this._state);
     }
 }
-
-export const addPostActionCreator = () => ({type: ADD_POST});
-export const postChangeActionCreator = (value) => ({type: POST_CHANGE, value: value});
-
-export const addMessageActionCreator = (id) => ({type: ADD_MESSAGE, id: id});
-export const messageChangeActionCreator = (value) => ({type: MESSAGE_CHANGE, value: value});
 
 export default store;
