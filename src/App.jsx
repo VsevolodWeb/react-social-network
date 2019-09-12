@@ -2,7 +2,7 @@ import React from 'react';
 import {Route} from 'react-router-dom';
 import './App.css';
 import Header from './components/Header/Header';
-import Column from './components/Column/Column';
+import Sidebar from './components/Sidebar/Sidebar';
 import Profile from './components/Profile/Profile';
 import Messages from './components/Messages/Messages';
 
@@ -12,10 +12,10 @@ function App(props) {
       <Header />
       <main>
         <div className="container mainGrid">
-          <Column state={props.data.friends} />
+          <Sidebar state={props.data.sidebarReducer.friends} dispatch={props.dispatch} />
           <div className="content">
-            <Route path="/profile" render={() => <Profile state={props.data.profile} dispatch={props.dispatch} />} />
-            <Route path="/messages" render={() => <Messages state={props.data.dialogs} dispatch={props.dispatch} />} />
+            <Route path="/profile" render={() => <Profile state={props.data.profileReducer.postsData} dispatch={props.dispatch} />} />
+            <Route path="/messages" render={() => <Messages state={props.data.dialogsReducer.dialogsData} dispatch={props.dispatch} />} />
           </div>
         </div>
       </main>

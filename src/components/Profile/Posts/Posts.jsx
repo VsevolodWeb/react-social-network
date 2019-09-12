@@ -5,7 +5,7 @@ import Post from './Post/Post';
 import {addPostActionCreator, postChangeActionCreator} from '../../../redux/profile-reducer'
 
 const Posts = (props) => {
-    let postsElements = props.data.postsData.map(post => <Post key={post.id} likeCount={post.likeCount} name={post.name} text={post.text} />);
+    let postsElements = props.data.map(post => <Post key={post.id} likeCount={post.likeCount} name={post.name} text={post.text} />);
 
     const addPost = () => {
         if(!props.data.newPostValue) return;
