@@ -14,8 +14,8 @@ function App(props) {
         <div className="container mainGrid">
           <Sidebar state={props.data.sidebarReducer.friends} dispatch={props.dispatch} />
           <div className="content">
-            <Route path="/profile" render={() => <Profile state={props.data.profileReducer.postsData} dispatch={props.dispatch} />} />
-            <Route path="/messages" render={() => <Messages state={props.data.dialogsReducer.dialogsData} dispatch={props.dispatch} />} />
+            <Route path="/profile" render={() => <Profile state={props.data.profileReducer} dispatch={props.dispatch} />} />
+            <Route path="/messages" render={() => <Messages state={props.data.dialogsReducer} dispatch={props.dispatch} />} />
           </div>
         </div>
       </main>

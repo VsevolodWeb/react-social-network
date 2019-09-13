@@ -6,8 +6,8 @@ import MessageList from './MessageList/MessageList'
 
 
 const Messages = (props) => {
-    let dialogElements = props.state.map(dialog => <Dialog id={dialog.id} name={dialog.name} key={dialog.id} />);
-    let messageListRoute = props.state
+    let dialogElements = props.state.dialogsData.map(dialog => <Dialog id={dialog.id} name={dialog.name} key={dialog.id} />);
+    let messageListRoute = props.state.dialogsData
             .map(dialog => <Route path={"/messages/" + dialog.id}
                             key={dialog.id}
                             render={() => <MessageList
