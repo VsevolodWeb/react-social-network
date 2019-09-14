@@ -12,10 +12,10 @@ function App(props) {
       <Header />
       <main>
         <div className="container mainGrid">
-          <Sidebar state={props.data.sidebarReducer.friends} dispatch={props.dispatch} />
+          <Sidebar state={props.data.sidebar.friends} dispatch={props.dispatch} />
           <div className="content">
-            <Route path="/profile" render={() => <Profile state={props.data.profileReducer} dispatch={props.dispatch} />} />
-            <Route path="/messages" render={() => <Messages state={props.data.dialogsReducer} dispatch={props.dispatch} />} />
+            <Route path="/profile" render={() => <Profile state={props.data.profile} dispatch={props.dispatch} />} />
+            <Route path="/messages" render={() => <Messages state={props.data.dialogs} dispatch={props.dispatch} />} />
           </div>
         </div>
       </main>

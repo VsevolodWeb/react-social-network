@@ -1,19 +1,13 @@
 import React from 'react';
-import s from './Posts.module.css'
-import Post from './Post/Post';
 
-import {addPostActionCreator, postChangeActionCreator} from '../../../redux/profile-reducer'
+import Post from './Post/Post';
+import s from './Posts.module.css'
 
 const Posts = (props) => {
     let postsElements = props.data.postsData.map(post => <Post key={post.id} likeCount={post.likeCount} name={post.name} text={post.text} />);
 
-    const addPost = () => {
-        if(!props.data.newPostValue) return;
-        props.dispatch(addPostActionCreator());
-    }
-
     const postChange = (e) => {
-        props.dispatch(postChangeActionCreator(e.currentTarget.value));
+        props.updateNewPost(e.currentTarget.value);
     }
 
     return (
@@ -23,7 +17,7 @@ const Posts = (props) => {
             </ul>
             <div className={s.title}>Написать на стену</div>
             <textarea className="textarea" onChange={postChange} value={props.data.newPostValue} />
-            <button className="button" onClick={addPost}>Отправить</button>
+            <button className="button" onClick={props.addPost}>Отправить</button>
         </div>
     )
 }
