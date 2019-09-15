@@ -5,7 +5,6 @@ import Info from './Info/Info';
 import PostsContainer from './Posts/PostsContainer';
 
 const Profile = (props) => {
-    console.log(props)
     return (
         <>
             <h1 className="title">Profile</h1>

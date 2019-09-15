@@ -4,7 +4,6 @@ import {addPostActionCreator, updateNewPostActionCreator} from '../../../redux/p
 import Posts from './Posts';
 
 const PostsContainer = (props) => {
-    console.log(props)
     const addPost = () => {
         if(!props.data.newPostValue) return;
 
