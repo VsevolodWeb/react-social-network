@@ -1,4 +1,5 @@
 import React from 'react';
+
 import s from './Profile.module.css'
 import Banner from './Banner/Banner';
 import Info from './Info/Info';
@@ -12,7 +13,9 @@ const Profile = (props) => {
                 
                 <Banner />
                 <Info />
-                <PostsContainer data={props.state} dispatch={props.dispatch} />
+                <DispatchContext.Consumer>
+                    {value => <PostsContainer data={props.state} dispatch={value} />}
+                </DispatchContext.Consumer>
             </div>
         </>
     )
