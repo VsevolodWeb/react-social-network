@@ -14,7 +14,7 @@ function App(props) {
         <div className="container mainGrid">
           <Sidebar state={props.data.sidebar.friends} />
           <div className="content">
-            <Route path="/profile" render={() => <Profile state={props.data.profile} />} />
+            <Route path="/profile" render={() => <Profile />} />
             <Route path="/messages" render={() => <Messages state={props.data.dialogs} />} />
           </div>
         </div>

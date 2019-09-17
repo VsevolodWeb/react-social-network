@@ -1,20 +1,26 @@
-import React from 'react';
+import {connect} from 'react-redux';
 
 import {addMessageActionCreator, messageChangeActionCreator} from '../../../redux/dialogs-reducer'
 import MessageList from './MessageList';
 
-
-const MessageListContainer = (props) => {
-    const addMessage = () => {
-        if(!props.newMessageValue) return;
-        props.dispatch(addMessageActionCreator(props.dialog.id));
+const mapStateToProps = (state) => {
+    return {
+        dialog: state.dialog,
+        newMessageValue: state.newMessageValue
     }
-
-    const updateNewPost = (value) => {
-        props.dispatch(messageChangeActionCreator(value));
-    }
-
-    return <MessageList updateNewMessage={updateNewPost} addMessage={addMessage} dialog={props.dialog} newMessageValue={props.newMessageValue} />
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addMessage: () => {
+            dispatch(addMessageActionCreator(1));
+        },
+        updateNewPost: (value) => {
+            dispatch(messageChangeActionCreator(value));
+        }
+    }
+}
+
+const MessageListContainer = connect(mapStateToProps, mapDispatchToProps)(MessageList)
 
 export default MessageListContainer;

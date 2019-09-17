@@ -13,9 +13,7 @@ const Profile = (props) => {
                 
                 <Banner />
                 <Info />
-                <DispatchContext.Consumer>
-                    {value => <PostsContainer data={props.state} dispatch={value} />}
-                </DispatchContext.Consumer>
+                <PostsContainer />
             </div>
         </>
     )

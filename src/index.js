@@ -6,18 +6,18 @@ import {Provider} from 'react-redux'
 import App from './App.jsx';
 import store from './redux/redux-store';
 
-let rerenderEntireTree = (state) => {
+let rerenderEntireTree = () => {
     ReactDOM.render(
         <BrowserRouter>
-            <Provider dispatch={store.dispatch.bind(store)}>
-                <App data={state} />
+            <Provider store={store}>
+                <App />
             </Provider>
         </BrowserRouter>
         , document.getElementById('root'));
 }
 
-rerenderEntireTree(store.getState());
+rerenderEntireTree();
 
 store.subscribe(() => {
-    rerenderEntireTree(store.getState());
+    rerenderEntireTree();
 });
