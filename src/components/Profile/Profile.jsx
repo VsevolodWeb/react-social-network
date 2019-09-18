@@ -10,7 +10,6 @@ const Profile = (props) => {
         <>
             <h1 className="title">Profile</h1>
             <div className={s.profile}>
-                
                 <Banner />
                 <Info />
                 <PostsContainer />

@@ -3,15 +3,18 @@ import {Route} from 'react-router-dom';
 
 import s from './Messages.module.css';
 import Dialog from './Dialog/Dialog'
-import MessageListContainer from './MessageList/MessageListContainer'
+import MessageList from './MessageList/MessageList'
 
 const Messages = (props) => {
-    let dialogElements = props.state.dialogsData.map(dialog => <Dialog id={dialog.id} name={dialog.name} key={dialog.id} />);
-    let messageListRoute = props.state.dialogsData
+    console.log(props)
+    let dialogElements = props.dialogs.dialogsData.map(dialog => <Dialog id={dialog.id} name={dialog.name} key={dialog.id} />);
+    let messageListRoute = props.dialogs.dialogsData
             .map(dialog => <Route path={"/messages/" + dialog.id} key={dialog.id}
-                                render={() => <MessageListContainer
+                                render={() => <MessageList
                                     dialog={dialog}
-                                    newMessageValue={props.state.newMessageValue} />}
+                                    newMessageValue={props.dialogs.newMessageValue}
+                                    updateNewMessage={props.updateNewMessage}
+                                    addMessage={props.addMessage} />}
                             />
                 );
 

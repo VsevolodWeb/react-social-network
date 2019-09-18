@@ -3,13 +3,13 @@ import s from './Sidebar.module.css'
 import Menu from './Menu/Menu';
 import Friends from './Friends/Friends';
 
-const Column = (props) => {
+const Sidebar = (props) => {
     return (
         <aside className={s.sidebar}>
             <Menu />
-            <Friends list={props.state} />
+            <Friends data={props.data.friends} />
         </aside>
     )
 }
 
-export default Column;
+export default Sidebar;

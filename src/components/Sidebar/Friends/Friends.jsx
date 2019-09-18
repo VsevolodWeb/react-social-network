@@ -3,7 +3,7 @@ import s from './Friends.module.css'
 
 
 const Friends = (props) => {
-    let friends = props.list.map((item) => {
+    let friends = props.data.map((item) => {
         return (
             <li key={item.id}>
                 <span className={s.image}></span>
