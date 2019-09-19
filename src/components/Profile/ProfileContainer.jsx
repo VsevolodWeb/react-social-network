@@ -1,7 +1,8 @@
 import {connect} from 'react-redux';
 
-import {addPostActionCreator, updateNewPostActionCreator} from '../../../redux/profile-reducer'
-import Posts from './Posts';
+import {addPostActionCreator, updateNewPostActionCreator} from '../../redux/profile-reducer'
+import Profile from './Profile';
+
 
 const mapStateToProps = (state) => {
     return {
@@ -20,6 +21,6 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-const PostsContainer = connect(mapStateToProps, mapDispatchToProps)(Posts)
+const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(Profile)
 
-export default PostsContainer;
+export default ProfileContainer;

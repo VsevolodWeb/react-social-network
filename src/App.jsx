@@ -3,10 +3,10 @@ import {Route} from 'react-router-dom';
 import './App.css';
 import Header from './components/Header/Header';
 import SidebarContainer from './components/Sidebar/SidebarContainer';
-import Profile from './components/Profile/Profile';
+import ProfileContainer from './components/Profile/ProfileContainer';
 import MessagesContainer from './components/Messages/MessagesContainer';
 
-function App(props) {
+function App() {
   return (
     <>
       <Header />
@@ -14,7 +14,7 @@ function App(props) {
         <div className="container mainGrid">
           <SidebarContainer />
           <div className="content">
-            <Route path="/profile" render={() => <Profile />} />
+            <Route path="/profile" render={() => <ProfileContainer />} />
             <Route path="/messages" render={() => <MessagesContainer />} />
           </div>
         </div>

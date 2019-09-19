@@ -3,7 +3,7 @@ import React from 'react';
 import s from './Profile.module.css'
 import Banner from './Banner/Banner';
 import Info from './Info/Info';
-import PostsContainer from './Posts/PostsContainer';
+import Posts from './Posts/Posts'
 
 const Profile = (props) => {
     return (
@@ -12,7 +12,7 @@ const Profile = (props) => {
             <div className={s.profile}>
                 <Banner />
                 <Info />
-                <PostsContainer />
+                <Posts newPostValue={props.data.newPostValue} data={props.data.postsData} updateNewPost={props.updateNewPost} addPost={props.addPost} />
             </div>
         </>
     )

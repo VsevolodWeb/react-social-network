@@ -26,26 +26,30 @@ const initialState = {
 
 const dialogsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case ADD_MESSAGE:
+        case ADD_MESSAGE: {
+            let stateCopy = Object.assign({}, state);
             let newMessage = {
-                id: state.dialogsData[action.id - 1].messages.length + 1,
-                text: state.newMessageValue,
+                id: stateCopy.dialogsData[action.id - 1].messages.length + 1,
+                text: stateCopy.newMessageValue,
                 from: 'Vsevolod'
             };
             
-            state.dialogsData[action.id - 1].messages.push(newMessage);
-            state.newMessageValue = '';
-            break;
+            stateCopy.dialogsData[action.id - 1].messages.push(newMessage);
+            stateCopy.newMessageValue = '';
+            
+            return stateCopy;
+        }
+        case MESSAGE_CHANGE: {
+            let stateCopy = {...state};
 
-        case MESSAGE_CHANGE:
-            state.newMessageValue = action.value;
-            break;
+            stateCopy.newMessageValue = action.value;
+
+            return stateCopy;
+        }
 
         default:
-            break;
+            return state
     }
-
-    return state;
 };
 
 export const addMessageActionCreator = (id) => ({type: ADD_MESSAGE, id: id});
