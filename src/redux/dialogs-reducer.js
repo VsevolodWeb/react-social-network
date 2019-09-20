@@ -27,7 +27,13 @@ const initialState = {
 const dialogsReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_MESSAGE: {
-            let stateCopy = Object.assign({}, state);
+            let stateCopy = Object.assign({}, state.dialogsData);
+
+            // Optimization?
+            // stateCopy.dialogsData = [...state.dialogsData];
+            // stateCopy.dialogsData[action.id - 1] = {...state.dialogsData[action.id - 1]}; 
+            // stateCopy.dialogsData[action.id - 1].messages = [...state.dialogsData[action.id - 1].messages];
+            
             let newMessage = {
                 id: stateCopy.dialogsData[action.id - 1].messages.length + 1,
                 text: stateCopy.newMessageValue,
@@ -37,18 +43,16 @@ const dialogsReducer = (state = initialState, action) => {
             stateCopy.dialogsData[action.id - 1].messages.push(newMessage);
             stateCopy.newMessageValue = '';
             
-            return stateCopy;
+            return stateCopy
         }
-        case MESSAGE_CHANGE: {
-            let stateCopy = {...state};
-
-            stateCopy.newMessageValue = action.value;
-
-            return stateCopy;
-        }
+        case MESSAGE_CHANGE:
+            return {
+                ...state,
+                newMessageValue: action.value
+            }
 
         default:
-            return state
+            return state; 
     }
 };
 
