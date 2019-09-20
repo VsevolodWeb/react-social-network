@@ -10,13 +10,10 @@ const Menu = () => {
                 <NavLink to="/profile" className={s.link} activeClassName={s.active}>My profile</NavLink>
             </li>
             <li className={s.item}>
-                <NavLink to="/messages/" className={s.link} activeClassName={s.active}>Messages</NavLink>
+                <NavLink to="/messages" className={s.link} activeClassName={s.active}>Messages</NavLink>
             </li>
             <li className={s.item}>
-                <NavLink to="/photos" className={s.link} activeClassName={s.active}>Photos</NavLink>
-            </li>
-            <li className={s.item}>
-                <NavLink to="/settings" className={s.link} activeClassName={s.active}>Settings</NavLink>
+                <NavLink to="/users" className={s.link} activeClassName={s.active}>Users</NavLink>
             </li>
         </ul>
     )
