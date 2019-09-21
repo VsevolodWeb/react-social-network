@@ -3,8 +3,8 @@ const POST_CHANGE = 'POST-CHANGE';
 
 const initialState = {
     postsData: [
-        {id: '1', text: 'Hello', name: 'Vsevolod', likeCount: '1'},
-        {id: '2', text: 'Hello', name: 'Ekaterina', likeCount: '3'}
+        {id: 1, text: 'Hello', name: 'Vsevolod', likeCount: 1},
+        {id: 2, text: 'Hello', name: 'Ekaterina', likeCount: 3}
     ],
     newPostValue: ''
 }
@@ -20,7 +20,8 @@ const profileReducer = (state = initialState, action) => {
                         text: state.newPostValue,
                         name: 'Vsevolod',
                         likeCount: '0'
-                    }],
+                    }
+                ],
                 newPostValue: ''
             }
         }

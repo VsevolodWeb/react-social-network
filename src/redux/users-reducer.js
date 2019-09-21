@@ -3,21 +3,43 @@ const SHOW_MORE = 'SHOW-MORE';
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 
+
 const initialState = {
-    users: [
+    list: [
         {
-            id: '1',
+            id: 1,
             fullName: 'Volodya Smirnov',
             location: {city: 'Velikie Luki', country: 'Russia'},
             status: 'Ya rodilsya!',
-            followed: 'false'
+            followed: false
         },
         {
-            id: '2',
-            fullName: 'Kseniya',
+            id: 2,
+            fullName: 'Anastasia Ivanova',
             location: {city: 'Chicago', country: 'USA'},
             status: 'OMG!',
-            followed: 'true'
+            followed: true
+        },
+        {
+            id: 3,
+            fullName: 'Vladimir Kutin',
+            location: {city: 'New York', country: 'USA'},
+            status: '50 cent',
+            followed: true
+        },
+        {
+            id: 4,
+            fullName: 'Hero Petrov',
+            location: {city: 'Vitebsk', country: 'Belarus'},
+            status: 'bulba:(',
+            followed: false
+        },
+        {
+            id: 5,
+            fullName: 'Ivan Mechnikov',
+            location: {city: 'Kiev', country: 'Ukraine'},
+            status: 'mdya',
+            followed: true
         }
     ]
 }

@@ -4,10 +4,9 @@ import Sidebar from './Sidebar';
 
 const mapStateToProps = (state) => {
     return {
-        data: state.sidebar
+        data: state.sidebar,
+        users: state.users.users
     }
 }
 
-const SidebarContainer = connect(mapStateToProps)(Sidebar)
-
-export default SidebarContainer;
+export default connect(mapStateToProps)(Sidebar);
