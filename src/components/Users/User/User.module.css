@@ -1,6 +1,6 @@
 .item {
     display: grid;
-    grid-gap: 10px;
+    grid-gap: 15px;
     text-align: center;
     justify-items: center;
 }
@@ -16,4 +16,9 @@
 .name {
     font-weight: bold;
     font-size: 20px;
+}
+
+.item .button {
+    height: 35px;
+    align-self: end;
 }

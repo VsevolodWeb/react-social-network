@@ -10,6 +10,11 @@ const Posts = (props) => {
         props.updateNewPost(e.currentTarget.value);
     }
 
+    const addPost = () => {
+        if(!props.newPostValue) return;
+        props.addPost();
+    }
+
     return (
         <div className={s.posts}>
             <ul className={s.list}>
@@ -17,7 +22,7 @@ const Posts = (props) => {
             </ul>
             <div className={s.title}>Написать на стену</div>
             <textarea className="textarea" onChange={postChange} value={props.newPostValue} />
-            <button className="button" onClick={props.addPost}>Отправить</button>
+            <button className="button" onClick={addPost}>Отправить</button>
         </div>
     )
 }

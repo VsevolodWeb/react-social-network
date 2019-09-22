@@ -3,14 +3,14 @@ import s from './Friends.module.css'
 
 
 const Friends = (props) => {
-    let friends = props.data.map((item) => {
-        return (
-            <li key={item.id}>
-                <span className={s.image}></span>
-                <div className={s.name}>{item.name}</div>
-            </li>
-        )
-    })
+    let friends = props.data
+                .filter((item) => item.followed)
+                .map((item) => {
+                    return <li key={item.id}>
+                                <span className={s.image}></span>
+                                <div className={s.name}>{item.fullName}</div>
+                            </li>
+    });
 
     return (
         <div>

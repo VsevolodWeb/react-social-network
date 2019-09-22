@@ -5,7 +5,7 @@ import Sidebar from './Sidebar';
 const mapStateToProps = (state) => {
     return {
         data: state.sidebar,
-        users: state.users.users
+        users: state.users.list
     }
 }
 

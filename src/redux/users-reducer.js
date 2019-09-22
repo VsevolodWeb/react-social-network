@@ -10,35 +10,35 @@ const initialState = {
             id: 1,
             fullName: 'Volodya Smirnov',
             location: {city: 'Velikie Luki', country: 'Russia'},
-            status: 'Ya rodilsya!',
+            status: 'Lorem ipsum',
             followed: false
         },
         {
             id: 2,
             fullName: 'Anastasia Ivanova',
             location: {city: 'Chicago', country: 'USA'},
-            status: 'OMG!',
+            status: 'Lorem ipsum',
             followed: true
         },
         {
             id: 3,
             fullName: 'Vladimir Kutin',
             location: {city: 'New York', country: 'USA'},
-            status: '50 cent',
+            status: 'Lorem ipsum',
             followed: true
         },
         {
             id: 4,
             fullName: 'Hero Petrov',
             location: {city: 'Vitebsk', country: 'Belarus'},
-            status: 'bulba:(',
+            status: 'Lorem ipsum',
             followed: false
         },
         {
             id: 5,
             fullName: 'Ivan Mechnikov',
             location: {city: 'Kiev', country: 'Ukraine'},
-            status: 'mdya',
+            status: 'Lorem ipsum',
             followed: true
         }
     ]

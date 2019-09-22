@@ -7,7 +7,7 @@ const Sidebar = (props) => {
     return (
         <aside className={s.sidebar}>
             <Menu />
-            <Friends data={props.data.friends} />
+            <Friends data={props.users} />
         </aside>
     )
 }
