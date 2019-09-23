@@ -5,43 +5,7 @@ const UNFOLLOW = 'UNFOLLOW';
 
 
 const initialState = {
-    list: [
-        {
-            id: 1,
-            fullName: 'Volodya Smirnov',
-            location: {city: 'Velikie Luki', country: 'Russia'},
-            status: 'Lorem ipsum',
-            followed: false
-        },
-        {
-            id: 2,
-            fullName: 'Anastasia Ivanova',
-            location: {city: 'Chicago', country: 'USA'},
-            status: 'Lorem ipsum',
-            followed: true
-        },
-        {
-            id: 3,
-            fullName: 'Vladimir Kutin',
-            location: {city: 'New York', country: 'USA'},
-            status: 'Lorem ipsum',
-            followed: true
-        },
-        {
-            id: 4,
-            fullName: 'Hero Petrov',
-            location: {city: 'Vitebsk', country: 'Belarus'},
-            status: 'Lorem ipsum',
-            followed: false
-        },
-        {
-            id: 5,
-            fullName: 'Ivan Mechnikov',
-            location: {city: 'Kiev', country: 'Ukraine'},
-            status: 'Lorem ipsum',
-            followed: true
-        }
-    ]
+    list: []
 }
 
 const usersReducer = (state = initialState, action) => {
@@ -49,7 +13,7 @@ const usersReducer = (state = initialState, action) => {
         case SET_USERS:
             return {
                 ...state,
-                users: [...state.users, ...action.users]
+                list: [...state.list, ...action.users]
             }
 
         case SHOW_MORE: {
@@ -59,7 +23,7 @@ const usersReducer = (state = initialState, action) => {
         case FOLLOW: {
             return {
                 ...state,
-                users: state.users.map(user => {
+                list: state.list.map(user => {
                     if(action.userId === user.id) {
                         return {...user, followed: true}
                     }
@@ -71,7 +35,7 @@ const usersReducer = (state = initialState, action) => {
         case UNFOLLOW: {
             return {
                 ...state,
-                users: state.users.map(user => {
+                list: state.list.map(user => {
                     if(action.userId === user.id) {
                         return {...user, followed: false}
                     }
@@ -85,8 +49,8 @@ const usersReducer = (state = initialState, action) => {
     }
 };
 
-export const setUsersActionCreator = (users) => ({type: SHOW_MORE, users});
-export const showMoreActionCreator = (id) => ({type: SHOW_MORE});
+export const setUsersActionCreator = (users) => ({type: SET_USERS, users});
+export const showMoreActionCreator = () => ({type: SHOW_MORE});
 export const followActionCreator = (userId) => ({type: FOLLOW, userId});
 export const unfollowActionCreator = (userId) => ({type: UNFOLLOW, userId});
 

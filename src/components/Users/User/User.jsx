@@ -6,7 +6,7 @@ const User = (props) => {
                 <div className={s.avatar}></div>
                 <div className={s.name}>{props.data.fullName}</div>
                 <div className={s.status}>{props.data.status}</div>
-                <button className={s.button + " button"}>{props.data.followed ? 'Unfollow': 'Follow'}</button>
+                <button className={s.button + " button"} onClick={() => {props.action(props.data.id)}}>{props.data.followed ? 'Unfollow': 'Follow'}</button>
            </div>
 }
 
