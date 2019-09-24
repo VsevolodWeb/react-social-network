@@ -9,7 +9,7 @@ const Sidebar = (props) => {
                 .map((item) => {
                     return <li key={item.id}>
                                 <span className={s.image}></span>
-                                <div className={s.name}>{item.fullName}</div>
+                                <div className={s.name}>{item.name}</div>
                             </li>
     });
 
