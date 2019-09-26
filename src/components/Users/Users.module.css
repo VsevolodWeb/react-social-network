@@ -3,3 +3,24 @@
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 20px;
 }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    margin-top: 50px;
+    padding: 0;
+}
+
+.pagination__item {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.pagination__item_active {
+    font-weight: bold;
+}
+
+.pagination__link {
+    color: #000;
+}
