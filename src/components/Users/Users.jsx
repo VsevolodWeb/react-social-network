@@ -6,10 +6,10 @@ import axios from 'axios';
 
 class Users extends React.Component {
     componentDidMount() {
-        axios.get('https://social-network.samuraijs.com/api/1.0/users')
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.data.currentPage}&count=${this.props.data.pageSize}`)
             .then(response => {
                 this.props.data.totalUsersCount = response.data.totalCount;
-
+                
                 return this.props.setUsers(response.data.items)
         });
     }
@@ -18,15 +18,19 @@ class Users extends React.Component {
         return this.props.data.list.map(user => <User key={user.id} data={user} action={user.followed ? this.props.unfollow: this.props.follow} />)
     };
 
+    setCurrentPage(value) {
+        this.props.setCurrentPage(value);
+    }
+
     render() {
         let pagesCount =  Math.ceil(this.props.data.totalUsersCount / this.props.data.pageSize);
-        let pagesCountArray = []
+        let pagesCountArray = [];
 
         for(let i = 1; i <= pagesCount; i++) {
-            pagesCountArray = [...pagesCountArray,
-                <li className={s.pagination__item + " " + s.pagination__item_active} key={i}>
-                    <a href="/" className={s.pagination__link}>{i}</a>
-                </li>]
+            pagesCountArray.push(
+                <li className={s.pagination__item + (this.props.data.currentPage === i ? (" " + s.pagination__item_active) : '')} key={i}>
+                    <button onClick={() => this.setCurrentPage(i)} className={s.pagination__button}>{i}</button>
+                </li>);
         }
         
         return <>

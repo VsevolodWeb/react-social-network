@@ -1,7 +1,7 @@
 .container {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-gap: 20px;
+    grid-gap: 40px;
 }
 
 .pagination {
@@ -21,6 +21,12 @@
     font-weight: bold;
 }
 
-.pagination__link {
+.pagination__button {
+    padding: 0;
+    background-color: transparent;
+    border-width: 0;
     color: #000;
+    font-weight: inherit;
+    cursor: pointer;
+    font-size: 14px;
 }

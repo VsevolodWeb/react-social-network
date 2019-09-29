@@ -1,5 +1,5 @@
 const SET_USERS = 'SET-USERS';
-const SHOW_MORE = 'SHOW-MORE';
+const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 
@@ -7,7 +7,8 @@ const UNFOLLOW = 'UNFOLLOW';
 const initialState = {
     list: [],
     pageSize: 30,
-    totalUsersCount: 0
+    totalUsersCount: 0,
+    currentPage: 1
 }
 
 const usersReducer = (state = initialState, action) => {
@@ -18,8 +19,8 @@ const usersReducer = (state = initialState, action) => {
                 list: [...state.list, ...action.users]
             }
 
-        case SHOW_MORE: {
-            return state;
+        case SET_CURRENT_PAGE: {
+            return {...state, currentPage: action.value};
         }
 
         case FOLLOW: {
@@ -52,7 +53,7 @@ const usersReducer = (state = initialState, action) => {
 };
 
 export const setUsersActionCreator = (users) => ({type: SET_USERS, users});
-export const showMoreActionCreator = () => ({type: SHOW_MORE});
+export const setCurrentPageActionCreator = (value) => ({type: SET_CURRENT_PAGE, value});
 export const followActionCreator = (userId) => ({type: FOLLOW, userId});
 export const unfollowActionCreator = (userId) => ({type: UNFOLLOW, userId});
 

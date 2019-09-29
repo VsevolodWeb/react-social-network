@@ -2,7 +2,6 @@
     display: grid;
     grid-gap: 15px;
     text-align: center;
-    justify-items: center;
 }
 
 .avatar {
@@ -11,6 +10,8 @@
     width: 100px;
     background-color: #a01f52;
     display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .name {
@@ -21,4 +22,10 @@
 .item .button {
     height: 35px;
     align-self: end;
+}
+
+.status {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
