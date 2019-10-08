@@ -2,10 +2,9 @@ import React from 'react'
 
 import s from './Users.module.css'
 import User from './User/User'
-
+import Preloader from '../common/Preloader/Preloader';
 
 const Users = (props) => {
-    console.log(props)
     let pagesCount =  Math.ceil(props.data.totalUsersCount / props.data.pageSize);
     let pagesCountArray = [];
 
@@ -22,7 +21,10 @@ const Users = (props) => {
     
     return <>
             <h1 className="title">Users</h1>
-            <div className={s.container}>{mapUsers()}</div>
+            {props.data.isFetching ? <Preloader /> : null }
+            <div className={s.container}>
+                {mapUsers()}
+            </div>
             <ul className={s.pagination}>
                 {pagesCountArray}
             </ul>
