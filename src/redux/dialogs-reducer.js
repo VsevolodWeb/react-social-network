@@ -1,5 +1,5 @@
 const ADD_MESSAGE = 'ADD-MESSAGE';
-const MESSAGE_CHANGE = 'MESSAGE-CHANGE';
+const UPDATE_NEW_MESSAGE = 'MESSAGE-CHANGE';
 
 const initialState = {
     dialogsData: [
@@ -39,7 +39,7 @@ const dialogsReducer = (state = initialState, action) => {
             
             return stateCopy;
         }
-        case MESSAGE_CHANGE:
+        case UPDATE_NEW_MESSAGE:
             return {
                 ...state,
                 newMessageValue: action.value
@@ -50,7 +50,7 @@ const dialogsReducer = (state = initialState, action) => {
     }
 };
 
-export const addMessageActionCreator = (id) => ({type: ADD_MESSAGE, id: id});
-export const messageChangeActionCreator = (value) => ({type: MESSAGE_CHANGE, value: value});
+export const addMessage = (id) => ({type: ADD_MESSAGE, id: id});
+export const updateNewMessage = (value) => ({type: UPDATE_NEW_MESSAGE, value: value});
 
 export default dialogsReducer;

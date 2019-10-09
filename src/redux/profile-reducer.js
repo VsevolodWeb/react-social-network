@@ -9,7 +9,7 @@ const initialState = {
     newPostValue: ''
 }
 
-const profileReducer = (state = initialState, action) => {  
+const profileReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_POST: {
             return {
@@ -37,7 +37,7 @@ const profileReducer = (state = initialState, action) => {
     }
 };
 
-export const addPostActionCreator = () => ({type: ADD_POST});
-export const updateNewPostActionCreator = (value) => ({type: POST_CHANGE, value});
+export const addPost= () => ({type: ADD_POST});
+export const updateNewPost = (value) => ({type: POST_CHANGE, value});
 
 export default profileReducer;
