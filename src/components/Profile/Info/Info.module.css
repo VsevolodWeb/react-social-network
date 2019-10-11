@@ -1,12 +1,19 @@
 .info {
     grid-area: info;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-gap: 30px;
 }
 
 .avatar {
-	width: 150px;
-	height: 150px;
-	background-size: cover;
-    grid-area: avatar;
-    margin-right: 30px;
+    width: 100%;
+    min-height: 150px;
+	height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+.name {
+    margin-top: 0;
+    margin-bottom: 30px;
 }
