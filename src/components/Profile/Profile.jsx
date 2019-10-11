@@ -4,9 +4,12 @@ import s from './Profile.module.css'
 import Banner from './Banner/Banner';
 import Info from './Info/Info';
 import Posts from './Posts/Posts'
+import Preloader from '../common/Preloader/Preloader'
 
 const Profile = (props) => {
-    console.log(props)
+    if(props.match.params.userId && !props.data.userProfile) {
+        return <Preloader />
+    }
     return (
         <>
             <h1 className="title">Profile</h1>
