@@ -1,3 +1,8 @@
+.container {
+	display: flex;
+	align-items: center;
+}
+
 .header {
 	background-color: #dbfeff;
 	margin-bottom: 30px;
@@ -7,4 +12,17 @@
 
 .logo {
 	width: 50px;
+}
+
+.login {
+	margin-left: auto;
+	text-align: right;
+}
+
+.link {
+	color: #424242
+}
+
+.link:hover {
+	text-decoration: none;
 }

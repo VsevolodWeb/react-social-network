@@ -1,6 +1,7 @@
 body {
     margin: 0;
-    font-family: 'Helvetica'
+	font-family: 'Helvetica';
+	color: #424242;
 }
 
 .container {

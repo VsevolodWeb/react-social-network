@@ -1,7 +1,7 @@
 import React from 'react';
 import {Route} from 'react-router-dom';
 import './App.css';
-import Header from './components/Header/Header';
+import HeaderContainer from './components/Header/HeaderContainer';
 import SidebarContainer from './components/Sidebar/SidebarContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import MessagesContainer from './components/Messages/MessagesContainer';
@@ -10,7 +10,7 @@ import UsersContainer from './components/Users/UsersContainer';
 function App() {
   return (
     <>
-      <Header />
+      <HeaderContainer />
       <main>
         <div className="container mainGrid">
           <SidebarContainer />
