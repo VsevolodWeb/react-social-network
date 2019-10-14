@@ -8,7 +8,7 @@ const SET_IS_FETCHING = 'SET-IS-FETCHING';
 
 const initialState = {
     list: [],
-    pageSize: 30,
+    pageSize: 20,
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: true

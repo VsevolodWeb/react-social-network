@@ -1,12 +1,13 @@
 .container {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: 40px;
 }
 
 .pagination {
     display: flex;
     justify-content: center;
+    flex-flow: wrap;
     list-style-type: none;
     margin-top: 50px;
     padding: 0;

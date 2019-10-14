@@ -24,8 +24,28 @@ class UsersContainer extends React.Component {
         this.props.setCurrentPage(pageId);
     }
 
+    followUser = (userId) => {
+        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`, {}, {withCredentials: true})
+            .then(response => {
+                if(response.data.resultCode === 0) {
+                    this.props.follow(userId);
+                }
+            }
+        );
+    }
+
+    unfollowUser = (userId) => {
+        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`, {}, {withCredentials: true})
+            .then(response => {
+                if(response.data.resultCode === 0) {
+                    this.props.unfollow(userId);
+                }
+            }
+        );
+    }
+
     render() {
-        return <Users data={this.props.data} setCurrentPage={this.setCurrentPage} follow={this.props.follow} unfollow={this.props.unfollow} />
+        return <Users data={this.props.data} setCurrentPage={this.setCurrentPage} followUser={this.followUser} unfollowUser={this.props.unfollowUser} />
     };
 }
 

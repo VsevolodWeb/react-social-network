@@ -16,7 +16,7 @@ const Users = (props) => {
     }
 
     const mapUsers = () => {
-        return props.data.list.map(user => <User key={user.id} data={user} action={user.followed ? props.unfollow: props.follow} />)
+        return props.data.list.map(user => <User key={user.id} data={user} action={user.followed ? props.unfollowUser: props.followUser} />)
     };
     
     return <>
