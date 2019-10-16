@@ -8,15 +8,15 @@ import { getUsers, followUserAPI, unfollowUserAPI } from '../../api/api';
 class UsersContainer extends React.Component {
     componentDidMount() {
         getUsers(this.props.data.currentPage, this.props.data.pageSize).then(response => {
-            this.props.setTotalUsersCount(response.data.totalCount);
-            this.props.setUsers(response.data.items);
+            this.props.setTotalUsersCount(response.totalCount);
+            this.props.setUsers(response.items);
             this.props.setIsFetching(false);
         });
     }
 
     setCurrentPage = (pageId) => {
         getUsers(pageId, this.props.data.pageSize).then(response => {
-                this.props.setUsers(response.data.items);
+                this.props.setUsers(response.items);
                 this.props.setIsFetching(false);
         });
         this.props.setCurrentPage(pageId);
@@ -24,7 +24,7 @@ class UsersContainer extends React.Component {
 
     followUser = (userId) => {
         followUserAPI(userId).then(response => {
-            if(response.data.resultCode === 0) {
+            if(response.resultCode === 0) {
                 this.props.follow(userId);
             }
         });
@@ -32,7 +32,7 @@ class UsersContainer extends React.Component {
 
     unfollowUser = (userId) => {
         unfollowUserAPI(userId).then(response => {
-            if(response.data.resultCode === 0) {
+            if(response.resultCode === 0) {
                 this.props.unfollow(userId);
             }
         });
