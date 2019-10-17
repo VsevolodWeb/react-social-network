@@ -3,13 +3,21 @@ import {NavLink} from 'react-router-dom';
 import s from './User.module.css'
 
 const User = (props) => {
+    const toggleFollow = () => {
+        props.action(props.data.id);
+    }
+
     return <div className={s.item}>
                 <NavLink to={`profile/${props.data.id}`}>
                     <span className={s.avatar}></span>
                 </NavLink>
                 <div className={s.name}>{props.data.name}</div>
                 <div className={s.status}>{props.data.status}</div>
-                <button className={s.button + " button"} onClick={() => {props.action(props.data.id)}}>{props.data.followed ? 'Unfollow': 'Follow'}</button>
+                <button className={s.button + " button"} onClick={toggleFollow}
+                    disabled={props.isFollowing.userId === props.data.id ? 'disabled': ''}
+                >
+                    {props.data.followed ? 'Unfollow': 'Follow'}
+                </button>
            </div>
 }
 

@@ -4,14 +4,15 @@ const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT';
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_IS_FETCHING = 'SET-IS-FETCHING';
-
+const SET_IS_FOLLOWING = 'SET-IS-FOLLOWING';
 
 const initialState = {
     list: [],
     pageSize: 20,
     totalUsersCount: 0,
     currentPage: 1,
-    isFetching: true
+    isFetching: true,
+    isFollowing: {userId: null, status: false}
 }
 
 const usersReducer = (state = initialState, action) => {
@@ -58,6 +59,10 @@ const usersReducer = (state = initialState, action) => {
             return {...state, isFetching: action.isFetching}
         }
 
+        case SET_IS_FOLLOWING: {
+            return {...state, isFollowing: {...action.isFollowing}}
+        }
+
         default:
             return state; 
     }
@@ -69,5 +74,6 @@ export const setTotalUsersCount = (totalUsersCount) => ({type: SET_TOTAL_USERS_C
 export const follow = (userId) => ({type: FOLLOW, userId});
 export const unfollow = (userId) => ({type: UNFOLLOW, userId});
 export const setIsFetching = (isFetching) => ({type: SET_IS_FETCHING, isFetching});
+export const setIsFollowing = (userId, isFollowing) => ({type: SET_IS_FOLLOWING, isFollowing: {userId, isFollowing}});
 
 export default usersReducer;

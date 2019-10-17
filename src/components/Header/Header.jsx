@@ -8,13 +8,14 @@ const Header = (props) => {
         <header className={s.header}>
             <div className={s.container + " container"}>
                 <img src={logo} alt="My Social Work" className={s.logo} />
-                {(props.isAuth) ? (
-                    <div className={s.login}>
-                        <div className={s.loginName}>{props.login}</div>
-                        <NavLink to="/logout" className={s.link}>Logout</NavLink>
-                    </div>
-                ) : <NavLink to="/login" className={s.link}>Login</NavLink>}
-                
+                <div className={s.login}>
+                    {(props.isAuth) ? (
+                        <>
+                            <div className={s.loginName}>{props.login}</div>
+                            <NavLink to="/logout" className={s.link}>Logout</NavLink>
+                        </>
+                    ) : <NavLink to="/login" className={s.link}>Login</NavLink>}
+                </div>
             </div>
         </header>
     )
