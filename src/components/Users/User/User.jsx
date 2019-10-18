@@ -14,7 +14,7 @@ const User = (props) => {
                 <div className={s.name}>{props.data.name}</div>
                 <div className={s.status}>{props.data.status}</div>
                 <button className={s.button + " button"} onClick={toggleFollow}
-                    disabled={props.isFollowing.userId === props.data.id ? 'disabled': ''}
+                    disabled={props.isFollowing.some(el => el === props.data.id) ? 'disabled': ''}
                 >
                     {props.data.followed ? 'Unfollow': 'Follow'}
                 </button>

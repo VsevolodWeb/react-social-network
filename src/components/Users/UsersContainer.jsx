@@ -45,7 +45,6 @@ class UsersContainer extends React.Component {
     }
 
     render() {
-        console.log(this.props.data)
         return <Users data={this.props.data} setCurrentPage={this.setCurrentPage}
                 followUser={this.followUser} unfollowUser={this.unfollowUser} isFollowing={this.props.data.isFollowing} />
     };

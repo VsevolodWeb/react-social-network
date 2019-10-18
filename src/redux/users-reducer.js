@@ -12,7 +12,7 @@ const initialState = {
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: true,
-    isFollowing: {userId: null, status: false}
+    isFollowing: []
 }
 
 const usersReducer = (state = initialState, action) => {
@@ -60,7 +60,10 @@ const usersReducer = (state = initialState, action) => {
         }
 
         case SET_IS_FOLLOWING: {
-            return {...state, isFollowing: {...action.isFollowing}}
+            return {
+                ...state,
+                isFollowing: action.isFetching ? [...state.isFollowing, action.userId] : state.isFollowing.filter(item => item !== action.userId)
+            }
         }
 
         default:
@@ -74,6 +77,6 @@ export const setTotalUsersCount = (totalUsersCount) => ({type: SET_TOTAL_USERS_C
 export const follow = (userId) => ({type: FOLLOW, userId});
 export const unfollow = (userId) => ({type: UNFOLLOW, userId});
 export const setIsFetching = (isFetching) => ({type: SET_IS_FETCHING, isFetching});
-export const setIsFollowing = (userId, isFollowing) => ({type: SET_IS_FOLLOWING, isFollowing: {userId, isFollowing}});
+export const setIsFollowing = (userId, isFetching) => ({type: SET_IS_FOLLOWING, userId, isFetching});
 
 export default usersReducer;
