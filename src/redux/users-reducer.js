@@ -1,3 +1,6 @@
+import { usersAPI } from './../api/api';
+
+
 const SET_USERS = 'SET-USERS';
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT';
@@ -71,6 +74,7 @@ const usersReducer = (state = initialState, action) => {
     }
 };
 
+
 export const setUsers = (users) => ({type: SET_USERS, users});
 export const setCurrentPage = (value) => ({type: SET_CURRENT_PAGE, value});
 export const setTotalUsersCount = (totalUsersCount) => ({type: SET_TOTAL_USERS_COUNT, totalUsersCount});
@@ -78,5 +82,36 @@ export const follow = (userId) => ({type: FOLLOW, userId});
 export const unfollow = (userId) => ({type: UNFOLLOW, userId});
 export const setIsFetching = (isFetching) => ({type: SET_IS_FETCHING, isFetching});
 export const setIsFollowing = (userId, isFetching) => ({type: SET_IS_FOLLOWING, userId, isFetching});
+
+
+export const getUsersThunkCreator = (currentPage, pageSize) => dispatch => {
+    usersAPI.getUsers(currentPage, pageSize).then(response => {
+        dispatch(setTotalUsersCount(response.totalCount));
+        dispatch(setUsers(response.items));
+        dispatch(setIsFetching(false));
+    });
+}
+
+export const followThunkCreator = (userId) => dispatch => {
+    dispatch(setIsFollowing(userId, true));
+
+    usersAPI.followUser(userId).then(response => {
+        if(response.resultCode === 0) {
+            dispatch(follow(userId));
+            dispatch(setIsFollowing(userId, false));
+        }
+    });
+}
+
+export const unfollowThunkCreator = (userId) => dispatch => {
+    dispatch(setIsFollowing(userId, true));
+    
+    usersAPI.unfollowUser(userId).then(response => {
+        if(response.resultCode === 0) {
+            dispatch(unfollow(userId));
+            dispatch(setIsFollowing(userId, false));
+        }
+    });
+}
 
 export default usersReducer;
