@@ -5,7 +5,8 @@ import Messages from './Messages';
 
 const mapStateToProps = (state) => {
     return {
-        dialogs: state.dialogs
+        dialogs: state.dialogs,
+        isAuth: state.auth.isAuth
     }
 }
 

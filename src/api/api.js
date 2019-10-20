@@ -20,7 +20,10 @@ export const usersAPI = {
     },
     getUserProfile(userId) {
         return instance.get(`profile/${userId}`).then(response => response.data);
-    },
+    }
+}
+
+export const authAPI = {
     authMe() {
         return  instance.get('auth/me').then(response => response.data);
     }
