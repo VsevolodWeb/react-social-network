@@ -1,9 +1,11 @@
 import React from 'react';
+import {compose} from 'redux';
 import {connect} from 'react-redux';
 
 import Users from './Users';
 import {setCurrentPage, followThunkCreator, unfollowThunkCreator,
         setIsFollowing, getUsersThunkCreator} from '../../redux/users-reducer'
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 
 class UsersContainer extends React.Component {
     componentDidMount() {
@@ -27,8 +29,12 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {
-    setCurrentPage,
-    follow: followThunkCreator, unfollow: unfollowThunkCreator, getUsers: getUsersThunkCreator,
-    setIsFollowing
-})(UsersContainer);
+
+export default compose(
+    connect(mapStateToProps, {
+        setCurrentPage,
+        follow: followThunkCreator, unfollow: unfollowThunkCreator, getUsers: getUsersThunkCreator,
+        setIsFollowing
+    }),
+    withAuthRedirect
+)(UsersContainer);
