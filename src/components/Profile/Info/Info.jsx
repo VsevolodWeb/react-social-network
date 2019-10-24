@@ -9,7 +9,7 @@ const Info = (props) => {
             <div className={s.avatar} style={{ backgroundImage: `url(${avatar})` }}></div>
             <div>
                 <h1 className={s.name}>{props.profile.fullName}</h1>
-                <div><Status /></div>
+                <div><Status text={"My status"} /></div>
             </div>
             <div className={s.text}>
                 {props.profile.aboutMe ? <><b>About me:</b> {props.profile.aboutMe}</>: ""}
