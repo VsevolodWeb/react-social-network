@@ -1,9 +1,10 @@
-import { usersAPI } from './../api/api';
+import { profileAPI } from './../api/api';
 
 
 const ADD_POST = 'ADD-POST';
 const POST_CHANGE = 'POST-CHANGE';
 const SET_USER_PROFILE = 'SET-USER-PROFILE';
+const SET_USER_STATUS = 'SET-USER-STATUS';
 
 const initialState = {
     postsData: [
@@ -13,9 +14,11 @@ const initialState = {
     newPostValue: '',
     profile: {
         fullName: "Vsevolod Ivanov",
-        aboutMe: "I am man"
+        aboutMe: "I am man",
+        status: "Vsevolod Status"
     },
-    userProfile: null
+    userProfile: null,
+    userStatus: null
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -44,6 +47,9 @@ const profileReducer = (state = initialState, action) => {
         case SET_USER_PROFILE:
             return {...state, userProfile: action.userProfile}
 
+        case SET_USER_STATUS:
+            return {...state, userStatus: action.userStatus}
+
         default:
             return state;
     }
@@ -52,11 +58,20 @@ const profileReducer = (state = initialState, action) => {
 export const addPost= () => ({type: ADD_POST});
 export const updateNewPost = (value) => ({type: POST_CHANGE, value});
 export const setUserProfile = (userProfile) => ({type: SET_USER_PROFILE, userProfile});
+export const setUserStatus = (userStatus) => ({type: SET_USER_PROFILE, userStatus});
 
 export const getUserProfileThunkCreator = (userId) => dispatch => {
     if(userId) {
-        usersAPI.getUserProfile(userId).then(response => {
+        profileAPI.getUserProfile(userId).then(response => {
             dispatch(setUserProfile(response));
+        });
+    }
+}
+
+export const getUserStatusThunkCreator = (userId) => dispatch => {
+    if(userId) {
+        profileAPI.getUserStatus(userId).then(response => {
+            dispatch(setUserStatus(response));
         });
     }
 }
