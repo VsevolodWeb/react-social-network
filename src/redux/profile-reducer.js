@@ -12,11 +12,6 @@ const initialState = {
         {id: 2, text: 'Hello', name: 'Ekaterina', likeCount: 3}
     ],
     newPostValue: '',
-    profile: {
-        fullName: "Vsevolod Ivanov",
-        aboutMe: "I am man",
-        status: "Vsevolod Status"
-    },
     userProfile: null,
     userStatus: null
 }
@@ -58,22 +53,18 @@ const profileReducer = (state = initialState, action) => {
 export const addPost= () => ({type: ADD_POST});
 export const updateNewPost = (value) => ({type: POST_CHANGE, value});
 export const setUserProfile = (userProfile) => ({type: SET_USER_PROFILE, userProfile});
-export const setUserStatus = (userStatus) => ({type: SET_USER_PROFILE, userStatus});
+export const setUserStatus = (userStatus) => ({type: SET_USER_STATUS, userStatus});
 
-export const getUserProfileThunkCreator = (userId) => dispatch => {
-    if(userId) {
-        profileAPI.getUserProfile(userId).then(response => {
-            dispatch(setUserProfile(response));
-        });
-    }
+export const getUserProfileThunkCreator = userId => dispatch => {
+    profileAPI.getUserProfile(userId).then(response => {
+        dispatch(setUserProfile(response));
+    });
 }
 
-export const getUserStatusThunkCreator = (userId) => dispatch => {
-    if(userId) {
-        profileAPI.getUserStatus(userId).then(response => {
-            dispatch(setUserStatus(response));
-        });
-    }
+export const getUserStatusThunkCreator = userId => dispatch => {
+    profileAPI.getUserStatus(userId).then(response => {
+        dispatch(setUserStatus(response));
+    });
 }
 
 export default profileReducer;

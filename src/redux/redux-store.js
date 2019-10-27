@@ -8,11 +8,12 @@ import usersReducer from './users-reducer'
 import authReducer from "./auth-reducer";
 
 const reducers = combineReducers({
+    auth: authReducer,
     dialogs: dialogsReducer,
     profile: profileReducer,
     sidebar: sidebarReducer,
-    users: usersReducer,
-    auth: authReducer
+    users: usersReducer
+    
 });
 const store = createStore(reducers, applyMiddleware(thunkMiddleware));
 
