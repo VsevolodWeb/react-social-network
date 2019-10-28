@@ -5,20 +5,31 @@ import {withRouter} from 'react-router-dom';
 
 import {addPost, updateNewPost, getUserProfileThunkCreator, getUserStatusThunkCreator} from '../../redux/profile-reducer'
 import Profile from './Profile';
-//import { withAuthRedirect } from '../../hoc/withAuthRedirect';
+import Preloader from '../common/Preloader/Preloader';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 
 
 class ProfileContainer extends React.Component {
     componentDidMount() {
-        let userId = this.props.match.params.userId;
-        
-        this.props.getUserProfile(userId);
-        this.props.getUserStatus(userId);
-        
+        let resultUserId = this.props.match.params.userId || this.props.userId;
+
+        if(resultUserId) {
+            this.props.getUserProfile(resultUserId);
+            this.props.getUserStatus(resultUserId);
+        } 
     }
 
     render() {
-        console.log(this.props.userId)
+        let userProfile = this.props.data.userProfile;
+        
+        if(!userProfile) {
+            return <Preloader />
+        }
+
+        if(userProfile.userId !== parseInt(this.props.match.params.userId) && (userProfile.userId !== this.props.userId)) {
+            return <Preloader />
+        }
+
         return <Profile {...this.props} />
     }
 }
@@ -27,7 +38,7 @@ class ProfileContainer extends React.Component {
 const mapStateToProps = (state) => {
     return {
         data: state.profile,
-        userId: state.auth
+        userId: state.auth.id
     }
 }
 
@@ -37,5 +48,5 @@ export default compose(
         addPost, updateNewPost, getUserProfile: getUserProfileThunkCreator, getUserStatus: getUserStatusThunkCreator
     }),
     withRouter,
-    //withAuthRedirect
+    withAuthRedirect
 )(ProfileContainer)

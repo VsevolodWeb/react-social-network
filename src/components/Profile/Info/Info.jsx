@@ -8,11 +8,11 @@ const Info = (props) => {
         <div className={s.info}>
             <div className={s.avatar} style={{ backgroundImage: `url(${avatar})` }}></div>
             <div>
-                <h1 className={s.name}>{props.profile.fullName}</h1>
-                <div><Status text={props.profile.status} /></div>
+                <h1 className={s.name}>{props.fullName}</h1>
+                <div><Status text={props.userStatus} /></div>
             </div>
             <div className={s.text}>
-                {props.profile.aboutMe ? <><b>About me:</b> {props.profile.aboutMe}</>: ""}
+                {props.aboutMe ? <><b>About me:</b> {props.aboutMe}</>: ""}
             </div>
         </div>
     )
