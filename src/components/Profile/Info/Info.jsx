@@ -9,7 +9,7 @@ const Info = (props) => {
             <div className={s.avatar} style={{ backgroundImage: `url(${avatar})` }}></div>
             <div>
                 <h1 className={s.name}>{props.fullName}</h1>
-                <div><Status text={props.userStatus} /></div>
+                {props.userStatus ? <Status text={props.userStatus} editingAbility={props.loginUserId === props.userId} /> : null}
             </div>
             <div className={s.text}>
                 {props.aboutMe ? <><b>About me:</b> {props.aboutMe}</>: ""}

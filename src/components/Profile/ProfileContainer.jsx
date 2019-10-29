@@ -16,21 +16,11 @@ class ProfileContainer extends React.Component {
         if(resultUserId) {
             this.props.getUserProfile(resultUserId);
             this.props.getUserStatus(resultUserId);
-        } 
+        }
     }
 
     render() {
-        let userProfile = this.props.data.userProfile;
-        
-        if(!userProfile) {
-            return <Preloader />
-        }
-
-        if(userProfile.userId !== parseInt(this.props.match.params.userId) && (userProfile.userId !== this.props.userId)) {
-            return <Preloader />
-        }
-
-        return <Profile {...this.props} />
+        return this.props.data.isFetching ? <Preloader /> : <Profile {...this.props} />;
     }
 }
 
