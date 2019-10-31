@@ -33,6 +33,16 @@ body {
 	min-height: 50px;
 }
 
+.input {
+	padding: 3px;
+	border-radius: 3px;
+	border: 1px solid #c7c7c7
+}
+
+.input:focus {
+	outline: none;
+}
+
 .button {
 	background-color: #aacfd0;
 	padding: 10px 20px;
@@ -54,4 +64,9 @@ body {
 
 [disabled] {
 	pointer-events: none;
+}
+
+.form {
+	display: grid;
+	grid-gap: 10px;
 }
