@@ -14,7 +14,7 @@ const initialState = {
     ],
     newPostValue: '',
     userProfile: null,
-    userStatus: null,
+    userStatus: "",
     isFetching: false
 }
 
@@ -58,7 +58,7 @@ const profileReducer = (state = initialState, action) => {
 export const addPost= () => ({type: ADD_POST});
 export const updateNewPost = (value) => ({type: POST_CHANGE, value});
 export const setUserProfile = (userProfile) => ({type: SET_USER_PROFILE, userProfile});
-export const setUserStatus = (userStatus) => ({type: SET_USER_STATUS, userStatus});
+export const setUserStatus = (userStatus) => ({type: SET_USER_STATUS, userStatus}); 
 export const setIsFetching = (isFetching) => ({type: SET_IS_FETCHING, isFetching});
 
 export const getUserProfileThunkCreator = userId => dispatch => {
@@ -74,6 +74,14 @@ export const getUserStatusThunkCreator = userId => dispatch => {
     profileAPI.getUserStatus(userId).then(response => {
         dispatch(setUserStatus(response));
         dispatch(setIsFetching(false));
+    });
+}
+
+export const updateUserStatusThunkCreator = status => dispatch => {
+    profileAPI.updateUserStatus(status).then(response => {
+        if(response.errorCode === 0) {
+            dispatch(setUserStatus(response));
+        }
     });
 }
 

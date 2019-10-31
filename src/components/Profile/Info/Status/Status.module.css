@@ -1,3 +1,7 @@
 .status {
     letter-spacing: 2px;
 }
+
+.status_editingAbility {
+    cursor: pointer;
+}
