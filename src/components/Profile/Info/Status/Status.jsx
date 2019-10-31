@@ -11,13 +11,23 @@ class Status extends React.Component {
         this.setState({
             editMode: !this.state.editMode
         })
-        this.props.updateUserStatus(this.state.status);
+        if(this.props.status !== this.state.status) {
+            this.props.updateUserStatus(this.state.status);
+        }
     }
 
     statusChange = e => {
         this.setState({
             status: e.currentTarget.value
         })
+    }
+
+    componentDidUpdate(prevProps) {
+        if(prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            })
+        }
     }
 
     render() {
