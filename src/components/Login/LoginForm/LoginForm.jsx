@@ -2,15 +2,14 @@ import React from 'react';
 import {reduxForm, Field} from 'redux-form';
 
 const LoginForm = props => {
-    console.log(props)
     return (
         <form onSubmit={props.handleSubmit}>
             <div className="form">
                 <div className="formGroup">
-                    <Field component="input" name="login" placeholder="Login" className="input" />
+                    <Field component="input" name="email" placeholder="Login" className="input" required />
                 </div>
                 <div className="formGroup">
-                    <Field component="input" name="password" type="password" placeholder="Password" className="input" />
+                    <Field component="input" name="password" type="password" placeholder="Password" className="input" autoComplete="password" required />
                 </div>
                 <div className="formGroup">
                     <label htmlFor="remember-me">
@@ -25,8 +24,6 @@ const LoginForm = props => {
     )
 }
 
-const LoginReduxForm = reduxForm({
-    form: 'login'
-})(LoginForm);
-
-export default LoginReduxForm;
+export default reduxForm({
+        form: 'login'
+    })(LoginForm);

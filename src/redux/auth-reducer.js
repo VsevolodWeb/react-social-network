@@ -33,4 +33,12 @@ export const authMeThunkCreator = () => dispatch => {
     });
 }
 
+export const authLoginThunkCreator = formData => dispatch => {
+    authAPI.authLogin(formData).then(response => {
+        if (response.resultCode === 0) {
+            dispatch(setUserData(response.data));
+        }
+    });
+}
+
 export default authReducer;

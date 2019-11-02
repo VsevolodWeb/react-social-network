@@ -1,15 +1,20 @@
 import React from 'react';
 import LoginForm from './LoginForm/LoginForm';
+import { authLoginThunkCreator, authMeThunkCreator } from '../../redux/auth-reducer';
+import { connect } from 'react-redux';
 
-const Login = () => {
+const Login = props => {
+    const loginSubmit = formData => {
+        props.authLogin(formData);
+    }
     return (
         <>
             <h1 className="title">Login</h1>
             <div>
-                <LoginForm />
+                <LoginForm onSubmit={loginSubmit} />
             </div>
         </>
     )
 }
 
-export default Login;
+export default connect(null, {authLogin: authLoginThunkCreator, authMe: authMeThunkCreator})(Login);
