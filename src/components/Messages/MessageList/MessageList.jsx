@@ -1,5 +1,6 @@
 import React from 'react';
 import Message from './Message/Message';
+import MessageForm from './MessageForm/MessageForm';
 
 
 const MessageList = (props) => {
@@ -7,19 +8,14 @@ const MessageList = (props) => {
         return <Message name={props.dialog.name} data={item} key={item.id} />
     });
 
-    const addMessage = () => {
-        if(!props.newMessageValue) return;
-        props.addMessage(props.dialog.id);
-    }
-    
-    const updateNewMessage = (e) => {
-        props.updateNewMessage(e.currentTarget.value);
+    const addMessage = data => {
+        if(!data.message) return;
+        props.addMessage(props.dialog.id, data.message);
     }
 
     messageList.push(
         <div key="0">
-            <textarea className="textarea" onChange={updateNewMessage} value={props.newMessageValue}></textarea>
-            <button className="button" onClick={addMessage}>Отправить</button>
+            <MessageForm onSubmit={addMessage} />
         </div>
     )
 

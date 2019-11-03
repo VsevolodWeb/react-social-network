@@ -19,13 +19,11 @@ const initialState = {
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_POST: {
-            console.log(action)
             return {
                 ...state,
-                postsData: [...state.postsData,
-                    {
+                postsData: [...state.postsData, {
                         id: '' + state.postsData.length + 1,
-                        text: state.newPostValue,
+                        text: action.message.postMessage,
                         name: 'Vsevolod',
                         likeCount: '0'
                     }
@@ -48,10 +46,10 @@ const profileReducer = (state = initialState, action) => {
     }
 };
 
-export const addPost= () => ({type: ADD_POST});
-export const setUserProfile = (userProfile) => ({type: SET_USER_PROFILE, userProfile});
-export const setUserStatus = (userStatus) => ({type: SET_USER_STATUS, userStatus}); 
-export const setIsFetching = (isFetching) => ({type: SET_IS_FETCHING, isFetching});
+export const addPost = message => ({type: ADD_POST, message});
+export const setUserProfile = userProfile => ({type: SET_USER_PROFILE, userProfile});
+export const setUserStatus = userStatus => ({type: SET_USER_STATUS, userStatus}); 
+export const setIsFetching = isFetching => ({type: SET_IS_FETCHING, isFetching});
 
 export const getUserProfileThunkCreator = userId => dispatch => {
     dispatch(setIsFetching(true));

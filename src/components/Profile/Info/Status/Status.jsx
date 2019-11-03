@@ -36,8 +36,8 @@ class Status extends React.Component {
                 {this.props.editingAbility ?
                     this.state.editMode ?
                         <input type="text" onBlur={this.toggleEditMode} onChange={this.statusChange} value={this.state.status} autoFocus />
-                        : <div className={`${s.status} ${s.status_editingAbility}`} onDoubleClick={this.toggleEditMode}>{this.props.status}</div>
-                    : <div className={s.status}>{this.props.status}</div>
+                        : <span className={`${s.status} ${s.status_editingAbility}`} onDoubleClick={this.toggleEditMode}>{this.props.status}</span>
+                    : <span className={s.status}>{this.props.status}</span>
                 }
             </div>
         )

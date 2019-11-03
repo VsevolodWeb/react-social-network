@@ -11,8 +11,6 @@ const Messages = (props) => {
             .map(dialog => <Route path={"/messages/" + dialog.id} key={dialog.id}
                                 render={() => <MessageList
                                     dialog={dialog}
-                                    newMessageValue={props.dialogs.newMessageValue}
-                                    updateNewMessage={props.updateNewMessage}
                                     addMessage={props.addMessage} />}
                             />
                 );

@@ -1,13 +1,20 @@
 import React from 'react';
-import {Field} from 'redux-form';
+import {reduxForm, Field} from 'redux-form';
 
 const PostsForm = props => {
+    const addPost = (e) => {
+        e.preventDefault();
+        props.handleSubmit();
+        props.reset();
+    }
     return (
-        <form onSubmit={props.handleSubmit}>
-            <Field className="textarea" value={props.newPostValue} component="textarea" />
+        <form onSubmit={addPost}>
+            <Field className="textarea" name="postMessage" component="textarea" />
             <button className="button">Отправить</button>
         </form>
     )
 }
 
-export default PostsForm;
+export default reduxForm({
+    form: 'addPost'
+})(PostsForm);;
