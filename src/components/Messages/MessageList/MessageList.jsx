@@ -9,7 +9,6 @@ const MessageList = (props) => {
     });
 
     const addMessage = data => {
-        if(!data.message) return;
         props.addMessage(props.dialog.id, data.message);
     }
 
