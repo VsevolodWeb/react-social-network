@@ -1,5 +1,5 @@
 .textElement {
-	padding: 3px;
+	padding: 6px;
 	border-radius: 3px;
 	border: 1px solid #c7c7c7;
 	width: 100%;
@@ -7,42 +7,4 @@
 
 .textElement:focus {
 	outline: none;
-}
-
-.button {
-	background-color: #aacfd0;
-	padding: 10px 20px;
-	font-weight: bold;
-    text-transform: uppercase;
-	border: none;
-	opacity: 0.8;
-	cursor: pointer;
-	border-radius: 5px;
-}
-
-.button:focus {
-	outline: none;
-}
-
-.button:hover {
-	opacity: 1;
-}
-
-[disabled] {
-	pointer-events: none;
-}
-
-.form {
-	display: grid;
-	grid-gap: 15px;
-}
-
-.formGroup__errorText {
-	color: red;
-	font-size: .6rem;
-}
-
-.formGroup_error input,
-.formGroup_error textarea {
-    border-color: red;
 }
