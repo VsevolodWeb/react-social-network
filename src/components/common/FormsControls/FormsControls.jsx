@@ -1,24 +1,31 @@
 import React from 'react';
 import s from './FormsControls.module.css';
 
-export const Textarea = ({input, meta, ...props}) => {
+const FormControl = ({input, meta, ...props}) => {
     const hasError = meta.touched && meta.error;
+    const children = props.children;
+    console.log([...children.props])
 
     return (
-        <div className={"formGroup_error" + hasError ? " formGroup_error" : ""}>
-            <textarea className={s.textElement} rows="4" {...input} {...props}></textarea>
+        <div className={"formGroup" + (hasError ? " formGroup_error" : "")}>
+            {React.createElement(children.type)}
             {hasError && <span className="formGroup__errorText">{meta.error}</span>}
         </div>
     )
 }
 
-export const Input = ({input, meta, ...props}) => {
-    const hasError = meta.touched && meta.error;
-
+export const Textarea = props => {
     return (
-        <div className={"formGroup_error" + hasError ? " formGroup_error" : ""}>
-            <input className={s.textElement} rows="4" {...input} {...props} />
-            {hasError && <span className="formGroup__errorText">{meta.error}</span>}
-        </div>
+        <FormControl {...props}>
+            <textarea className={s.textElement} rows="4"/>
+        </FormControl>
+    )
+}
+
+export const Input = props => {
+    return (
+        <FormControl {...props}>
+            <input className={s.textElement}/>
+        </FormControl>
     )
 }

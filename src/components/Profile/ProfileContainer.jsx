@@ -6,13 +6,12 @@ import {withRouter} from 'react-router-dom';
 import {addPost, getUserProfileThunkCreator, getUserStatusThunkCreator, updateUserStatusThunkCreator} from '../../redux/profile-reducer'
 import Profile from './Profile';
 import Preloader from '../common/Preloader/Preloader';
-import { withAuthRedirect } from '../../hoc/withAuthRedirect';
+//import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 
 
 class ProfileContainer extends React.Component {
     componentDidMount() {
         let resultUserId = this.props.match.params.userId || this.props.userId;
-
         if(resultUserId) {
             this.props.getUserProfile(resultUserId);
             this.props.getUserStatus(resultUserId);
@@ -39,5 +38,5 @@ export default compose(
         updateUserStatus: updateUserStatusThunkCreator
     }),
     withRouter,
-    withAuthRedirect
+    //withAuthRedirect
 )(ProfileContainer)
