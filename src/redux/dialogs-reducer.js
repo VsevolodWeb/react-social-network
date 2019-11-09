@@ -1,3 +1,5 @@
+import {RESET_FORM} from './actions/actions'
+
 const ADD_MESSAGE = 'ADD-MESSAGE';
 
 const initialState = {
@@ -43,5 +45,6 @@ const dialogsReducer = (state = initialState, action) => {
 };
 
 export const addMessage = (id, message) => ({type: ADD_MESSAGE, id, message});
+export const resetMessage = () => ({type: RESET_FORM});
 
 export default dialogsReducer;

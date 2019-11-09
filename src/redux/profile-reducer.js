@@ -1,5 +1,5 @@
 import { profileAPI } from './../api/api';
-
+import {RESET_FORM} from './actions/actions'
 
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET-USER-PROFILE';
@@ -50,6 +50,7 @@ export const addPost = message => ({type: ADD_POST, message});
 export const setUserProfile = userProfile => ({type: SET_USER_PROFILE, userProfile});
 export const setUserStatus = userStatus => ({type: SET_USER_STATUS, userStatus}); 
 export const setIsFetching = isFetching => ({type: SET_IS_FETCHING, isFetching});
+export const resetPost = () => ({type: RESET_FORM});
 
 export const getUserProfileThunkCreator = userId => dispatch => {
     dispatch(setIsFetching(true));

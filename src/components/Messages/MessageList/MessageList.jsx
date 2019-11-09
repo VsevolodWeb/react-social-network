@@ -10,6 +10,7 @@ const MessageList = (props) => {
 
     const addMessage = data => {
         props.addMessage(props.dialog.id, data.message);
+        props.resetMessage();
     }
 
     messageList.push(

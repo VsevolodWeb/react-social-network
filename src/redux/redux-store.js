@@ -8,13 +8,32 @@ import sidebarReducer from './sidebar-reducer'
 import usersReducer from './users-reducer'
 import authReducer from "./auth-reducer";
 
+import {RESET_FORM} from './actions/actions'
+
 const reducers = combineReducers({
     auth: authReducer,
     dialogs: dialogsReducer,
     profile: profileReducer,
     sidebar: sidebarReducer,
     users: usersReducer,
-    form: formReducer
+    form: formReducer.plugin({
+        addMessage: (state, action) => {
+            switch(action.type) {
+                case RESET_FORM:
+                    return undefined;
+                default:
+                    return state;
+            }
+        },
+        addPost: (state, action) => {
+            switch(action.type) {
+                case RESET_FORM:
+                    return undefined;
+                default:
+                    return state;
+            }
+        }
+    })
     
 });
 const store = createStore(reducers, applyMiddleware(thunkMiddleware));

@@ -9,6 +9,7 @@ const Posts = (props) => {
 
     const postsFormSubmit = formData => {
         props.addPost(formData);
+        props.resetPost();
     }
 
     return (
