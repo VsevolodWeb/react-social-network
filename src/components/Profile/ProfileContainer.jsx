@@ -6,7 +6,7 @@ import {withRouter} from 'react-router-dom';
 import {addPost, getUserProfileThunkCreator, getUserStatusThunkCreator, updateUserStatusThunkCreator, resetPost} from '../../redux/profile-reducer'
 import Profile from './Profile';
 import Preloader from '../common/Preloader/Preloader';
-//import { withAuthRedirect } from '../../hoc/withAuthRedirect';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 
 
 class ProfileContainer extends React.Component {
@@ -38,5 +38,5 @@ export default compose(
         updateUserStatus: updateUserStatusThunkCreator, resetPost
     }),
     withRouter,
-    //withAuthRedirect
+    withAuthRedirect
 )(ProfileContainer)

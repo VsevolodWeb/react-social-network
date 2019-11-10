@@ -1,6 +1,7 @@
 import { authAPI } from './../api/api';
 
 const SET_USER_DATA = 'SET-USER-DATA';
+const REMOVE_USER_DATA = 'REMOVE-USER-DATA';
 
 const initialState = {
     id: null,
@@ -18,12 +19,22 @@ const authReducer = (state = initialState, action) => {
                 isAuth: true
             };
 
+        case REMOVE_USER_DATA: {
+            return {
+                id: null,
+                email: null,
+                login: null,
+                isAuth: false
+            };
+        }
+
         default:
             return state; 
     }
 };
 
 export const setUserData = (userData) => ({type: SET_USER_DATA, userData});
+export const removeUserData = () => ({type: REMOVE_USER_DATA});
 
 export const authMeThunkCreator = () => dispatch => {
     authAPI.authMe().then(response => {
@@ -36,7 +47,15 @@ export const authMeThunkCreator = () => dispatch => {
 export const authLoginThunkCreator = formData => dispatch => {
     authAPI.authLogin(formData).then(response => {
         if (response.resultCode === 0) {
-            dispatch(setUserData(response.data));
+            dispatch(authMeThunkCreator());
+        }
+    });
+}
+
+export const authLogout = () => dispatch => {
+    authAPI.authLogout().then(response => {
+        if (response.resultCode === 0) {
+            dispatch(removeUserData());
         }
     });
 }
