@@ -7,6 +7,7 @@ import profileReducer from './profile-reducer'
 import sidebarReducer from './sidebar-reducer'
 import usersReducer from './users-reducer'
 import authReducer from "./auth-reducer";
+import appReducer from "./app-reducer";
 
 import {RESET_FORM} from './actions/actions'
 
@@ -16,6 +17,7 @@ const reducers = combineReducers({
     profile: profileReducer,
     sidebar: sidebarReducer,
     users: usersReducer,
+    app: appReducer,
     form: formReducer.plugin({
         addMessage: (state, action) => {
             switch(action.type) {

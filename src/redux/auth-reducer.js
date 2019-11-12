@@ -39,7 +39,7 @@ export const setUserData = (userData) => ({type: SET_USER_DATA, userData});
 export const removeUserData = () => ({type: REMOVE_USER_DATA});
 
 export const authMeThunkCreator = () => dispatch => {
-    authAPI.authMe().then(response => {
+    return authAPI.authMe().then(response => {
         if (response.resultCode === 0) {
             dispatch(setUserData(response.data));
         }
