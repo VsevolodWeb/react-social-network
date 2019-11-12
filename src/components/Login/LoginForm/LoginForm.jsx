@@ -17,6 +17,9 @@ const LoginForm = props => {
                             <Field component="input" name="rememberMe" type="checkbox" id="remember-me" /> Remember me
                         </label>
                     </div>
+                    {props.error ? <div className="formGroup">
+                        <span className="formGroup__errorText">{props.error}</span>
+                    </div> : ""}
                     <div className="formGroup">
                         <button className="button">Login</button>
                     </div>
