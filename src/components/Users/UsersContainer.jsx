@@ -3,9 +3,10 @@ import {compose} from 'redux';
 import {connect} from 'react-redux';
 
 import Users from './Users';
-import {setCurrentPage, followThunkCreator, unfollowThunkCreator,
-        setIsFollowing, getUsersThunkCreator} from '../../redux/users-reducer'
+import { setCurrentPage, followThunkCreator, unfollowThunkCreator,
+        setIsFollowing, getUsersThunkCreator } from '../../redux/users-reducer'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
+import { getUsers } from '../../redux/users-selectors';
 
 class UsersContainer extends React.Component {
     componentDidMount() {
@@ -25,7 +26,7 @@ class UsersContainer extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        data: state.users
+        data: getUsers(state)
     }
 }
 
