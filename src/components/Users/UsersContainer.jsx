@@ -24,11 +24,9 @@ class UsersContainer extends React.Component {
     };
 }
 
-const mapStateToProps = (state) => {
-    return {
-        data: getUsers(state)
-    }
-}
+const mapStateToProps = (state) => ({
+    data: getUsers(state)
+});
 
 
 export default compose(
