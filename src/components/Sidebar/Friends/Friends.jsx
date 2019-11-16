@@ -11,6 +11,6 @@ const Friends = (props) => {
             </ul>
         </div>
     )
-}
+};
 
 export default Friends;

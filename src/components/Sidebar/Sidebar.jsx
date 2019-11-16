@@ -8,7 +8,7 @@ const Sidebar = (props) => {
                 .filter((item) => item.followed)
                 .map((item) => {
                     return <li key={item.id}>
-                                <span className={s.image}></span>
+                                <span className={s.image} />
                                 <div className={s.name}>{item.name}</div>
                             </li>
     });
@@ -19,6 +19,6 @@ const Sidebar = (props) => {
             {friends.length ? <Friends data={friends} />: ''}
         </aside>
     )
-}
+};
 
 export default Sidebar;

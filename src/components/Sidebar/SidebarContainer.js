@@ -7,6 +7,6 @@ const mapStateToProps = (state) => {
         data: state.sidebar,
         users: state.users.list
     }
-}
+};
 
 export default connect(mapStateToProps)(Sidebar);
