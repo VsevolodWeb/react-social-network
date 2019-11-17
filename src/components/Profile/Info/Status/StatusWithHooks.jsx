@@ -27,8 +27,8 @@ const StatusWithHooks = props => {
             {props.editingAbility ?
                 editMode ?
                     <input type="text" onBlur={toggleEditMode} onChange={statusChange} value={status} autoFocus />
-                    : <span className={`${s.status} ${s.status_editingAbility}`} onDoubleClick={toggleEditMode}>{status}</span>
-                : <span className={s.status}>{status}</span>
+                    : <span className={`${s.status} ${s.status_editingAbility}`} onDoubleClick={toggleEditMode}>{props.status}</span>
+                : <span className={s.status}>{props.status}</span>
             }
         </div>
     )
