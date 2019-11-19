@@ -10,7 +10,7 @@ const Posts = (props) => {
     const postsFormSubmit = formData => {
         props.addPost(formData);
         props.resetPost();
-    }
+    };
 
     return (
         <div className={s.posts}>
@@ -21,6 +21,6 @@ const Posts = (props) => {
             <PostsForm onSubmit={postsFormSubmit} />
         </div>
     )
-}
+};
 
 export default Posts;

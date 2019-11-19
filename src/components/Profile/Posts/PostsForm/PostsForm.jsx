@@ -16,8 +16,8 @@ const PostsForm = props => {
             </div>
         </form>
     )
-}
+};
 
 export default reduxForm({
     form: 'addPost'
-})(PostsForm);;
+})(PostsForm);

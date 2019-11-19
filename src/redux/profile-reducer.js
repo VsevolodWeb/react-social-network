@@ -14,7 +14,7 @@ const initialState = {
     userProfile: null,
     userStatus: "",
     isFetching: false
-}
+};
 
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -33,13 +33,13 @@ const profileReducer = (state = initialState, action) => {
         }
 
         case SET_USER_PROFILE:
-            return {...state, userProfile: action.userProfile}
+            return {...state, userProfile: action.userProfile};
 
         case SET_USER_STATUS:
-            return {...state, userStatus: action.userStatus}
+            return {...state, userStatus: action.userStatus};
 
         case SET_IS_FETCHING:
-            return {...state, isFetching: action.isFetching}
+            return {...state, isFetching: action.isFetching};
 
         default:
             return state;
@@ -58,7 +58,7 @@ export const getUserProfileThunkCreator = userId => dispatch => {
         dispatch(setUserProfile(response));
         dispatch(setIsFetching(false));
     });
-}
+};
 
 export const getUserStatusThunkCreator = userId => dispatch => {
     dispatch(setIsFetching(true));
@@ -66,7 +66,7 @@ export const getUserStatusThunkCreator = userId => dispatch => {
         dispatch(setUserStatus(response));
         dispatch(setIsFetching(false));
     });
-}
+};
 
 export const updateUserStatusThunkCreator = status => dispatch => {
     profileAPI.updateUserStatus(status).then(response => {
@@ -74,6 +74,6 @@ export const updateUserStatusThunkCreator = status => dispatch => {
             dispatch(setUserStatus(response));
         }
     });
-}
+};
 
 export default profileReducer;

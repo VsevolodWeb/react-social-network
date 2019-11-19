@@ -29,7 +29,7 @@ const mapStateToProps = (state) => {
         data: state.profile,
         userId: state.auth.id
     }
-}
+};
 
 
 export default compose(
