@@ -8,7 +8,7 @@ const Posts = (props) => {
     let postsElements = props.data.map(post => <Post key={post.id} likeCount={post.likeCount} name={post.name} text={post.text} />);
 
     const postsFormSubmit = formData => {
-        props.addPost(formData);
+        props.addPost(formData.postMessage);
         props.resetPost();
     };
 
