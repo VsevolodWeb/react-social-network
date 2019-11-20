@@ -1,10 +1,10 @@
 import { profileAPI } from './../api/api';
 import {RESET_FORM} from './actions/actions'
 
-const ADD_POST = 'ADD-POST';
-const SET_USER_PROFILE = 'SET-USER-PROFILE';
-const SET_USER_STATUS = 'SET-USER-STATUS';
-const SET_IS_FETCHING = 'SET-IS-FETCHING';
+const ADD_POST = '/profile/ADD_POST';
+const SET_USER_PROFILE = 'profile/SET_USER_PROFILE';
+const SET_USER_STATUS = 'profile/SET_USER_STATUS';
+const SET_IS_FETCHING = 'profile/SET_IS_FETCHING';
 
 export const initialState = {
     postsData: [
@@ -19,7 +19,6 @@ export const initialState = {
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_POST: {
-            console.log(action)
             return {
                 ...state,
                 postsData: [...state.postsData, {
@@ -53,28 +52,30 @@ export const setUserStatus = userStatus => ({type: SET_USER_STATUS, userStatus})
 export const setIsFetching = isFetching => ({type: SET_IS_FETCHING, isFetching});
 export const resetPost = () => ({type: RESET_FORM});
 
-export const getUserProfileThunkCreator = userId => dispatch => {
+export const getUserProfileThunkCreator = userId => async dispatch => {
     dispatch(setIsFetching(true));
-    profileAPI.getUserProfile(userId).then(response => {
-        dispatch(setUserProfile(response));
-        dispatch(setIsFetching(false));
-    });
+
+    const response = await profileAPI.getUserProfile(userId);
+
+    dispatch(setUserProfile(response));
+    dispatch(setIsFetching(false));
 };
 
-export const getUserStatusThunkCreator = userId => dispatch => {
+export const getUserStatusThunkCreator = userId => async dispatch => {
     dispatch(setIsFetching(true));
-    profileAPI.getUserStatus(userId).then(response => {
+
+    const response = await profileAPI.getUserStatus(userId);
+
+    dispatch(setUserStatus(response));
+    dispatch(setIsFetching(false));
+};
+
+export const updateUserStatusThunkCreator = status => async dispatch => {
+    const response = await profileAPI.updateUserStatus(status);
+
+    if(response.errorCode === 0) {
         dispatch(setUserStatus(response));
-        dispatch(setIsFetching(false));
-    });
-};
-
-export const updateUserStatusThunkCreator = status => dispatch => {
-    profileAPI.updateUserStatus(status).then(response => {
-        if(response.errorCode === 0) {
-            dispatch(setUserStatus(response));
-        }
-    });
+    }
 };
 
 export default profileReducer;

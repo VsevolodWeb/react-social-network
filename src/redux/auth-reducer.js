@@ -2,15 +2,15 @@ import {stopSubmit} from 'redux-form';
 
 import { authAPI } from './../api/api';
 
-const SET_USER_DATA = 'SET-USER-DATA';
-const REMOVE_USER_DATA = 'REMOVE-USER-DATA';
+const SET_USER_DATA = 'auth/SET_USER_DATA';
+const REMOVE_USER_DATA = 'auth/REMOVE_USER_DATA';
 
 const initialState = {
     id: null,
     email: null,
     login: null,
     isAuth: false
-}
+};
 
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -38,30 +38,30 @@ const authReducer = (state = initialState, action) => {
 export const setUserData = (userData) => ({type: SET_USER_DATA, userData});
 export const removeUserData = () => ({type: REMOVE_USER_DATA});
 
-export const authMeThunkCreator = () => dispatch => {
-    return authAPI.authMe().then(response => {
-        if (response.resultCode === 0) {
-            dispatch(setUserData(response.data));
-        }
-    });
-}
+export const authMeThunkCreator = () => async dispatch => {
+    const response = await authAPI.authMe();
 
-export const authLoginThunkCreator = formData => dispatch => {
-    authAPI.authLogin(formData).then(response => {
-        if (response.resultCode === 0) {
-            dispatch(authMeThunkCreator());
-        } else {
-            dispatch(stopSubmit("login", {_error: response.messages[0]}));
-        }
-    });
-}
+    if (response.resultCode === 0) {
+        dispatch(setUserData(response.data));
+    }
+};
 
-export const authLogout = () => dispatch => {
-    authAPI.authLogout().then(response => {
-        if (response.resultCode === 0) {
-            dispatch(removeUserData());
-        }
-    });
-}
+export const authLoginThunkCreator = formData => async dispatch => {
+    const response = await authAPI.authLogin(formData);
+
+    if (response.resultCode === 0) {
+        dispatch(authMeThunkCreator());
+    } else {
+        dispatch(stopSubmit("login", {_error: response.messages[0]}));
+    }
+};
+
+export const authLogout = () => async dispatch => {
+    const response = await authAPI.authLogout();
+
+    if (response.resultCode === 0) {
+        dispatch(removeUserData());
+    }
+};
 
 export default authReducer;

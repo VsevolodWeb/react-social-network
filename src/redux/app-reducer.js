@@ -1,13 +1,13 @@
 import { authMeThunkCreator } from "./auth-reducer";
 
-const SET_INITIALIZATION = 'SET-INITIALIZATION';
+const SET_INITIALIZATION = 'app/SET_INITIALIZATION';
 
 const initialState = {
     initialization: false
-}
+};
 
 const appReducer = (state = initialState, action) => {
-    switch (action.type) {
+    switch(action.type) {
         case SET_INITIALIZATION:
             return {
                 ...state,
@@ -15,7 +15,7 @@ const appReducer = (state = initialState, action) => {
             };
 
         default:
-            return state; 
+            return state;
     }
 };
 
@@ -27,6 +27,6 @@ export const initializeThunkCreator = () => dispatch => {
     Promise.all([promiseAuthMe]).then(() => {
         dispatch(setUserData());
     });
-}
+};
 
 export default appReducer;

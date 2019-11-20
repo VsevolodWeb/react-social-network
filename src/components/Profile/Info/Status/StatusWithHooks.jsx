@@ -3,8 +3,8 @@ import s from './Status.module.css'
 
 const StatusWithHooks = props => {
 
-    const [editMode, setEditMode] = useState(false);
-    const [status, setStatus] = useState(props.status);
+    let [editMode, setEditMode] = useState(false);
+    let [status, setStatus] = useState(props.status);
 
     useEffect(() => {
         setStatus(props.status);
@@ -16,11 +16,11 @@ const StatusWithHooks = props => {
         if(props.status !== status) {
             props.updateUserStatus(status);
         }
-    }
+    };
 
     const statusChange = e => {
         setStatus(e.currentTarget.value);
-    }
+    };
 
     return (
         <div className={s.container}>

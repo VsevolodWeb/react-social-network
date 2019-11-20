@@ -1,6 +1,6 @@
 import {RESET_FORM} from './actions/actions'
 
-const ADD_MESSAGE = 'ADD-MESSAGE';
+const ADD_MESSAGE = 'dialogs/ADD_MESSAGE';
 
 const initialState = {
     dialogsData: [
@@ -22,7 +22,7 @@ const initialState = {
             ]
         }
     ]
-}
+};
 
 const dialogsReducer = (state = initialState, action) => {
     switch (action.type) {

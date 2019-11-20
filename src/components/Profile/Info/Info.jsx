@@ -16,6 +16,6 @@ const Info = (props) => {
             </div>
         </div>
     )
-}
+};
 
 export default Info;

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route} from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { initializeThunkCreator } from './redux/app-reducer';
 import './App.css';
@@ -43,6 +43,6 @@ class App extends React.Component {
 
 const mapStateToProps = state => ({
   initialized: state.app.initialization
-})
+});
 
 export default connect(mapStateToProps, {initialize: initializeThunkCreator})(App);

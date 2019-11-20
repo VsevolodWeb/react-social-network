@@ -1,1 +1,1 @@
-export const RESET_FORM = 'RESET-FORM';
+export const RESET_FORM = 'common/RESET_FORM';

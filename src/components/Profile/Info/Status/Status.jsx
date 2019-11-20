@@ -5,25 +5,25 @@ class Status extends React.Component {
     state = {
         editMode: false,
         status: this.props.status
-    }
+    };
 
     toggleEditMode = () => {
         this.setState({
             editMode: !this.state.editMode
-        })
+        });
 
         if(this.props.status !== this.state.status) {
             this.props.updateUserStatus(this.state.status);
         }
-    }
+    };
 
     statusChange = e => {
         this.setState({
             status: e.currentTarget.value
         })
-    }
+    };
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps, prevState) {
         if(prevProps.status !== this.props.status) {
             this.setState({
                 status: this.props.status
