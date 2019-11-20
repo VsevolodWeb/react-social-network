@@ -1,13 +1,15 @@
-import profileReducer, { addPost, initialState } from "./profile-reducer";
+import profileReducer, { addPost, initialState } from './profile-reducer';
+
+const messagePost = 'text from test';
+const newStateAfterAddPost = profileReducer(initialState, addPost(messagePost));
+
+const getPostDataLength = state => state.postsData.length;
 
 
 it('the number of posts should increase', () => {
-    const messagePost = "text from test";
-    const action = addPost(messagePost);
-    const newState = profileReducer(initialState, action);
-    const getPostDataLength = state => state.postsData.length;
-
-    expect(getPostDataLength(newState)).toBe(getPostDataLength(initialState) + 1);
-    expect(newState.postsData[getPostDataLength(newState) - 1].text).toBe(messagePost);
+    expect(getPostDataLength(newStateAfterAddPost)).toBe(getPostDataLength(initialState) + 1);
 });
-  
+
+it('text message should match with added post', () => {
+    expect(newStateAfterAddPost.postsData[getPostDataLength(newStateAfterAddPost) - 1].text).toBe(messagePost);
+});
