@@ -33,7 +33,7 @@ class Status extends React.Component {
 
     render() {
         return (
-            <div className={s.container}>
+            <div>
                 {this.props.editingAbility ?
                     this.state.editMode ?
                         <input type="text" onBlur={this.toggleEditMode} onChange={this.statusChange} value={this.state.status} autoFocus />

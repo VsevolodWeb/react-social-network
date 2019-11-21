@@ -2,7 +2,7 @@ import React from 'react';
 import s from './Friends.module.css'
 
 
-const Friends = (props) => {
+const Friends = props => {
     return (
         <div>
             <h3 className={s.title}>My Friends</h3>

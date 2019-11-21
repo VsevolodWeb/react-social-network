@@ -3,11 +3,11 @@ import {NavLink} from 'react-router-dom';
 import logo from './logo.svg';
 import s from './Header.module.css'
 
-const Header = (props) => {
+const Header = props => {
     const logoutLink = e => {
         e.preventDefault();
         props.authLogout();
-    }
+    };
 
     return (
         <header className={s.header}>
@@ -24,6 +24,6 @@ const Header = (props) => {
             </div>
         </header>
     )
-}
+};
 
 export default Header

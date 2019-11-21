@@ -1,0 +1,27 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    flex-flow: wrap;
+    list-style-type: none;
+    margin-top: 50px;
+    padding: 0;
+}
+
+.pagination__item {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.pagination__item_active {
+    font-weight: bold;
+}
+
+.pagination__button {
+    padding: 0;
+    background-color: transparent;
+    border-width: 0;
+    color: #000;
+    font-weight: inherit;
+    cursor: pointer;
+    font-size: 14px;
+}

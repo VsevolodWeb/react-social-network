@@ -23,7 +23,7 @@ const StatusWithHooks = props => {
     };
 
     return (
-        <div className={s.container}>
+        <div>
             {props.editingAbility ?
                 editMode ?
                     <input type="text" onBlur={toggleEditMode} onChange={statusChange} value={status} autoFocus />

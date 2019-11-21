@@ -5,8 +5,8 @@ import profile from './banner.jpg';
 
 const Banner = () => {
     return (
-        <div className={s.banner} style={{ backgroundImage: `url(${profile})` }}></div>
+        <div className={s.banner} style={{ backgroundImage: `url(${profile})` }} />
     )
-}
+};
 
 export default Banner;

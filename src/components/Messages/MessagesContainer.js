@@ -10,8 +10,7 @@ const mapStateToProps = state => {
     return {
         dialogs: state.dialogs
     }
-}
-
+};
 
 export default compose(
     connect(mapStateToProps, {addMessage, resetMessage}), 

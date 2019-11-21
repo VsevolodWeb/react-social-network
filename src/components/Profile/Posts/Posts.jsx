@@ -4,7 +4,7 @@ import Post from './Post/Post';
 import s from './Posts.module.css'
 import PostsForm from './PostsForm/PostsForm';
 
-const Posts = (props) => {
+const Posts = props => {
     let postsElements = props.data.map(post => <Post key={post.id} likeCount={post.likeCount} name={post.name} text={post.text} />);
 
     const postsFormSubmit = formData => {

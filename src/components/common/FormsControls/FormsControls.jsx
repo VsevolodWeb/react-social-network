@@ -10,7 +10,7 @@ const FormControl = props => {
             {hasError && <span className="formGroup__errorText">{props.meta.error}</span>}
         </div>
     )
-}
+};
 
 export const Textarea = ({input, meta, ...props}) => {
     return (
@@ -18,7 +18,7 @@ export const Textarea = ({input, meta, ...props}) => {
             <textarea className={s.textElement} rows="4" {...input} {...props}/>
         </FormControl>
     )
-}
+};
 
 export const Input = ({input, meta, ...props}) => {
     return (
@@ -26,4 +26,4 @@ export const Input = ({input, meta, ...props}) => {
             <input className={s.textElement} autoComplete="current-password" {...input} {...props}/>
         </FormControl>
     )
-}
+};

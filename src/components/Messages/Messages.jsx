@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route} from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import s from './Messages.module.css';
 import Dialog from './Dialog/Dialog'
@@ -30,6 +30,6 @@ const Messages = (props) => {
             </div>
         </>
     )
-}
+};
 
 export default Messages;

@@ -2,7 +2,7 @@ import React from 'react';
 import s from './Post.module.css'
 import image from '../../Info/avatar.jpg'
 
-const Post = (props) => {
+const Post = props => {
     return (
         <li className={s.item}>
             <img src={image} alt="avatar" className={s.avatar}/>
@@ -18,6 +18,6 @@ const Post = (props) => {
             </div>
         </li>
     )
-}
+};
 
 export default Post;

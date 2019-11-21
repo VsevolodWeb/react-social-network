@@ -5,7 +5,7 @@ import Banner from './Banner/Banner';
 import Info from './Info/Info';
 import Posts from './Posts/Posts';
 
-const Profile = (props) => {
+const Profile = props => {
     return (
         <>
             <h1 className="title">Profile</h1>

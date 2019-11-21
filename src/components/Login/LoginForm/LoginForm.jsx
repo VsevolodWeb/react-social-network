@@ -27,8 +27,8 @@ const LoginForm = props => {
             </form>
         </div>
     )
-}
+};
 
 export default reduxForm({
-        form: 'login'
-    })(LoginForm);
+    form: 'login'
+})(LoginForm);
