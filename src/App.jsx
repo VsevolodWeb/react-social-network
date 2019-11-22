@@ -1,7 +1,5 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { initializeThunkCreator } from './redux/app-reducer';
 import './App.css';
 
 import HeaderContainer from './components/Header/HeaderContainer';
@@ -14,7 +12,7 @@ import Preloader from './components/common/Preloader/Preloader';
 
 class App extends React.Component {
   componentDidMount() {
-      this.props.initialize();
+    this.props.initialize();
   }
 
   render() {
@@ -41,8 +39,4 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  initialized: state.app.initialization
-});
-
-export default connect(mapStateToProps, {initialize: initializeThunkCreator})(App);
+export default App;
