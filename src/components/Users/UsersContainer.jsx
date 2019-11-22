@@ -3,7 +3,7 @@ import {compose} from 'redux';
 import {connect} from 'react-redux';
 
 import Users from './Users';
-import Pagination from "./Pagination/Pagination";
+import Pagination from "../common/Pagination/Pagination";
 import { setCurrentPage, followThunkCreator, unfollowThunkCreator,
         setIsFollowing, getUsersThunkCreator } from '../../redux/users-reducer'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
@@ -22,7 +22,7 @@ class UsersContainer extends React.Component {
     
     render() {
         return <>
-            <Users data={this.props.data} followUser={this.props.follow} unfollowUser={this.props.unfollow} isFollowing={this.props.data.isFollowing} />
+            <Users list={this.props.data.list} followUser={this.props.follow} unfollowUser={this.props.unfollow} isFollowing={this.props.data.isFollowing} isFetching={this.props.data.isFetching} />
             <Pagination setCurrentPage={this.setCurrentPage} currentPage={this.props.data.currentPage} totalUsersCount={this.props.data.totalUsersCount} pageSize={this.props.data.pageSize} />
         </>
     };
