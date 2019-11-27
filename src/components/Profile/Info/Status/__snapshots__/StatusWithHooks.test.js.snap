@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Status component status from props should be in the state 1`] = `
+<div>
+  <span
+    className="status"
+  >
+    test status
+  </span>
+</div>
+`;
