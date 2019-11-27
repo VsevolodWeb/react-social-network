@@ -1,16 +1,16 @@
 import React from "react";
-import { create, act } from "react-test-renderer"
+import { create } from "react-test-renderer"
 import StatusWithHooks from "./StatusWithHooks";
 
 
+
 describe("Status component", () => {
-    let root;
+    const component = create(<StatusWithHooks status="test status"/>);
+    it("status should be created successfully", () => {
+        expect(component.toJSON()).toMatchSnapshot();
+    })
 
-    test("status from props should be in the state", () => {
-       act(() => {
-           root = create(<StatusWithHooks status="test status"/>)
-       });
-
-       expect(root.toJSON()).toMatchSnapshot();
+    it("test", () => {
+        expect(component.toJSON()).toMatchSnapshot();
     })
 });
