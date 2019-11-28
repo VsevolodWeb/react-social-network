@@ -3,7 +3,8 @@
 exports[`Status component status should be created successfully 1`] = `
 <div>
   <span
-    className="status"
+    className="status status_editingAbility"
+    onDoubleClick={[Function]}
   >
     test status
   </span>
