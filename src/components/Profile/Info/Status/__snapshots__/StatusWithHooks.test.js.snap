@@ -10,13 +10,3 @@ exports[`Status component status should be created successfully 1`] = `
   </span>
 </div>
 `;
-
-exports[`Status component test 1`] = `
-<div>
-  <span
-    className="status"
-  >
-    test status
-  </span>
-</div>
-`;
