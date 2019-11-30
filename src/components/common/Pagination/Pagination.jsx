@@ -5,16 +5,22 @@ const Pagination = props => {
     let pagesCount =  Math.ceil(props.totalCount / props.pageSize);
     let pagesCountArray = [];
     const portion = 10;
+    const halfPortion = portion / 2;
 
     let startCount = 1;
     let endCount = portion;
-    if(props.currentPage > portion / 2 && props.currentPage < pagesCount - 5) {
-        startCount = props.currentPage - portion / 2;
-        endCount = props.currentPage + portion / 2;
+
+    if(!pagesCount) {
+        return null;
     }
 
-    
-   
+    if(props.currentPage > halfPortion && props.currentPage < pagesCount - halfPortion) {
+        startCount = props.currentPage - halfPortion;
+        endCount = props.currentPage + halfPortion;
+    } else if(props.currentPage >= pagesCount - halfPortion) {
+        startCount = pagesCount - portion;
+        endCount = pagesCount;
+    }
 
     for(let i = startCount; i <= endCount; i++) {
         pagesCountArray.push(
@@ -22,13 +28,33 @@ const Pagination = props => {
                 <button onClick={() => props.setCurrentPage(i)} className={s.pagination__button}>{i}</button>
             </li>);
     }
-    return <>
-            <button>Prev</button>
+
+    const changePage = direction => {
+        let currentPageId = props.currentPage;
+
+        switch (direction) {
+            case 'prev':
+                currentPageId -= 1;
+                break;
+            case 'next':
+                currentPageId += 1;
+                break;
+            default:
+                return;
+        }
+
+        props.setCurrentPage(currentPageId);
+    }
+
+    return (
+        <section className={s.wrapper}>
+            {props.currentPage !== 1 ? <button onClick={() => {changePage('prev')}}>Prev</button> : null}
             <ul className={s.pagination}>
                 {pagesCountArray}
             </ul>
-            <button>Next</button>
-        </>
+            {props.currentPage !== pagesCount ? <button onClick={() => {changePage('next')}}>Next</button> : null}
+        </section>
+    );
 };
 
 export default Pagination;
