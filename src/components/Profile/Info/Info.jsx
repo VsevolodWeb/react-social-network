@@ -9,13 +9,18 @@ const Info = props => {
         imgSource = props.photos.large;
     } catch {}
 
+    let editingAbility = props.loginUserId === props.userId;
+
 
     return (
         <div className={s.info}>
-            <div className={s.avatar} style={{ backgroundImage: `url(${imgSource || avatar})` }} />
+            <div className={s.avatarWrapper}>
+                <div className={s.avatar} style={{ backgroundImage: `url(${imgSource || avatar})` }} />
+                {editingAbility ? <input className="button" type="file" /> : null}
+            </div>
             <div>
                 <h1 className={s.name}>{props.fullName}</h1>
-                {props.userStatus ? <StatusWithHooks status={props.userStatus} editingAbility={props.loginUserId === props.userId} updateUserStatus={props.updateUserStatus} /> : null}
+                {props.userStatus ? <StatusWithHooks status={props.userStatus} editingAbility={editingAbility} updateUserStatus={props.updateUserStatus} /> : null}
             </div>
             <div className={s.text}>
                 {props.aboutMe ? <><b>About me:</b> {props.aboutMe}</>: ""}

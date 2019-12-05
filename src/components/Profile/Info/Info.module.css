@@ -13,6 +13,11 @@
     background-position: center;
 }
 
+.avatarWrapper {
+    display: grid;
+    grid-gap: 20px;
+}
+
 .name {
     margin-top: 0;
 }

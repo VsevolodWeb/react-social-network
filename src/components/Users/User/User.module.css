@@ -12,6 +12,7 @@
     display: inline-block;
     margin-left: auto;
     margin-right: auto;
+    background-size: cover;
 }
 
 .name {

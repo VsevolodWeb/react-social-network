@@ -29,6 +29,9 @@ export const profileAPI = {
     },
     updateUserStatus(status) {
         return instance.put('profile/status', {status}).then(response => response.data);
+    },
+    updateUserPhoto(photo) {
+        return instance.put('profile/photo', {photo}).then(response => response.data);
     }
 };
 
