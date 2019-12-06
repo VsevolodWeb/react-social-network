@@ -11,7 +11,7 @@ const Profile = props => {
             <h1 className="title">Profile</h1>
             <div className={s.profile}>
                 <Banner />
-                <Info {...props.data.userProfile} userStatus={props.data.userStatus} updateUserStatus={props.updateUserStatus} loginUserId={props.userId} />
+                <Info {...props.data.userProfile} userStatus={props.data.userStatus} updateUserStatus={props.updateUserStatus} loginUserId={props.userId} updateUserPhoto={props.updateUserPhoto} />
                 <Posts data={props.data.postsData} addPost={props.addPost} resetPost={props.resetPost} />
             </div>
         </>

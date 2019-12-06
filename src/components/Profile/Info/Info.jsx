@@ -11,12 +11,16 @@ const Info = props => {
 
     let editingAbility = props.loginUserId === props.userId;
 
+    const onPhotoSelected = e => {
+        props.updateUserPhoto(e.target.files[0]);
+    };
+
 
     return (
         <div className={s.info}>
             <div className={s.avatarWrapper}>
                 <div className={s.avatar} style={{ backgroundImage: `url(${imgSource || avatar})` }} />
-                {editingAbility ? <input className="button" type="file" /> : null}
+                {editingAbility ? <input className="button" type="file" onChange={onPhotoSelected} /> : null}
             </div>
             <div>
                 <h1 className={s.name}>{props.fullName}</h1>

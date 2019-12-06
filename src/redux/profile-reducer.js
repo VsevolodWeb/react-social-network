@@ -5,6 +5,7 @@ const ADD_POST = '/profile/ADD_POST';
 const SET_USER_PROFILE = 'profile/SET_USER_PROFILE';
 const SET_USER_STATUS = 'profile/SET_USER_STATUS';
 const SET_IS_FETCHING = 'profile/SET_IS_FETCHING';
+const SET_USER_PHOTO = 'profile/SET_USER_PHOTO';
 
 export const initialState = {
     postsData: [
@@ -41,6 +42,9 @@ const profileReducer = (state = initialState, action) => {
         case SET_IS_FETCHING:
             return {...state, isFetching: action.isFetching};
 
+        case SET_USER_PHOTO:
+            return {...state, userProfile: {...state.userProfile, photos: {...action.photos}}};
+
         default:
             return state;
     }
@@ -51,6 +55,7 @@ export const setUserProfile = userProfile => ({type: SET_USER_PROFILE, userProfi
 export const setUserStatus = userStatus => ({type: SET_USER_STATUS, userStatus}); 
 export const setIsFetching = isFetching => ({type: SET_IS_FETCHING, isFetching});
 export const resetPost = () => ({type: RESET_FORM});
+export const setUserPhoto = photos => ({type: SET_USER_PHOTO, photos});
 
 export const getUserProfileThunkCreator = userId => async dispatch => {
     dispatch(setIsFetching(true));
@@ -75,6 +80,14 @@ export const updateUserStatusThunkCreator = status => async dispatch => {
 
     if(response.resultCode === 0) {
         dispatch(setUserStatus(status));
+    }
+};
+
+export const setUserPhotoThunkCreator = photo => async dispatch => {
+    const response = await profileAPI.updateUserPhoto(photo);
+
+    if(response.resultCode === 0) {
+        dispatch(setUserPhoto(response));
     }
 };
 

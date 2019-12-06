@@ -31,7 +31,8 @@ export const profileAPI = {
         return instance.put('profile/status', {status}).then(response => response.data);
     },
     updateUserPhoto(photo) {
-        return instance.put('profile/photo', {photo}).then(response => response.data);
+        const instanceDefaults = instance.defaults;
+        return axios.put(`${instanceDefaults.baseURL}profile/photo`, {photo}, {...instanceDefaults, headers: {...instanceDefaults.headers, 'Content-Type': 'multipart/form-data'}}).then(response => response.data);
     }
 };
 
