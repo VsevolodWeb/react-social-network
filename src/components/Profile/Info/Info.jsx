@@ -15,6 +15,9 @@ const Info = props => {
         props.updateUserPhoto(e.target.files[0]);
     };
 
+    // if(props.contacts) {
+    //     console.log(Object.values(props.contacts).includes(null))
+    // }
 
     return (
         <div className={s.info}>
@@ -27,7 +30,12 @@ const Info = props => {
                 {props.userStatus ? <StatusWithHooks status={props.userStatus} editingAbility={editingAbility} updateUserStatus={props.updateUserStatus} /> : null}
             </div>
             <div className={s.text}>
-                {props.aboutMe ? <><b>About me:</b> {props.aboutMe}</>: ""}
+                {props.lookingForAJob ? <div><b>Looking for job</b></div> : null}
+                {props.lookingForAJobDescription ? <div><b>My skills</b>: {props.lookingForAJobDescription}</div> : null}
+                {props.aboutMe ? <div><b>About me:</b> {props.aboutMe}</div> : null}
+                {props.contacts ? <div><b>Contacts:</b> <ul>{Object.keys(props.contacts).map((socialTitle, index) => {
+                                                            return props.contacts[index] ? <li>{socialTitle}: {props.contacts[index]}</li> : null
+                                                        })}</ul></div> : null}
             </div>
         </div>
     )

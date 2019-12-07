@@ -87,7 +87,7 @@ export const setUserPhotoThunkCreator = photo => async dispatch => {
     const response = await profileAPI.updateUserPhoto(photo);
 
     if(response.resultCode === 0) {
-        dispatch(setUserPhoto(response));
+        dispatch(setUserPhoto(response.data.photos));
     }
 };
 
