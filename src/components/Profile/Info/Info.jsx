@@ -1,23 +1,31 @@
-import React from 'react';
+import React, {useState} from 'react';
 import s from './Info.module.css'
 import avatar from './avatar.jpg';
 import StatusWithHooks from './Status/StatusWithHooks';
+import Data from './Data/Data';
+import DataForm from './DataForm/DataForm';
 
 const Info = props => {
     let imgSource = "";
+    let editingAbility = props.loginUserId === props.userId;
+    let [editModeProfile, setEditModeProfile] = useState(false);
+
     try {
         imgSource = props.photos.large;
     } catch {}
-
-    let editingAbility = props.loginUserId === props.userId;
 
     const onPhotoSelected = e => {
         props.updateUserPhoto(e.target.files[0]);
     };
 
-    // if(props.contacts) {
-    //     console.log(Object.values(props.contacts).includes(null))
-    // }
+    const dataFormSubmit = formData => {
+       //console.log(formData);
+       setEditModeProfile(false);
+    };
+
+    const changeEditModeProfile = () => {
+        setEditModeProfile(!editModeProfile);
+    }
 
     return (
         <div className={s.info}>
@@ -27,15 +35,19 @@ const Info = props => {
             </div>
             <div>
                 <h1 className={s.name}>{props.fullName}</h1>
-                {props.userStatus ? <StatusWithHooks status={props.userStatus} editingAbility={editingAbility} updateUserStatus={props.updateUserStatus} /> : null}
+                {props.userStatus ? <StatusWithHooks status={props.userStatus} editingAbility={editingAbility}
+                                                    updateUserStatus={props.updateUserStatus} /> : null}
             </div>
             <div className={s.text}>
-                {props.lookingForAJob ? <div><b>Looking for job</b></div> : null}
-                {props.lookingForAJobDescription ? <div><b>My skills</b>: {props.lookingForAJobDescription}</div> : null}
-                {props.aboutMe ? <div><b>About me:</b> {props.aboutMe}</div> : null}
-                {props.contacts ? <div><b>Contacts:</b> <ul>{Object.keys(props.contacts).map((socialTitle, index) => {
-                                                            return props.contacts[index] ? <li>{socialTitle}: {props.contacts[index]}</li> : null
-                                                        })}</ul></div> : null}
+                
+                {editModeProfile ?
+                    <DataForm onSubmit={dataFormSubmit} contacts={props.contacts} /> :
+                    <>
+                        <button className="button" onClick={changeEditModeProfile}>Edit</button>
+                        <Data aboutMe={props.aboutMe} contacts={props.contacts} lookingForAJob={props.lookingForAJob}
+                        lookingForAJobDescription={props.lookingForAJobDescription} />
+                    </>
+                }
             </div>
         </div>
     )

@@ -36,6 +36,11 @@ body {
 	grid-gap: 15px;
 }
 
+.formTitle {
+	margin-top: 20px;
+	font-weight: bold;
+}
+
 .formGroup {}
 
 .formGroup__errorText {
