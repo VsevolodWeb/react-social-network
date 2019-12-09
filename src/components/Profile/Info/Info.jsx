@@ -41,11 +41,12 @@ const Info = props => {
             <div className={s.text}>
                 
                 {editModeProfile ?
-                    <DataForm onSubmit={dataFormSubmit} contacts={props.contacts} /> :
+                    <DataForm onSubmit={dataFormSubmit} aboutMe={props.aboutMe} contacts={props.contacts} initialValues={{aboutMe: "asd"}}
+                            lookingForAJob={props.lookingForAJob} lookingForAJobDescription={props.lookingForAJobDescription}/> :
                     <>
                         <button className="button" onClick={changeEditModeProfile}>Edit</button>
                         <Data aboutMe={props.aboutMe} contacts={props.contacts} lookingForAJob={props.lookingForAJob}
-                        lookingForAJobDescription={props.lookingForAJobDescription} />
+                        l   ookingForAJobDescription={props.lookingForAJobDescription} />
                     </>
                 }
             </div>
