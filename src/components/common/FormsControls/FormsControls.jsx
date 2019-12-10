@@ -20,10 +20,13 @@ export const Textarea = ({input, meta, ...props}) => {
     )
 };
 
-export const Input = ({input, meta, ...props}) => {
+export const Input = ({input, meta, labelText, ...props}) => {
     return (
         <FormControl meta={meta}>
-            <input className={s.textElement} autoComplete="current-password" {...input} {...props}/>
+            <label className="label label_inline">
+                {labelText}
+                <input className={s.textElement} autoComplete="current-password" {...input} {...props}/>
+            </label>
         </FormControl>
     )
 };

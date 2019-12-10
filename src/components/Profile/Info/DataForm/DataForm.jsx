@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {reduxForm, Field} from 'redux-form';
 
-import { Input, Textarea } from '../../../common/FormsControls/FormsControls';
+import { Input } from '../../../common/FormsControls/FormsControls';
 
 const DataForm = props => {
     let contactsFields = [];
@@ -15,7 +15,7 @@ const DataForm = props => {
     return <form onSubmit={props.handleSubmit}>
                 <div className="form">
                     <div className="formTitle">General info:</div>
-                    <Field component={Input} name="looking_for_job" placeholder="Looking for job" />
+                    <Field component={Input} name="looking_for_job" type="checkbox" labelText="Looking for job" />
                     <Field component={Input} name="my_skills" placeholder="My skills" value={props.lookingForJobDescription} />
                     <Field component={Input} name="about_me" placeholder="About me" value={props.aboutMe} />
                     <div className="formTitle">Contacts:</div>
@@ -28,7 +28,7 @@ const DataForm = props => {
 }
 
 export default reduxForm({
-    form: 'profile',
+    form: 'edit-profile',
     initialValues: {
         looking_for_job: this
     },

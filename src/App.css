@@ -75,3 +75,10 @@ body {
 [disabled] {
 	pointer-events: none;
 }
+
+.label_inline {
+	display: flex;
+	align-items: center;
+	font-size: 12px;
+	white-space: nowrap;
+}

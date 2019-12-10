@@ -91,4 +91,13 @@ export const setUserPhotoThunkCreator = photo => async dispatch => {
     }
 };
 
+export const saveUserProfileThunkCreator = userId => async dispatch => {
+    dispatch(setIsFetching(true));
+
+    const response = await profileAPI.saveUserProfile(userId);
+
+    dispatch(setUserProfile(response));
+    dispatch(setIsFetching(false));
+};
+
 export default profileReducer;

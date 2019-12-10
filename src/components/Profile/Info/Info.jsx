@@ -19,8 +19,8 @@ const Info = props => {
     };
 
     const dataFormSubmit = formData => {
-       //console.log(formData);
-       setEditModeProfile(false);
+        props.saveUserProfile(formData);
+        setEditModeProfile(false);
     };
 
     const changeEditModeProfile = () => {
@@ -39,14 +39,13 @@ const Info = props => {
                                                     updateUserStatus={props.updateUserStatus} /> : null}
             </div>
             <div className={s.text}>
-                
                 {editModeProfile ?
                     <DataForm onSubmit={dataFormSubmit} aboutMe={props.aboutMe} contacts={props.contacts} initialValues={{aboutMe: "asd"}}
                             lookingForAJob={props.lookingForAJob} lookingForAJobDescription={props.lookingForAJobDescription}/> :
                     <>
                         <button className="button" onClick={changeEditModeProfile}>Edit</button>
                         <Data aboutMe={props.aboutMe} contacts={props.contacts} lookingForAJob={props.lookingForAJob}
-                        l   ookingForAJobDescription={props.lookingForAJobDescription} />
+                            lookingForAJobDescription={props.lookingForAJobDescription} />
                     </>
                 }
             </div>
