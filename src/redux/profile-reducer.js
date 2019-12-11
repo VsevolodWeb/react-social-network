@@ -91,12 +91,13 @@ export const setUserPhotoThunkCreator = photo => async dispatch => {
     }
 };
 
-export const saveUserProfileThunkCreator = userId => async dispatch => {
+export const saveUserProfileThunkCreator = userInfo => async (dispatch, getState) => {
     dispatch(setIsFetching(true));
+    const userId = getState().profile.userProfile.id
 
-    const response = await profileAPI.saveUserProfile(userId);
+    await profileAPI.saveUserProfile(userInfo);
 
-    dispatch(setUserProfile(response));
+    dispatch(setUserProfile(userId));
     dispatch(setIsFetching(false));
 };
 

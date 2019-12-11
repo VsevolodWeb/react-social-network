@@ -5,19 +5,19 @@ import { Input } from '../../../common/FormsControls/FormsControls';
 
 const DataForm = props => {
     let contactsFields = [];
-
     if(props.contacts) {
         contactsFields.push(Object.keys(props.contacts)
                         .map((value, index) => <Field key={index} component={Input}
-                            name={value} placeholder={value.charAt(0).toUpperCase() + value.substring(1)} value={props.contacts[index]} />));
+                            name={"contacts." + value} placeholder={value.charAt(0).toUpperCase() + value.substring(1)} value={props.contacts[index]} />));
     }
 
     return <form onSubmit={props.handleSubmit}>
                 <div className="form">
                     <div className="formTitle">General info:</div>
-                    <Field component={Input} name="looking_for_job" type="checkbox" labelText="Looking for job" />
-                    <Field component={Input} name="my_skills" placeholder="My skills" value={props.lookingForJobDescription} />
-                    <Field component={Input} name="about_me" placeholder="About me" value={props.aboutMe} />
+                    <Field component={Input} name="fullName" type="text" placeholder="Full name" />
+                    <Field component={Input} name="lookingForAJob" type="checkbox" labelText="Looking for job" />
+                    <Field component={Input} name="lookingForAJobDescription" placeholder="My skills" value={props.lookingForJobDescription} />
+                    <Field component={Input} name="aboutMe" placeholder="About me" value={props.aboutMe} />
                     <div className="formTitle">Contacts:</div>
                     {contactsFields}
                     <div className="formGroup">
@@ -28,9 +28,5 @@ const DataForm = props => {
 }
 
 export default reduxForm({
-    form: 'edit-profile',
-    initialValues: {
-        looking_for_job: this
-    },
-    enableReinitialize: true
+    form: 'edit-profile'
 })(DataForm);
