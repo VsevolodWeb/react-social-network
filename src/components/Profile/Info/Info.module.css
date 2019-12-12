@@ -27,3 +27,7 @@
     grid-column-start: 1;
     grid-column-end: 2;
 }
+
+.button {
+    margin-bottom: 20px;
+}

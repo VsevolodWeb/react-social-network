@@ -1,3 +1,5 @@
+import { stopSubmit } from 'redux-form';
+
 import { profileAPI } from './../api/api';
 import {RESET_FORM} from './actions/actions'
 
@@ -92,13 +94,16 @@ export const setUserPhotoThunkCreator = photo => async dispatch => {
 };
 
 export const saveUserProfileThunkCreator = userInfo => async (dispatch, getState) => {
-    dispatch(setIsFetching(true));
-    const userId = getState().profile.userProfile.id
+    const userId = getState().profile.userProfile.userId
 
-    await profileAPI.saveUserProfile(userInfo);
-
-    dispatch(setUserProfile(userId));
-    dispatch(setIsFetching(false));
+    const responseSaveProfile = await profileAPI.saveUserProfile(userInfo);
+    
+    if (responseSaveProfile.resultCode === 0) {
+        const responseGetProfile = await profileAPI.getUserProfile(userId);
+        dispatch(setUserProfile(responseGetProfile));
+    } else {
+        dispatch(stopSubmit("edit-profile", {_error: responseSaveProfile.messages}));
+    }
 };
 
 export default profileReducer;

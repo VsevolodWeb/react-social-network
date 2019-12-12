@@ -2,7 +2,7 @@ import React from 'react';
 import LoginForm from './LoginForm/LoginForm';
 import { authLoginThunkCreator, authMeThunkCreator } from '../../redux/auth-reducer';
 import { connect } from 'react-redux';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 const Login = props => {
     const loginSubmit = formData => {
