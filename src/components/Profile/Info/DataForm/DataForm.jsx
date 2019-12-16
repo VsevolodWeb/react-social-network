@@ -11,7 +11,8 @@ const DataForm = props => {
                             name={"contacts." + value} placeholder={value.charAt(0).toUpperCase() + value.substring(1)} value={props.contacts[index]} />));
     }
 
-    return <>
+    return  <>
+                {props.error ? props.error.map((item, index) => <div key={index} className="formGroup__errorText">{item}</div>) : null}
                 <form onSubmit={props.handleSubmit}>
                     <div className="form">
                         <div className="formTitle">General info:</div>
@@ -27,7 +28,7 @@ const DataForm = props => {
                     </div>
                 </form>
             </>
-}
+};
 
 export default reduxForm({
     form: 'edit-profile'

@@ -94,7 +94,7 @@ export const setUserPhotoThunkCreator = photo => async dispatch => {
 };
 
 export const saveUserProfileThunkCreator = userInfo => async (dispatch, getState) => {
-    const userId = getState().profile.userProfile.userId
+    const userId = getState().profile.userProfile.userId;
 
     const responseSaveProfile = await profileAPI.saveUserProfile(userInfo);
     
@@ -103,6 +103,8 @@ export const saveUserProfileThunkCreator = userInfo => async (dispatch, getState
         dispatch(setUserProfile(responseGetProfile));
     } else {
         dispatch(stopSubmit("edit-profile", {_error: responseSaveProfile.messages}));
+        
+        return Promise.reject(responseSaveProfile.messages);
     }
 };
 

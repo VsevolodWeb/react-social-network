@@ -6,6 +6,7 @@ import { required } from '../../../utils/validators/index';
 import s from'./LoginForm.module.css';
 
 const LoginForm = props => {
+    console.log(props.error)
     return (
         <div className={s.container}>
             <form onSubmit={props.handleSubmit}>

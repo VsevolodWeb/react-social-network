@@ -8,6 +8,7 @@ import sidebarReducer from './sidebar-reducer'
 import usersReducer from './users-reducer'
 import authReducer from "./auth-reducer";
 import appReducer from "./app-reducer";
+import securityReducer from "./security-reducer";
 
 import {RESET_FORM} from './actions/actions'
 
@@ -35,8 +36,8 @@ const reducers = combineReducers({
                     return state;
             }
         }
-    })
-    
+    }),
+    security: securityReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
