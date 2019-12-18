@@ -20,10 +20,7 @@ export const getCaptcha = captchaURL => ({type: GET_CAPTCHA, captchaURL});
 
 export const getCaptchaThunkCreator = () => async dispatch => {
     const response = await securityAPI.getCaptcha();
-    console.log(response)
-    if(response.resultCode === 10) {
-        dispatch(getCaptcha(response));
-    }
+    dispatch(getCaptcha(response.data.url));
 };
 
 export default securityReducer;

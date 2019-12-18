@@ -1,10 +1,11 @@
 import React from 'react';
+import classNames from 'classnames'
 import s from './Pagination.module.css'
 
 const Pagination = props => {
     let pagesCount =  Math.ceil(props.totalCount / props.pageSize);
     let pagesCountArray = [];
-    let currentPage = props.currentPage
+    let currentPage = props.currentPage;
     const portion = 10;
     const halfPortion = portion / 2;
 
@@ -25,7 +26,7 @@ const Pagination = props => {
 
     for(let i = startCount; i <= endCount; i++) {
         pagesCountArray.push(
-            <li className={s.pagination__item + (currentPage === i ? (" " + s.pagination__item_active) : "")} key={i}>
+            <li className={classNames(s.pagination__item, {[s.pagination__item_active]: currentPage === i})} key={i}>
                 <button onClick={() => props.setCurrentPage(i)} className={s.pagination__button}>{i}</button>
             </li>);
     }

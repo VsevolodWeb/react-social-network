@@ -1,4 +1,5 @@
 import {stopSubmit} from 'redux-form';
+import {getCaptchaThunkCreator} from './security-reducer'
 
 import { authAPI } from './../api/api';
 
@@ -49,10 +50,16 @@ export const authMeThunkCreator = () => async dispatch => {
 export const authLoginThunkCreator = formData => async dispatch => {
     const response = await authAPI.authLogin(formData);
 
-    if (response.resultCode === 0) {
-        dispatch(authMeThunkCreator());
-    } else {
-        dispatch(stopSubmit("login", {_error: response.messages[0]}));
+    switch (response.resultCode) {
+        case 0: {
+            dispatch(authMeThunkCreator());
+            break;
+        }
+        case 10: {
+            dispatch(getCaptchaThunkCreator());
+            break;
+        }
+        default: dispatch(stopSubmit("login", {_error: response.messages[0]}));
     }
 };
 

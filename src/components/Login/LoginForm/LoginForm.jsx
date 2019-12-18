@@ -6,7 +6,6 @@ import { required } from '../../../utils/validators/index';
 import s from'./LoginForm.module.css';
 
 const LoginForm = props => {
-    console.log(props.error)
     return (
         <div className={s.container}>
             <form onSubmit={props.handleSubmit}>
@@ -20,7 +19,13 @@ const LoginForm = props => {
                     </div>
                     {props.error ? <div className="formGroup">
                         <span className="formGroup__errorText">{props.error}</span>
-                    </div> : ""}
+                    </div> : null}
+                    {props.captchaURL ?
+                        <>
+                            <img src={props.captchaURL} alt="captcha" width="150"/>
+                            <Field component={Input} name="captcha" validate={[required]}/>
+                        </>
+                        : null}
                     <div className="formGroup">
                         <button className="button">Login</button>
                     </div>
