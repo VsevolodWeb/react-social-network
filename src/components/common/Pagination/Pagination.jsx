@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from 'classnames'
+import cn from 'classnames'
 import s from './Pagination.module.css'
 
 const Pagination = props => {
@@ -26,7 +26,7 @@ const Pagination = props => {
 
     for(let i = startCount; i <= endCount; i++) {
         pagesCountArray.push(
-            <li className={classNames(s.pagination__item, {[s.pagination__item_active]: currentPage === i})} key={i}>
+            <li className={cn(s.pagination__item, {[s.pagination__item_active]: currentPage === i})} key={i}>
                 <button onClick={() => props.setCurrentPage(i)} className={s.pagination__button}>{i}</button>
             </li>);
     }
