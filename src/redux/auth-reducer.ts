@@ -1,19 +1,26 @@
 import {stopSubmit} from 'redux-form';
 import {getCaptchaThunkCreator} from './security-reducer'
 
-import { authAPI } from './../api/api';
+import { authAPI } from '../api/api';
 
 const SET_USER_DATA = 'auth/SET_USER_DATA';
 const REMOVE_USER_DATA = 'auth/REMOVE_USER_DATA';
 
-const initialState = {
+type InitialStateType = {
+    id: number | null
+    email: string | null
+    login: string | null
+    isAuth: boolean
+}
+
+const initialState: InitialStateType = {
     id: null,
     email: null,
     login: null,
     isAuth: false
 };
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case SET_USER_DATA:
             return {
