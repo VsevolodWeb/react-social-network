@@ -2,6 +2,16 @@ import {RESET_FORM} from './actions/actions'
 
 const ADD_MESSAGE = 'dialogs/ADD_MESSAGE';
 
+type MessageItemStateType = {
+    id: number
+    text: string
+    from: string
+}
+type DialogsItemStateType = {
+    id: number
+    name: string
+    messages: Array<MessageItemStateType>
+}
 const initialState = {
     dialogsData: [
         {
@@ -11,7 +21,7 @@ const initialState = {
                 {id: 1, text: 'Привет', from: 'Ekaterina'},
                 {id: 2, text: 'Привет!', from: 'Vsevolod'},
                 {id: 3, text: 'Как дела?', from: 'Ekaterina'}
-            ]
+            ] as Array<MessageItemStateType>
         },
         {
             id: 2,
@@ -19,12 +29,14 @@ const initialState = {
             messages: [
                 {id: 1, text: 'Как дела?', from: 'Leonid'},
                 {id: 2, text: 'Отлично!', from: 'Vsevolod'}
-            ]
+            ] as Array<MessageItemStateType>
         }
-    ]
+    ] as Array<DialogsItemStateType>
 };
 
-const dialogsReducer = (state = initialState, action) => {
+type InitialStateType = typeof initialState;
+
+const dialogsReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case ADD_MESSAGE: {
             let stateCopy = Object.assign({}, state);
@@ -44,7 +56,13 @@ const dialogsReducer = (state = initialState, action) => {
     }
 };
 
-export const addMessage = (id, message) => ({type: ADD_MESSAGE, id, message});
+
+type AddMessageType = {
+    type: string
+    id: number
+    message: string
+}
+export const addMessage = (id: number, message: string): AddMessageType => ({type: ADD_MESSAGE, id, message});
 export const resetMessage = () => ({type: RESET_FORM});
 
 export default dialogsReducer;

@@ -43,18 +43,38 @@ const authReducer = (state = initialState, action: any): InitialStateType => {
     }
 };
 
-export const setUserData = (userData) => ({type: SET_USER_DATA, userData});
-export const removeUserData = () => ({type: REMOVE_USER_DATA});
+type UserDataType = {
+    id: number
+    login: string
+    email: string
+}
+type SetUserDataActionType = {
+    type: typeof SET_USER_DATA
+    userData: UserDataType
+}
+export const setUserData = (userData: UserDataType): SetUserDataActionType => ({type: SET_USER_DATA, userData});
 
-export const authMeThunkCreator = () => async dispatch => {
+type RemoveUserDataActionType = {
+    type: string
+}
+export const removeUserData = (): RemoveUserDataActionType => ({type: REMOVE_USER_DATA});
+
+export const authMeThunkCreator = () => async (dispatch: any) => {
     const response = await authAPI.authMe();
 
     if (response.resultCode === 0) {
+        console.log(response.data);
         dispatch(setUserData(response.data));
     }
 };
 
-export const authLoginThunkCreator = formData => async dispatch => {
+type AuthLoginThunkCreatorFormDataType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha: string
+}
+export const authLoginThunkCreator = (formData: AuthLoginThunkCreatorFormDataType) => async (dispatch: any) => {
     const response = await authAPI.authLogin(formData);
 
     switch (response.resultCode) {
@@ -70,7 +90,7 @@ export const authLoginThunkCreator = formData => async dispatch => {
     }
 };
 
-export const authLogout = () => async dispatch => {
+export const authLogout = () => async (dispatch: any) => {
     const response = await authAPI.authLogout();
 
     if (response.resultCode === 0) {
