@@ -9,7 +9,7 @@ const Posts = props => {
 
     const postsFormSubmit = formData => {
         props.addPost(formData.postMessage);
-        props.resetPost();
+        props.resetForm();
     };
 
     return (

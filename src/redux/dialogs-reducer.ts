@@ -63,6 +63,9 @@ type AddMessageType = {
     message: string
 }
 export const addMessage = (id: number, message: string): AddMessageType => ({type: ADD_MESSAGE, id, message});
-export const resetMessage = () => ({type: RESET_FORM});
+type ResetMessage = {
+    type: typeof RESET_FORM
+}
+export const resetMessage = (): ResetMessage => ({type: RESET_FORM});
 
 export default dialogsReducer;

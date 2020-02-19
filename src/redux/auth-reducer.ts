@@ -63,7 +63,6 @@ export const authMeThunkCreator = () => async (dispatch: any) => {
     const response = await authAPI.authMe();
 
     if (response.resultCode === 0) {
-        console.log(response.data);
         dispatch(setUserData(response.data));
     }
 };

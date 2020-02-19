@@ -14,7 +14,7 @@ const Profile = props => {
                 <Info {...props.data.userProfile} userStatus={props.data.userStatus}
                         updateUserStatus={props.updateUserStatus} loginUserId={props.userId}
                         updateUserPhoto={props.updateUserPhoto} saveUserProfile={props.saveUserProfile} />
-                <Posts data={props.data.postsData} addPost={props.addPost} resetPost={props.resetPost} />
+                <Posts data={props.data.postsData} addPost={props.addPost} resetForm={props.resetForm} />
             </div>
         </>
     )

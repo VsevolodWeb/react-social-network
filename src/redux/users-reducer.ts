@@ -10,6 +10,14 @@ const UNFOLLOW = 'users/UNFOLLOW';
 const SET_IS_FETCHING = 'users/SET_IS_FETCHING';
 const SET_IS_FOLLOWING = 'users/SET_IS_FOLLOWING';
 
+type UserType = {
+    id: number
+    name: string
+    status: string
+}
+type InitialStateType = {
+	list: Array<>
+}
 const initialState = {
     list: [],
     pageSize: 20,

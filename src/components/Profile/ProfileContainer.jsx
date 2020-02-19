@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 
 import {addPost, getUserProfileThunkCreator, getUserStatusThunkCreator,
-        updateUserStatusThunkCreator, resetPost, setUserPhotoThunkCreator,
+        updateUserStatusThunkCreator, resetForm, setUserPhotoThunkCreator,
         saveUserProfileThunkCreator} from '../../redux/profile-reducer'
 import Profile from './Profile';
 import Preloader from '../common/Preloader/Preloader';
@@ -47,7 +47,7 @@ const mapStateToProps = state => {
 export default compose(
     connect(mapStateToProps, {
         addPost, getUserProfile: getUserProfileThunkCreator, getUserStatus: getUserStatusThunkCreator,
-        updateUserStatus: updateUserStatusThunkCreator, resetPost, updateUserPhoto: setUserPhotoThunkCreator,
+        updateUserStatus: updateUserStatusThunkCreator, resetForm, updateUserPhoto: setUserPhotoThunkCreator,
         saveUserProfile: saveUserProfileThunkCreator
     }),
     withRouter,
