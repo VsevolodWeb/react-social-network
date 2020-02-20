@@ -2,6 +2,7 @@ import { stopSubmit } from 'redux-form';
 
 import { profileAPI } from '../api/api';
 import { RESET_FORM } from './actions/actions'
+import {PhotosType} from "./types/types";
 
 const ADD_POST = '/profile/ADD_POST';
 const SET_USER_PROFILE = 'profile/SET_USER_PROFILE';
@@ -24,10 +25,6 @@ type ContactsType = {
     website: string
     youtube: string
     mainLink: string
-}
-type PhotosType = {
-    small: string | null
-    large: string | null
 }
 type ProfileType = {
     userId: number
