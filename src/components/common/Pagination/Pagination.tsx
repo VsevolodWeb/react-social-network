@@ -2,9 +2,16 @@ import React from 'react';
 import cn from 'classnames'
 import s from './Pagination.module.css'
 
-const Pagination = props => {
+type PropsType = {
+    setCurrentPage: (pageId: number) => void
+    currentPage: number
+    totalCount: number
+    pageSize: number
+};
+
+const Pagination: React.FC<PropsType> = (props: PropsType) => {
     let pagesCount =  Math.ceil(props.totalCount / props.pageSize);
-    let pagesCountArray = [];
+    let pagesCountArray: Array<React.ReactElement> = [];
     let currentPage = props.currentPage;
     const portion = 10;
     const halfPortion = portion / 2;
@@ -13,7 +20,7 @@ const Pagination = props => {
     let endCount = portion;
 
     if(!pagesCount) {
-        return null;
+       return null;
     }
 
     if(currentPage > halfPortion && currentPage < pagesCount - halfPortion) {
@@ -31,7 +38,7 @@ const Pagination = props => {
             </li>);
     }
 
-    const changePage = direction => {
+    const changePage = (direction: string) => {
         switch (direction) {
             case 'prev':
                 currentPage -= 1;
@@ -44,7 +51,7 @@ const Pagination = props => {
         }
 
         props.setCurrentPage(currentPage);
-    }
+    };
 
     return (
         <section className={s.wrapper}>

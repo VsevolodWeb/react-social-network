@@ -3,8 +3,17 @@ import React from 'react'
 import s from './Users.module.css'
 import User from './User/User'
 import Preloader from '../common/Preloader/Preloader';
+import {UserType} from "../../redux/types/types";
 
-const Users = props => {
+type PropsType = {
+	list: Array<UserType>
+    followUser: (userId: number) => void
+    unfollowUser: (userId: number) => void
+    isFollowing: boolean
+    isFetching: boolean
+}
+
+const Users: React.FC<PropsType> = props => {
     return <>
         <h1 className="title">Users</h1>
         {props.isFetching ? <Preloader /> : null }
