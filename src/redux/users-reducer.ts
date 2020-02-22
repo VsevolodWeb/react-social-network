@@ -21,9 +21,9 @@ const initialState = {
     isFollowing: [] as Array<number>
 };
 
-type InitialStateType = typeof initialState;
+export type UsersInitialStateType = typeof initialState;
 
-const usersReducer = (state = initialState, action: any): InitialStateType => {
+const usersReducer = (state = initialState, action: any): UsersInitialStateType => {
     switch (action.type) {
         case SET_USERS:
             return {

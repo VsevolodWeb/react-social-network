@@ -12,7 +12,7 @@ import securityReducer from "./security-reducer";
 
 import {RESET_FORM} from './actions/actions'
 
-const reducers = combineReducers({
+const rootReducer = combineReducers({
     auth: authReducer,
     dialogs: dialogsReducer,
     profile: profileReducer,
@@ -40,8 +40,12 @@ const reducers = combineReducers({
     security: securityReducer
 });
 
+type RootReducerType = typeof rootReducer;
+export type AppStateType = ReturnType<RootReducerType>
+
+// @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducers, composeEnhancers(
+const store = createStore(rootReducer, composeEnhancers(
     applyMiddleware(thunkMiddleware)
 ));
 
