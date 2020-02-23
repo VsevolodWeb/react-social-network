@@ -5,20 +5,26 @@ import {connect} from 'react-redux';
 import Users from './Users';
 import Pagination from "../common/Pagination/Pagination";
 import {
-    setCurrentPage, followThunkCreator, unfollowThunkCreator,
-    setIsFollowing, getUsersThunkCreator, UsersInitialStateType
+    setCurrentPage, followThunkCreator, unfollowThunkCreator, getUsersThunkCreator, UsersInitialStateType
 } from '../../redux/users-reducer'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import { getUsers } from '../../redux/users-selectors';
 import {AppStateType} from "../../redux/redux-store";
 
-type PropsType = {
+type MapStateToPropsType = {
     data: UsersInitialStateType
+}
+
+type MapDispatchToPropsType = {
     setCurrentPage: (pageId: number) => void
     follow: (userId: number) => void
     unfollow: (userId: number) => void
     getUsers: (currentPage: number, pageSize: number) => void
 }
+
+type OwnType = {}
+
+type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnType;
 
 class UsersContainer extends React.Component<PropsType> {
     componentDidMount() {
@@ -38,15 +44,13 @@ class UsersContainer extends React.Component<PropsType> {
     };
 }
 
-const mapStateToProps = (state: AppStateType) => ({
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
     data: getUsers(state)
 });
 
-
 export default compose(
-    connect(mapStateToProps, {
+    connect<MapStateToPropsType, MapDispatchToPropsType, OwnType, AppStateType>(mapStateToProps, {
         setCurrentPage,
-        follow: followThunkCreator, unfollow: unfollowThunkCreator, getUsers: getUsersThunkCreator,
-        setIsFollowing
+        follow: followThunkCreator, unfollow: unfollowThunkCreator, getUsers: getUsersThunkCreator
     }), withAuthRedirect
 )(UsersContainer);

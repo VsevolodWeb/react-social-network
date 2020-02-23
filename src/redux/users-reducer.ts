@@ -104,7 +104,7 @@ type SetIsFollowingType = {
     userId: number
     isFetching: boolean
 }
-export const setIsFollowing = (userId: number, isFetching: boolean): SetIsFollowingType => ({type: SET_IS_FOLLOWING, userId, isFetching});
+const setIsFollowing = (userId: number, isFetching: boolean): SetIsFollowingType => ({type: SET_IS_FOLLOWING, userId, isFetching});
 
 export const getUsersThunkCreator = (currentPage: number, pageSize: number) => async (dispatch: any) => {
     const response = await usersAPI.getUsers(currentPage, pageSize);

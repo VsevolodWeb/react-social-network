@@ -5,10 +5,15 @@ import {AppStateType} from "../redux/redux-store";
 
 export const withAuthRedirect = (Component: any) => {
 
-    type PropsType = {
+    type MapStateToPropsType = {
         isAuth: boolean
-        userId: number
+        userId: number | null
     }
+
+    type MapDispatchToProps = {}
+    type OwProps = {}
+
+    type PropsType = MapStateToPropsType & MapDispatchToProps & OwProps;
 
     class RedirectComponent extends React.Component<PropsType> {
         render() {
@@ -17,10 +22,10 @@ export const withAuthRedirect = (Component: any) => {
         }
     }
 
-    const mapStateToProps = (state: AppStateType) => ({
+    const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
         isAuth: state.auth.isAuth,
         userId: state.auth.id
     });
 
-    return connect(mapStateToProps)(RedirectComponent);
+    return connect<MapStateToPropsType, MapDispatchToProps, OwProps, AppStateType>(mapStateToProps)(RedirectComponent);
 };
