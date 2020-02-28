@@ -3,6 +3,8 @@ import { stopSubmit } from 'redux-form';
 import { profileAPI } from '../api/api';
 import { RESET_FORM } from './actions/actions'
 import {PhotosType} from "./types/types";
+import {Dispatch} from "redux";
+import {AppStateType} from "./redux-store";
 
 const ADD_POST = '/profile/ADD_POST';
 const SET_USER_PROFILE = 'profile/SET_USER_PROFILE';
@@ -46,8 +48,9 @@ export const initialState = {
 };
 
 type InitialStateType = typeof initialState
+type ActionsTypes = AddPostType | SetUserProfileType | SetUserStatusType | SetIsFetchingType | resetFormType | SetUserPhotoType;
 
-const profileReducer = (state = initialState, action: any): InitialStateType => {
+const profileReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
         case ADD_POST: {
             return {
@@ -103,18 +106,18 @@ type SetIsFetchingType = {
 }
 export const setIsFetching = (isFetching: boolean): SetIsFetchingType => ({type: SET_IS_FETCHING, isFetching});
 
-type resetForm = {
+type resetFormType = {
     type: typeof RESET_FORM
 }
-export const resetForm = (): resetForm => ({type: RESET_FORM});
+export const resetForm = (): resetFormType => ({type: RESET_FORM});
 
-type SetUserPhoto = {
+type SetUserPhotoType = {
     type: typeof SET_USER_PHOTO
     photos: PhotosType
 }
-export const setUserPhoto = (photos: PhotosType): SetUserPhoto => ({type: SET_USER_PHOTO, photos});
+export const setUserPhoto = (photos: PhotosType): SetUserPhotoType => ({type: SET_USER_PHOTO, photos});
 
-export const getUserProfileThunkCreator = (userId: number) => async (dispatch: any) => {
+export const getUserProfileThunkCreator = (userId: number) => async (dispatch: Dispatch<ActionsTypes>) => {
     dispatch(setIsFetching(true));
 
     const response = await profileAPI.getUserProfile(userId);
@@ -123,7 +126,7 @@ export const getUserProfileThunkCreator = (userId: number) => async (dispatch: a
     dispatch(setIsFetching(false));
 };
 
-export const getUserStatusThunkCreator = (userId: number) => async (dispatch: any) => {
+export const getUserStatusThunkCreator = (userId: number) => async (dispatch: Dispatch<ActionsTypes>) => {
     dispatch(setIsFetching(true));
 
     const response = await profileAPI.getUserStatus(userId);
@@ -132,7 +135,7 @@ export const getUserStatusThunkCreator = (userId: number) => async (dispatch: an
     dispatch(setIsFetching(false));
 };
 
-export const updateUserStatusThunkCreator = (status: string) => async (dispatch: any) => {
+export const updateUserStatusThunkCreator = (status: string) => async (dispatch: Dispatch<ActionsTypes>) => {
     const response = await profileAPI.updateUserStatus(status);
 
     if(response.resultCode === 0) {
@@ -140,7 +143,7 @@ export const updateUserStatusThunkCreator = (status: string) => async (dispatch:
     }
 };
 
-export const setUserPhotoThunkCreator = (photo: PhotosType) => async (dispatch: any) => {
+export const setUserPhotoThunkCreator = (photo: PhotosType) => async (dispatch: Dispatch<ActionsTypes>) => {
     const response = await profileAPI.updateUserPhoto(photo);
 
     if(response.resultCode === 0) {
@@ -148,17 +151,20 @@ export const setUserPhotoThunkCreator = (photo: PhotosType) => async (dispatch: 
     }
 };
 
-export const saveUserProfileThunkCreator = (userInfo: ProfileType) => async (dispatch: any, getState: any) => {
-    const userId = getState().profile.userProfile.userId;
+export const saveUserProfileThunkCreator = (userInfo: ProfileType) => async (dispatch: Dispatch<ActionsTypes>, getState: () => AppStateType) => {
+    const userProfile = getState().profile.userProfile;
+    if(!userProfile) return;
+
+	const userId = userProfile.userId;
 
     const responseSaveProfile = await profileAPI.saveUserProfile(userInfo);
-    
+
     if (responseSaveProfile.resultCode === 0) {
         const responseGetProfile = await profileAPI.getUserProfile(userId);
         dispatch(setUserProfile(responseGetProfile));
     } else {
         dispatch(stopSubmit("edit-profile", {_error: responseSaveProfile.messages}));
-        
+
         return Promise.reject(responseSaveProfile.messages);
     }
 };

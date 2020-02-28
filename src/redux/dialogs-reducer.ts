@@ -36,7 +36,9 @@ const initialState = {
 
 type InitialStateType = typeof initialState;
 
-const dialogsReducer = (state = initialState, action: any): InitialStateType => {
+type ActionsTypes = AddMessageType | ResetMessage;
+
+const dialogsReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
         case ADD_MESSAGE: {
             let stateCopy = Object.assign({}, state);
@@ -58,7 +60,7 @@ const dialogsReducer = (state = initialState, action: any): InitialStateType => 
 
 
 type AddMessageType = {
-    type: string
+    type: typeof ADD_MESSAGE
     id: number
     message: string
 }

@@ -2,6 +2,7 @@ import {stopSubmit} from 'redux-form';
 import {getCaptchaThunkCreator} from './security-reducer'
 
 import { authAPI } from '../api/api';
+import {Dispatch} from "redux";
 
 const SET_USER_DATA = 'auth/SET_USER_DATA';
 const REMOVE_USER_DATA = 'auth/REMOVE_USER_DATA';
@@ -20,7 +21,9 @@ const initialState: InitialStateType = {
     isAuth: false
 };
 
-const authReducer = (state = initialState, action: any): InitialStateType => {
+type ActionsTypes = SetUserDataActionType | RemoveUserDataActionType;
+
+const authReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
         case SET_USER_DATA:
             return {
@@ -55,11 +58,11 @@ type SetUserDataActionType = {
 export const setUserData = (userData: UserDataType): SetUserDataActionType => ({type: SET_USER_DATA, userData});
 
 type RemoveUserDataActionType = {
-    type: string
+    type: typeof REMOVE_USER_DATA
 }
 export const removeUserData = (): RemoveUserDataActionType => ({type: REMOVE_USER_DATA});
 
-export const authMeThunkCreator = () => async (dispatch: any) => {
+export const authMeThunkCreator = () => async (dispatch: Dispatch<SetUserDataActionType>) => {
     const response = await authAPI.authMe();
 
     if (response.resultCode === 0) {
@@ -73,7 +76,7 @@ type AuthLoginThunkCreatorFormDataType = {
     rememberMe: boolean
     captcha: string
 }
-export const authLoginThunkCreator = (formData: AuthLoginThunkCreatorFormDataType) => async (dispatch: any) => {
+export const authLoginThunkCreator = (formData: AuthLoginThunkCreatorFormDataType) => async (dispatch: Dispatch<ActionsTypes> | any) => {
     const response = await authAPI.authLogin(formData);
 
     switch (response.resultCode) {
@@ -89,7 +92,7 @@ export const authLoginThunkCreator = (formData: AuthLoginThunkCreatorFormDataTyp
     }
 };
 
-export const authLogout = () => async (dispatch: any) => {
+export const authLogout = () => async (dispatch: Dispatch<ActionsTypes>) => {
     const response = await authAPI.authLogout();
 
     if (response.resultCode === 0) {
