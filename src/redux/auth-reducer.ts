@@ -1,7 +1,7 @@
 import {stopSubmit} from 'redux-form';
 import {getCaptchaThunkCreator} from './security-reducer'
 
-import { authAPI } from '../api/api';
+import {authAPI, AuthResultCodesEnum, AuthResultCodesWithCaptcha} from '../api/api';
 import {Dispatch} from "redux";
 
 const SET_USER_DATA = 'auth/SET_USER_DATA';
@@ -65,7 +65,7 @@ export const removeUserData = (): RemoveUserDataActionType => ({type: REMOVE_USE
 export const authMeThunkCreator = () => async (dispatch: Dispatch<SetUserDataActionType>) => {
     const response = await authAPI.authMe();
 
-    if (response.resultCode === 0) {
+    if (response.resultCode === AuthResultCodesEnum.Success) {
         dispatch(setUserData(response.data));
     }
 };
@@ -80,11 +80,11 @@ export const authLoginThunkCreator = (formData: AuthLoginThunkCreatorFormDataTyp
     const response = await authAPI.authLogin(formData);
 
     switch (response.resultCode) {
-        case 0: {
+        case AuthResultCodesEnum.Success: {
             dispatch(authMeThunkCreator());
             break;
         }
-        case 10: {
+        case AuthResultCodesWithCaptcha.CaptchaIsRequired: {
             dispatch(getCaptchaThunkCreator());
             break;
         }
@@ -95,7 +95,7 @@ export const authLoginThunkCreator = (formData: AuthLoginThunkCreatorFormDataTyp
 export const authLogout = () => async (dispatch: Dispatch<ActionsTypes>) => {
     const response = await authAPI.authLogout();
 
-    if (response.resultCode === 0) {
+    if (response.resultCode === AuthResultCodesEnum.Success) {
         dispatch(removeUserData());
     }
 };
