@@ -32,6 +32,7 @@ const StatusWithHooks = props => {
             }
         </div>
     )
-}
+};
+
 
 export default StatusWithHooks;

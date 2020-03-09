@@ -17,11 +17,11 @@ const Login = props => {
     </>) : <Redirect to="/profile" />
 };
 
-const mapDispatchToProps = state => ({
+const mapStateToProps = state => ({
     isAuth: state.auth.isAuth,
     captchaURL: state.security.captchaURL
 });
 
-export default connect(mapDispatchToProps,
+export default connect(mapStateToProps,
     {authLogin: authLoginThunkCreator, authMe: authMeThunkCreator}
     )(Login);
