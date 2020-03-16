@@ -9,7 +9,7 @@ type PropsType = {
     pageSize: number
 };
 
-const Pagination: React.FC<PropsType> = (props: PropsType) => {
+const Pagination: React.FC<PropsType> = props => {
     let pagesCount =  Math.ceil(props.totalCount / props.pageSize);
     let pagesCountArray: Array<React.ReactElement> = [];
     let currentPage = props.currentPage;

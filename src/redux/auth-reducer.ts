@@ -70,13 +70,13 @@ export const authMeThunkCreator = () => async (dispatch: Dispatch<SetUserDataAct
     }
 };
 
-type AuthLoginThunkCreatorFormDataType = {
+export type AuthLoginFormDataType = {
     email: string
     password: string
     rememberMe: boolean
     captcha: string
 }
-export const authLoginThunkCreator = (formData: AuthLoginThunkCreatorFormDataType) => async (dispatch: Dispatch<ActionsTypes> | any) => {
+export const authLoginThunkCreator = (formData: AuthLoginFormDataType) => async (dispatch: Dispatch<ActionsTypes> | any) => {
     const response = await authAPI.authLogin(formData);
 
     switch (response.resultCode) {

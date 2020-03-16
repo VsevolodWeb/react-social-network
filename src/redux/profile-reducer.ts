@@ -143,7 +143,7 @@ export const updateUserStatusThunkCreator = (status: string) => async (dispatch:
     }
 };
 
-export const setUserPhotoThunkCreator = (photo: PhotosType) => async (dispatch: Dispatch<ActionsTypes>) => {
+export const setUserPhotoThunkCreator = (photo: string) => async (dispatch: Dispatch<ActionsTypes>) => {
     const response = await profileAPI.updateUserPhoto(photo);
 
     if(response.resultCode === 0) {
