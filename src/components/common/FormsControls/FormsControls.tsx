@@ -1,7 +1,11 @@
 import React from 'react';
 import s from './FormsControls.module.css';
+import {WrappedFieldMetaProps, WrappedFieldProps} from "redux-form";
 
-const FormControl = props => {
+type FormsControlType = {
+	meta: WrappedFieldMetaProps
+}
+const FormControl: React.FC<FormsControlType> = (props) => {
     const hasError = props.meta.touched && props.meta.error;
 
     return (
@@ -12,20 +16,23 @@ const FormControl = props => {
     )
 };
 
-export const Textarea = ({input, meta, ...props}) => {
+export const Textarea: React.FC<WrappedFieldProps> = ({input, meta, ...props}) => {
     return (
         <FormControl meta={meta}>
-            <textarea className={s.textElement} rows="4" {...input} {...props}/>
+            <textarea className={s.textElement} rows={4} {...input} {...props}/>
         </FormControl>
     )
 };
 
-export const Input = ({input, meta, labelText, ...props}) => {
+type InputType = WrappedFieldProps & {
+	labelText: string
+}
+export const Input: React.FC<InputType> = ({input, meta, labelText, ...props}) => {
     return (
         <FormControl meta={meta}>
             <label className="label label_inline">
                 {labelText}
-                <input className={s.textElement} autoComplete="current-password" {...input} {...props}/>
+                <input className={s.textElement} {...input} {...props}/>
             </label>
         </FormControl>
     )

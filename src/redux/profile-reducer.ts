@@ -28,7 +28,7 @@ type ContactsType = {
     youtube: string
     mainLink: string
 }
-type ProfileType = {
+export type ProfileType = {
     userId: number
     lookingForAJob: boolean
     lookingForAJobDescription: string

@@ -1,4 +1,4 @@
-import React, {Props} from 'react';
+import React from 'react';
 import LoginForm from './LoginForm/LoginForm';
 import {authLoginThunkCreator, AuthLoginFormDataType, authMeThunkCreator} from '../../redux/auth-reducer';
 import { connect } from 'react-redux';
