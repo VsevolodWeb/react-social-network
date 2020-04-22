@@ -81,49 +81,23 @@ const usersReducer = (state = initialState, action: ActionsTypes): UsersInitialS
 	}
 };
 
-type SetUsersType = {
-	type: typeof SET_USERS
-	users: Array<UserType>
-}
-export const setUsers = (users: Array<UserType>): SetUsersType => ({type: SET_USERS, users});
-type SetCurrentPageType = {
-	type: typeof SET_CURRENT_PAGE
-	value: number
-}
-export const setCurrentPage = (value: number): SetCurrentPageType => ({type: SET_CURRENT_PAGE, value});
-type SetTotalUsersCountType = {
-	type: typeof SET_TOTAL_USERS_COUNT
-	totalUsersCount: number
-}
-export const setTotalUsersCount = (totalUsersCount: number): SetTotalUsersCountType => ({
+export const actions = {
+	setUsers: (users: Array<UserType>) => ({type: SET_USERS, users}),
+	setCurrentPage: (value: number) => ({type: SET_CURRENT_PAGE, value}),
+	setTotalUsersCount: (totalUsersCount: number) => ({
 	type: SET_TOTAL_USERS_COUNT,
 	totalUsersCount
-});
-type FollowType = {
-	type: typeof FOLLOW
-	userId: number
-}
-export const follow = (userId: number): FollowType => ({type: FOLLOW, userId});
-type UnfollowType = {
-	type: typeof UNFOLLOW
-	userId: number
-}
-export const unfollow = (userId: number): UnfollowType => ({type: UNFOLLOW, userId});
-type SetIsFetchingType = {
-	type: typeof SET_IS_FETCHING
-	isFetching: boolean
-}
-export const setIsFetching = (isFetching: boolean): SetIsFetchingType => ({type: SET_IS_FETCHING, isFetching});
-type SetIsFollowingType = {
-	type: typeof SET_IS_FOLLOWING
-	userId: number
-	isFetching: boolean
-}
-const setIsFollowing = (userId: number, isFetching: boolean): SetIsFollowingType => ({
+}),
+	follow: (userId: number) => ({type: FOLLOW, userId}),
+	unfollow: (userId: number) => ({type: UNFOLLOW, userId}),
+	setIsFetching: (isFetching: boolean) => ({type: SET_IS_FETCHING, isFetching}),
+	setIsFollowing: (userId: number, isFetching: boolean) => ({
 	type: SET_IS_FOLLOWING,
 	userId,
 	isFetching
-});
+})
+};
+
 
 export const getUsersThunkCreator = (currentPage: number, pageSize: number): ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes> => {
 	return async dispatch => {
@@ -133,15 +107,14 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number): Thu
 		dispatch(setUsers(response.items));
 		dispatch(setIsFetching(false));
 	};
-};
 
-type toggleFollowingUserActionCreatorType = FollowType | UnfollowType;
+
 type toggleFollowingUserApiResponseType = {
 	resultCode: number
 	messages: Array<string>
 }
 const toggleFollowingUser = async (apiMethod: (userId: number) => Promise<toggleFollowingUserApiResponseType>,
-                                   actionCreator: (userId: number) => toggleFollowingUserActionCreatorType,
+                                   actionCreator,
                                    userId: number, dispatch: Dispatch<ActionsTypes>) => {
 
 	dispatch(setIsFollowing(userId, true));
