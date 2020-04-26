@@ -5,7 +5,11 @@ import {connect} from 'react-redux';
 import Users from './Users';
 import Pagination from "../common/Pagination/Pagination";
 import {
-    setCurrentPage, followThunkCreator, unfollowThunkCreator, getUsersThunkCreator, UsersInitialStateType
+	followThunkCreator,
+	unfollowThunkCreator,
+	getUsersThunkCreator,
+	UsersInitialStateType,
+	actions
 } from '../../redux/users-reducer'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import { getUsers } from '../../redux/users-selectors';
@@ -50,7 +54,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
 
 export default compose(
     connect<MapStateToPropsType, MapDispatchToPropsType, OwnType, AppStateType>(mapStateToProps, {
-        setCurrentPage,
+	    setCurrentPage: actions.setCurrentPage,
         follow: followThunkCreator, unfollow: unfollowThunkCreator, getUsers: getUsersThunkCreator
     }), withAuthRedirect
 )(UsersContainer);
