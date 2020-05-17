@@ -1,36 +1,31 @@
-import { securityAPI } from '../api/api';
-import {Dispatch} from "redux";
+import { securityAPI } from '../api/api'
+import {Dispatch} from "redux"
+import {InferActionsTypes} from "./redux-store";
 
-const GET_CAPTCHA = '/security/GET_CAPTCHA';
-
-type InitialStateType = {
-	captchaURL: string | null
-}
-export const initialState: InitialStateType = {
-    captchaURL: null
+export const initialState = {
+    captchaURL: null as null | string
 };
+type InitialStateType = typeof initialState
 
-type ActionsType = GetCaptchaType;
+type ActionsType = InferActionsTypes<typeof actions>
 
-const securityReducer = (state = initialState, action: ActionsType) => {
+const securityReducer = (state = initialState, action: ActionsType): InitialStateType => {
     switch(action.type) {
-        case GET_CAPTCHA:
-            return {...state, captchaURL: action.captchaURL};
+        case 'GET_CAPTCHA':
+            return {...state, captchaURL: action.captchaURL}
 
         default:
             return state;
     }
 };
 
-type GetCaptchaType = {
-    type: typeof GET_CAPTCHA
-    captchaURL: string
+export const actions = {
+    getCaptcha: (captchaURL: string) => ({type: 'GET_CAPTCHA', captchaURL} as const)
 }
-export const getCaptcha = (captchaURL: string): GetCaptchaType => ({type: GET_CAPTCHA, captchaURL});
 
 export const getCaptchaThunkCreator = () => async (dispatch: Dispatch<ActionsType>) => {
-    const response = await securityAPI.getCaptcha();
-    dispatch(getCaptcha(response.data.url));
+    const response = await securityAPI.getCaptcha()
+    dispatch(actions.getCaptcha(response.data.url))
 };
 
-export default securityReducer;
+export default securityReducer
