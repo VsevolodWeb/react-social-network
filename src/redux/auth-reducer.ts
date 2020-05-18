@@ -1,38 +1,32 @@
-import {stopSubmit} from 'redux-form';
+import {stopSubmit} from 'redux-form'
 import {getCaptchaThunkCreator} from './security-reducer'
 
-import {authAPI, AuthResultCodesEnum, AuthResultCodesWithCaptcha} from '../api/api';
-import {Dispatch} from "redux";
+import {authAPI, AuthResultCodesEnum, AuthResultCodesWithCaptcha} from '../api/api'
+import {Dispatch} from "redux"
+import {InferActionsTypes} from "./redux-store";
 
-const SET_USER_DATA = 'auth/SET_USER_DATA';
-const REMOVE_USER_DATA = 'auth/REMOVE_USER_DATA';
 
-type InitialStateType = {
-    id: number | null
-    email: string | null
-    login: string | null
-    isAuth: boolean
-}
 
-const initialState: InitialStateType = {
-    id: null,
-    email: null,
-    login: null,
+const initialState = {
+    id: null as null | number,
+    email: null as null | string,
+    login: null as null | string,
     isAuth: false
 };
+type InitialStateType = typeof initialState
 
-type ActionsTypes = SetUserDataActionType | RemoveUserDataActionType;
+type ActionsTypes = InferActionsTypes<typeof actions>
 
 const authReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
-        case SET_USER_DATA:
+        case "auth/SET_USER_DATA":
             return {
                 ...state,
                 ...action.userData,
                 isAuth: true
             };
 
-        case REMOVE_USER_DATA: {
+        case "auth/REMOVE_USER_DATA": {
             return {
                 id: null,
                 email: null,
@@ -46,27 +40,25 @@ const authReducer = (state = initialState, action: ActionsTypes): InitialStateTy
     }
 };
 
+
+
 type UserDataType = {
     id: number
     login: string
     email: string
 }
-type SetUserDataActionType = {
-    type: typeof SET_USER_DATA
-    userData: UserDataType
-}
-export const setUserData = (userData: UserDataType): SetUserDataActionType => ({type: SET_USER_DATA, userData});
 
-type RemoveUserDataActionType = {
-    type: typeof REMOVE_USER_DATA
-}
-export const removeUserData = (): RemoveUserDataActionType => ({type: REMOVE_USER_DATA});
+const actions = {
+    setUserData: (userData: UserDataType) => ({type: "auth/SET_USER_DATA", userData} as const),
+    removeUserData: () => ({type: "auth/REMOVE_USER_DATA"} as const)
+} as const
 
-export const authMeThunkCreator = () => async (dispatch: Dispatch<SetUserDataActionType>) => {
+export type AuthMeThunkType = (dispatch: Dispatch<{type: string, userData: UserDataType}>) => void
+export const authMeThunkCreator = (): AuthMeThunkType => async (dispatch) => {
     const response = await authAPI.authMe();
 
     if (response.resultCode === AuthResultCodesEnum.Success) {
-        dispatch(setUserData(response.data));
+        dispatch(actions.setUserData(response.data));
     }
 };
 
@@ -96,7 +88,7 @@ export const authLogout = () => async (dispatch: Dispatch<ActionsTypes>) => {
     const response = await authAPI.authLogout();
 
     if (response.resultCode === AuthResultCodesEnum.Success) {
-        dispatch(removeUserData());
+        dispatch(actions.removeUserData());
     }
 };
 

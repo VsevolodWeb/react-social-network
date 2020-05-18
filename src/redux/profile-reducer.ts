@@ -4,13 +4,8 @@ import { profileAPI } from '../api/api'
 import { RESET_FORM } from './actions/actions'
 import {PhotosType} from './types/types'
 import {Dispatch} from "redux"
-import {AppStateType} from './redux-store'
+import {AppStateType, InferActionsTypes} from './redux-store'
 
-const ADD_POST = '/profile/ADD_POST'
-const SET_USER_PROFILE = 'profile/SET_USER_PROFILE'
-const SET_USER_STATUS = 'profile/SET_USER_STATUS'
-const SET_IS_FETCHING = 'profile/SET_IS_FETCHING'
-const SET_USER_PHOTO = 'profile/SET_USER_PHOTO'
 
 type PostType = {
     id: number
@@ -50,11 +45,11 @@ export const initialState = {
 };
 
 type InitialStateType = typeof initialState
-type ActionsTypes = AddPostType | SetUserProfileType | SetUserStatusType | SetIsFetchingType | resetFormType | SetUserPhotoType
+type ActionsTypes = InferActionsTypes<typeof actions>
 
 const profileReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
-        case ADD_POST: {
+        case "profile/ADD_POST": {
             return {
                 ...state,
                 postsData: [...state.postsData, {
@@ -67,16 +62,16 @@ const profileReducer = (state = initialState, action: ActionsTypes): InitialStat
             }
         }
 
-        case SET_USER_PROFILE:
+        case "profile/SET_USER_PROFILE":
             return {...state, userProfile: action.userProfile}
 
-        case SET_USER_STATUS:
+        case "profile/SET_USER_STATUS":
             return {...state, userStatus: action.userStatus}
 
-        case SET_IS_FETCHING:
+        case "profile/SET_IS_FETCHING":
             return {...state, isFetching: action.isFetching}
 
-        case SET_USER_PHOTO:
+        case "profile/SET_USER_PHOTO":
             return {...state, userProfile: {...state.userProfile, photos: {...action.photos}} as ProfileType}
 
         default:
@@ -84,74 +79,48 @@ const profileReducer = (state = initialState, action: ActionsTypes): InitialStat
     }
 };
 
-type AddPostType = {
-    type: typeof ADD_POST
-    message: string
+export const actions = {
+    addPost: (message: string) => ({type: "profile/ADD_POST", message} as const),
+    setUserProfile: (userProfile: ProfileType) => ({type: "profile/SET_USER_PROFILE", userProfile} as const),
+    setUserStatus: (userStatus: string) => ({type: "profile/SET_USER_STATUS", userStatus} as const),
+    setIsFetching: (isFetching: boolean) => ({type: "profile/SET_IS_FETCHING", isFetching} as const),
+    resetForm: () => ({type: RESET_FORM} as const),
+    setUserPhoto: (photos: PhotosType) => ({type: "profile/SET_USER_PHOTO", photos} as const)
 }
-export const addPost = (message: string): AddPostType => ({type: ADD_POST, message})
-
-type SetUserProfileType = {
-    type: typeof SET_USER_PROFILE
-    userProfile: ProfileType
-}
-export const setUserProfile = (userProfile: ProfileType): SetUserProfileType => ({type: SET_USER_PROFILE, userProfile})
-
-type SetUserStatusType = {
-    type: typeof SET_USER_STATUS
-    userStatus: string
-}
-export const setUserStatus = (userStatus: string): SetUserStatusType => ({type: SET_USER_STATUS, userStatus})
-
-type SetIsFetchingType = {
-    type: typeof SET_IS_FETCHING
-    isFetching: boolean
-}
-export const setIsFetching = (isFetching: boolean): SetIsFetchingType => ({type: SET_IS_FETCHING, isFetching})
-
-type resetFormType = {
-    type: typeof RESET_FORM
-}
-export const resetForm = (): resetFormType => ({type: RESET_FORM})
-
-type SetUserPhotoType = {
-    type: typeof SET_USER_PHOTO
-    photos: PhotosType
-}
-export const setUserPhoto = (photos: PhotosType): SetUserPhotoType => ({type: SET_USER_PHOTO, photos})
 
 export const getUserProfileThunkCreator = (userId: number) => async (dispatch: Dispatch<ActionsTypes>) => {
-    dispatch(setIsFetching(true))
+    dispatch(actions.setIsFetching(true))
 
     const response = await profileAPI.getUserProfile(userId)
 
-    dispatch(setUserProfile(response))
-    dispatch(setIsFetching(false))
-};
+    dispatch(actions.setUserProfile(response))
+    dispatch(actions.setIsFetching(false))
+}
 
 export const getUserStatusThunkCreator = (userId: number) => async (dispatch: Dispatch<ActionsTypes>) => {
-    dispatch(setIsFetching(true))
+    dispatch(actions.setIsFetching(true))
 
     const response = await profileAPI.getUserStatus(userId)
 
-    dispatch(setUserStatus(response))
-    dispatch(setIsFetching(false))
-};
+    dispatch(actions.setUserStatus(response))
+    dispatch(actions.setIsFetching(false))
+}
 
 export const updateUserStatusThunkCreator = (status: string) => async (dispatch: Dispatch<ActionsTypes>) => {
     const response = await profileAPI.updateUserStatus(status)
 
     if(response.resultCode === 0) {
-        dispatch(setUserStatus(status))
+        dispatch(actions.setUserStatus(status))
     }
-};
+}
 
 export const setUserPhotoThunkCreator = (photo: string) => async (dispatch: Dispatch<ActionsTypes>) => {
     const response = await profileAPI.updateUserPhoto(photo)
 
     if(response.resultCode === 0) {
-        dispatch(setUserPhoto(response.data.photos))
+        dispatch(actions.setUserPhoto(response.data.photos))
     }
-};
+}
 
 export const saveUserProfileThunkCreator = (userInfo: ProfileType) => async (dispatch: Dispatch<ActionsTypes>, getState: () => AppStateType) => {
     const userProfile = getState().profile.userProfile
@@ -163,12 +132,12 @@ export const saveUserProfileThunkCreator = (userInfo: ProfileType) => async (dis
 
     if (responseSaveProfile.resultCode === 0) {
         const responseGetProfile = await profileAPI.getUserProfile(userId)
-        dispatch(setUserProfile(responseGetProfile))
+        dispatch(actions.setUserProfile(responseGetProfile))
     } else {
         dispatch(stopSubmit("edit-profile", {_error: responseSaveProfile.messages}))
 
         return Promise.reject(responseSaveProfile.messages)
     }
-};
+}
 
 export default profileReducer

@@ -1,17 +1,7 @@
 import {RESET_FORM} from './actions/actions'
+import {InferActionsTypes} from "./redux-store";
 
-const ADD_MESSAGE = 'dialogs/ADD_MESSAGE';
 
-type MessageItemStateType = {
-    id: number
-    text: string
-    from: string
-}
-type DialogsItemStateType = {
-    id: number
-    name: string
-    messages: Array<MessageItemStateType>
-}
 const initialState = {
     dialogsData: [
         {
@@ -21,7 +11,7 @@ const initialState = {
                 {id: 1, text: 'Привет', from: 'Ekaterina'},
                 {id: 2, text: 'Привет!', from: 'Vsevolod'},
                 {id: 3, text: 'Как дела?', from: 'Ekaterina'}
-            ] as Array<MessageItemStateType>
+            ]
         },
         {
             id: 2,
@@ -29,45 +19,40 @@ const initialState = {
             messages: [
                 {id: 1, text: 'Как дела?', from: 'Leonid'},
                 {id: 2, text: 'Отлично!', from: 'Vsevolod'}
-            ] as Array<MessageItemStateType>
+            ]
         }
-    ] as Array<DialogsItemStateType>
-};
+    ]
+}
 
-type InitialStateType = typeof initialState;
+type InitialStateType = typeof initialState
 
-type ActionsTypes = AddMessageType | ResetMessage;
+type ActionsTypes = InferActionsTypes<typeof actions>
 
 const dialogsReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
-        case ADD_MESSAGE: {
+        case "actions/ADD_MESSAGE": {
             let stateCopy = Object.assign({}, state);
             let newMessage = {
                 id: stateCopy.dialogsData[action.id - 1].messages.length + 1,
                 text: action.message,
                 from: 'Vsevolod'
-            };
+            }
             
-            stateCopy.dialogsData[action.id - 1].messages.push(newMessage);
+            stateCopy.dialogsData[action.id - 1].messages.push(newMessage)
             
-            return stateCopy;
+            return stateCopy
         }
 
         default:
-            return state; 
+            return state
     }
-};
-
-
-type AddMessageType = {
-    type: typeof ADD_MESSAGE
-    id: number
-    message: string
 }
-export const addMessage = (id: number, message: string): AddMessageType => ({type: ADD_MESSAGE, id, message});
-type ResetMessage = {
-    type: typeof RESET_FORM
-}
-export const resetMessage = (): ResetMessage => ({type: RESET_FORM});
 
-export default dialogsReducer;
+
+export const actions = {
+    addMessage: (id: number, message: string) => ({type: "actions/ADD_MESSAGE", id, message} as const),
+    resetMessage: () => ({type: RESET_FORM} as const)
+}
+
+
+export default dialogsReducer

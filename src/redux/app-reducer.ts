@@ -1,17 +1,16 @@
-import {authMeThunkCreator} from "./auth-reducer";
-import {Dispatch} from "redux";
+import {authMeThunkCreator, AuthMeThunkType} from "./auth-reducer"
+import {Dispatch} from "redux"
+import {InferActionsTypes} from "./redux-store";
 
-const SET_INITIALIZATION = 'app/SET_INITIALIZATION';
+const SET_INITIALIZATION = 'app/SET_INITIALIZATION'
 
-type InitialStateType = {
-    initialization: boolean
-}
 
-const initialState: InitialStateType = {
+const initialState = {
     initialization: false
 };
+type InitialStateType = typeof initialState
 
-type ActionsTypes = SetInitializationActionType;
+type ActionsTypes = InferActionsTypes<typeof actions>
 
 const appReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch(action.type) {
@@ -26,17 +25,15 @@ const appReducer = (state = initialState, action: ActionsTypes): InitialStateTyp
     }
 };
 
-type SetInitializationActionType = {
-    type: typeof SET_INITIALIZATION
+export const actions = {
+    setInitialization: () => ({type: "app/SET_INITIALIZATION"})
 }
 
-export const setInitialization = (): SetInitializationActionType => ({type: SET_INITIALIZATION});
-
-export const initializeThunkCreator = () => (dispatch: Dispatch<ActionsTypes> | any) => {
+export const initializeThunkCreator = () => (dispatch: Dispatch<ActionsTypes>) => {
     const promiseAuthMe = dispatch(authMeThunkCreator());
 
     Promise.all([promiseAuthMe]).then(() => {
-        dispatch(setInitialization());
+        dispatch(actions.setInitialization());
     });
 };
 

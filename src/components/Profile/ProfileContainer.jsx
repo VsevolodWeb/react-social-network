@@ -3,8 +3,8 @@ import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 
-import {addPost, getUserProfileThunkCreator, getUserStatusThunkCreator,
-        updateUserStatusThunkCreator, resetForm, setUserPhotoThunkCreator,
+import {actions, getUserProfileThunkCreator, getUserStatusThunkCreator,
+        updateUserStatusThunkCreator, setUserPhotoThunkCreator,
         saveUserProfileThunkCreator} from '../../redux/profile-reducer'
 import Profile from './Profile';
 import Preloader from '../common/Preloader/Preloader';
@@ -46,8 +46,8 @@ const mapStateToProps = state => {
 
 export default compose(
     connect(mapStateToProps, {
-        addPost, getUserProfile: getUserProfileThunkCreator, getUserStatus: getUserStatusThunkCreator,
-        updateUserStatus: updateUserStatusThunkCreator, resetForm, updateUserPhoto: setUserPhotoThunkCreator,
+        addPost: actions.addPost, getUserProfile: getUserProfileThunkCreator, getUserStatus: getUserStatusThunkCreator,
+        updateUserStatus: updateUserStatusThunkCreator, resetForm: actions.resetForm, updateUserPhoto: setUserPhotoThunkCreator,
         saveUserProfile: saveUserProfileThunkCreator
     }),
     withRouter,

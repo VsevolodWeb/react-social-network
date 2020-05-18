@@ -63,7 +63,7 @@ const usersReducer = (state = initialState, action: ActionsTypes): UsersInitialS
 		default:
 			return state
 	}
-};
+}
 
 export const actions = {
 	setUsers: (users: Array<UserType>) => ({type: 'SET_USERS', users} as const),
