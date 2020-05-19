@@ -1,10 +1,10 @@
 import { stopSubmit } from 'redux-form'
 
-import { profileAPI } from '../api/api'
 import { RESET_FORM } from './actions/actions'
 import {PhotosType} from './types/types'
 import {Dispatch} from "redux"
 import {AppStateType, InferActionsTypes} from './redux-store'
+import {profileAPI} from "../api/profile-api";
 
 
 type PostType = {

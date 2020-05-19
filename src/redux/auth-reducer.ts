@@ -1,9 +1,10 @@
 import {stopSubmit} from 'redux-form'
 import {getCaptchaThunkCreator} from './security-reducer'
 
-import {authAPI, AuthResultCodesEnum, AuthResultCodesWithCaptcha} from '../api/api'
+import {AuthResultCodesEnum, AuthResultCodesWithCaptcha} from '../api/api'
 import {Dispatch} from "redux"
 import {InferActionsTypes} from "./redux-store";
+import {authAPI} from "../api/auth-api";
 
 
 

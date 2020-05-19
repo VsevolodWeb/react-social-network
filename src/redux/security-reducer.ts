@@ -1,6 +1,6 @@
-import { securityAPI } from '../api/api'
 import {Dispatch} from "redux"
 import {InferActionsTypes} from "./redux-store";
+import {securityAPI} from "../api/security-api";
 
 export const initialState = {
     captchaURL: null as null | string

@@ -1,6 +1,7 @@
-import {authMeThunkCreator, AuthMeThunkType} from "./auth-reducer"
-import {Dispatch} from "redux"
-import {InferActionsTypes} from "./redux-store";
+import {authMeThunkCreator} from "./auth-reducer"
+import {AnyAction} from "redux"
+import {InferActionsTypes} from "./redux-store"
+import {ThunkDispatch} from "redux-thunk"
 
 const SET_INITIALIZATION = 'app/SET_INITIALIZATION'
 
@@ -21,7 +22,7 @@ const appReducer = (state = initialState, action: ActionsTypes): InitialStateTyp
             };
 
         default:
-            return state;
+            return state
     }
 };
 
@@ -29,12 +30,12 @@ export const actions = {
     setInitialization: () => ({type: "app/SET_INITIALIZATION"})
 }
 
-export const initializeThunkCreator = () => (dispatch: Dispatch<ActionsTypes>) => {
-    const promiseAuthMe = dispatch(authMeThunkCreator());
+export const initializeThunkCreator = () => (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+    const promiseAuthMe = dispatch(authMeThunkCreator())
 
     Promise.all([promiseAuthMe]).then(() => {
-        dispatch(actions.setInitialization());
+        dispatch(actions.setInitialization())
     });
 };
 
-export default appReducer;
+export default appReducer
