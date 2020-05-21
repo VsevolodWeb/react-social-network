@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {UserType} from "../redux/types/types";
 
+
 export const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     headers: {
@@ -8,6 +9,18 @@ export const instance = axios.create({
     },
     withCredentials: true
 });
+
+export enum AuthResultCodes {
+    Success = 0,
+    Error = 1,
+    CaptchaIsRequired = 10
+}
+
+export type ResponseType<Data = {}> = {
+    resultCode: AuthResultCodes
+    messages: Array<string>
+    data: Data
+}
 
 
 export type GetItemsType = {

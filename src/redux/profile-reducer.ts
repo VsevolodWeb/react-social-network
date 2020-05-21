@@ -1,7 +1,7 @@
-import { stopSubmit } from 'redux-form'
+import {stopSubmit} from 'redux-form'
 
-import { RESET_FORM } from './actions/actions'
-import {PhotosType} from './types/types'
+import {RESET_FORM} from './actions/actions'
+import {PhotosType, ProfileType} from './types/types'
 import {Dispatch} from "redux"
 import {AppStateType, InferActionsTypes} from './redux-store'
 import {profileAPI} from "../api/profile-api";
@@ -12,24 +12,6 @@ type PostType = {
     text: string
     name: string
     likeCount: number
-}
-
-export type ProfileType = {
-    userId: number
-    lookingForAJob: boolean
-    lookingForAJobDescription: string
-    fullName: string
-    contacts: {
-        github: string
-        vk: string
-        facebook: string
-        instagram: string
-        twitter: string
-        website: string
-        youtube: string
-        mainLink: string
-    }
-    photos: PhotosType
 }
 
 const PostsData: Array<PostType> = [

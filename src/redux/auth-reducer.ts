@@ -1,11 +1,10 @@
 import {stopSubmit} from 'redux-form'
 import {getCaptchaThunkCreator} from './security-reducer'
 
-import {AuthResultCodesEnum, AuthResultCodesWithCaptcha} from '../api/api'
+import {AuthResultCodes} from '../api/api'
 import {Dispatch} from "redux"
 import {InferActionsTypes} from "./redux-store";
 import {authAPI} from "../api/auth-api";
-
 
 
 const initialState = {
@@ -58,7 +57,7 @@ export type AuthMeThunkType = (dispatch: Dispatch<{type: string, userData: UserD
 export const authMeThunkCreator = (): AuthMeThunkType => async (dispatch) => {
     const response = await authAPI.authMe();
 
-    if (response.resultCode === AuthResultCodesEnum.Success) {
+    if (response.resultCode === AuthResultCodes.Success) {
         dispatch(actions.setUserData(response.data));
     }
 };
@@ -73,11 +72,11 @@ export const authLoginThunkCreator = (formData: AuthLoginFormDataType) => async 
     const response = await authAPI.authLogin(formData);
 
     switch (response.resultCode) {
-        case AuthResultCodesEnum.Success: {
+        case AuthResultCodes.Success: {
             dispatch(authMeThunkCreator());
             break;
         }
-        case AuthResultCodesWithCaptcha.CaptchaIsRequired: {
+        case AuthResultCodes.CaptchaIsRequired: {
             dispatch(getCaptchaThunkCreator());
             break;
         }
@@ -88,7 +87,7 @@ export const authLoginThunkCreator = (formData: AuthLoginFormDataType) => async 
 export const authLogout = () => async (dispatch: Dispatch<ActionsTypes>) => {
     const response = await authAPI.authLogout();
 
-    if (response.resultCode === AuthResultCodesEnum.Success) {
+    if (response.resultCode === AuthResultCodes.Success) {
         dispatch(actions.removeUserData());
     }
 };
