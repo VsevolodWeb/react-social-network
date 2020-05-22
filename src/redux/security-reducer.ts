@@ -25,7 +25,7 @@ export const actions = {
 
 export const getCaptchaThunkCreator = () => async (dispatch: Dispatch<ActionsType>) => {
     const response = await securityAPI.getCaptcha()
-    dispatch(actions.getCaptcha(response.data.url))
+    dispatch(actions.getCaptcha(response.url))
 };
 
 export default securityReducer

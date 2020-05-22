@@ -80,7 +80,7 @@ export const actions = {
 		userId,
 		isFetching
 	} as const)
-};
+}
 
 
 export const getUsersThunkCreator = (currentPage: number, pageSize: number): ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes> => {

@@ -51,7 +51,7 @@ type UserDataType = {
 const actions = {
     setUserData: (userData: UserDataType) => ({type: "auth/SET_USER_DATA", userData} as const),
     removeUserData: () => ({type: "auth/REMOVE_USER_DATA"} as const)
-} as const
+}
 
 export type AuthMeThunkType = (dispatch: Dispatch<{type: string, userData: UserDataType}>) => void
 export const authMeThunkCreator = (): AuthMeThunkType => async (dispatch) => {
