@@ -1,9 +1,8 @@
 import {updateObjectInArray} from "../utils/object-helpers"
 import {UserType} from "./types/types"
-import {ThunkAction} from "redux-thunk"
-import {AppStateType, InferActionsTypes} from "./redux-store"
+import {InferActionsTypes} from "./redux-store"
 import {Dispatch} from "redux"
-import {usersAPI} from "../api/users-api";
+import {usersAPI} from "../api/users-api"
 
 
 const initialState = {
@@ -13,13 +12,13 @@ const initialState = {
 	currentPage: 1,
 	isFetching: true,
 	isFollowing: [] as Array<number>
-};
+}
 
-export type UsersInitialStateType = typeof initialState
+export type InitialStateType = typeof initialState
 
 type ActionsTypes = InferActionsTypes<typeof actions>
 
-const usersReducer = (state = initialState, action: ActionsTypes): UsersInitialStateType => {
+const usersReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
 	switch (action.type) {
 		case "SET_USERS":
 			return {
@@ -83,15 +82,13 @@ export const actions = {
 }
 
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number): ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes> => {
-	return async dispatch => {
-		const response = await usersAPI.getUsers(currentPage, pageSize)
+export const getUsersThunkCreator = (currentPage: number, pageSize: number) => async (dispatch: Dispatch<ActionsTypes>) => {
+	const response = await usersAPI.getUsers(currentPage, pageSize)
 
-		dispatch(actions.setTotalUsersCount(response.totalCount))
-		dispatch(actions.setUsers(response.items))
-		dispatch(actions.setIsFetching(false))
-	};
-};
+	dispatch(actions.setTotalUsersCount(response.totalCount))
+	dispatch(actions.setUsers(response.items))
+	dispatch(actions.setIsFetching(false))
+}
 
 
 type toggleFollowingUserApiResponseType = {
@@ -109,14 +106,14 @@ const toggleFollowingUser = async (apiMethod: (userId: number) => Promise<toggle
 		dispatch(actionCreator(userId))
 		dispatch(actions.setIsFollowing(userId, false))
 	}
-};
+}
 
 export const followThunkCreator = (userId: number) => (dispatch: Dispatch<ActionsTypes>) => {
 	return toggleFollowingUser(usersAPI.followUser, actions.follow, userId, dispatch)
-};
+}
 
 export const unfollowThunkCreator = (userId: number) => (dispatch: Dispatch<ActionsTypes>) => {
 	return toggleFollowingUser(usersAPI.unfollowUser, actions.unfollow, userId, dispatch)
-};
+}
 
 export default usersReducer

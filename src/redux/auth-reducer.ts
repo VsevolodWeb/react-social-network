@@ -3,8 +3,9 @@ import {getCaptchaThunkCreator} from './security-reducer'
 
 import {AuthResultCodes} from '../api/api'
 import {Dispatch} from "redux"
-import {InferActionsTypes} from "./redux-store";
-import {authAPI} from "../api/auth-api";
+import {AppStateType, InferActionsTypes} from "./redux-store"
+import {authAPI, AuthLoginFormDataType} from "../api/auth-api"
+import {ThunkDispatch} from "redux-thunk"
 
 
 const initialState = {
@@ -12,9 +13,9 @@ const initialState = {
     email: null as null | string,
     login: null as null | string,
     isAuth: false
-};
-type InitialStateType = typeof initialState
+}
 
+type InitialStateType = typeof initialState
 type ActionsTypes = InferActionsTypes<typeof actions>
 
 const authReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
@@ -24,7 +25,7 @@ const authReducer = (state = initialState, action: ActionsTypes): InitialStateTy
                 ...state,
                 ...action.userData,
                 isAuth: true
-            };
+            }
 
         case "auth/REMOVE_USER_DATA": {
             return {
@@ -32,13 +33,13 @@ const authReducer = (state = initialState, action: ActionsTypes): InitialStateTy
                 email: null,
                 login: null,
                 isAuth: false
-            };
+            }
         }
 
         default:
-            return state; 
+            return state
     }
-};
+}
 
 
 
@@ -53,36 +54,29 @@ const actions = {
     removeUserData: () => ({type: "auth/REMOVE_USER_DATA"} as const)
 }
 
-export type AuthMeThunkType = (dispatch: Dispatch<{type: string, userData: UserDataType}>) => void
-export const authMeThunkCreator = (): AuthMeThunkType => async (dispatch) => {
+export const authMeThunkCreator = () => async (dispatch: Dispatch<ActionsTypes>) => {
     const response = await authAPI.authMe();
 
     if (response.resultCode === AuthResultCodes.Success) {
         dispatch(actions.setUserData(response.data));
     }
-};
-
-export type AuthLoginFormDataType = {
-    email: string
-    password: string
-    rememberMe: boolean
-    captcha: string
 }
-export const authLoginThunkCreator = (formData: AuthLoginFormDataType) => async (dispatch: Dispatch<ActionsTypes> | any) => {
+
+export const authLoginThunkCreator = (formData: AuthLoginFormDataType) => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionsTypes>) => {
     const response = await authAPI.authLogin(formData);
 
     switch (response.resultCode) {
         case AuthResultCodes.Success: {
-            dispatch(authMeThunkCreator());
+            await dispatch(authMeThunkCreator());
             break;
         }
         case AuthResultCodes.CaptchaIsRequired: {
-            dispatch(getCaptchaThunkCreator());
+            await dispatch(getCaptchaThunkCreator());
             break;
         }
         default: dispatch(stopSubmit("login", {_error: response.messages[0]}));
     }
-};
+}
 
 export const authLogout = () => async (dispatch: Dispatch<ActionsTypes>) => {
     const response = await authAPI.authLogout();
@@ -90,6 +84,6 @@ export const authLogout = () => async (dispatch: Dispatch<ActionsTypes>) => {
     if (response.resultCode === AuthResultCodes.Success) {
         dispatch(actions.removeUserData());
     }
-};
+}
 
 export default authReducer;

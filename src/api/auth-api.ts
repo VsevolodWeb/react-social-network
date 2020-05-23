@@ -1,7 +1,7 @@
 import {instance, ResponseType} from "./api"
 
 
-type AuthLoginFormDataType = {
+export type AuthLoginFormDataType = {
     email: string
     password: string
     rememberMe: boolean

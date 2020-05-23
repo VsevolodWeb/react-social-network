@@ -8,7 +8,7 @@ import {
 	followThunkCreator,
 	unfollowThunkCreator,
 	getUsersThunkCreator,
-	UsersInitialStateType,
+	InitialStateType,
 	actions
 } from '../../redux/users-reducer'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
@@ -16,7 +16,7 @@ import { getUsers } from '../../redux/users-selectors';
 import {AppStateType} from "../../redux/redux-store";
 
 type MapStateToPropsType = {
-    data: UsersInitialStateType
+    data: InitialStateType
 }
 
 type MapDispatchToPropsType = {

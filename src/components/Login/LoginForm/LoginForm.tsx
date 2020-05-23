@@ -4,7 +4,7 @@ import {reduxForm, Field, InjectedFormProps} from 'redux-form';
 import { Input } from '../../common/FormsControls/FormsControls';
 import { required } from '../../../utils/validators';
 import s from'./LoginForm.module.css';
-import {AuthLoginFormDataType} from "../../../redux/auth-reducer";
+import {AuthLoginFormDataType} from "../../../api/auth-api";
 
 type OwnPropsType = {
 	captchaURL: string | null
