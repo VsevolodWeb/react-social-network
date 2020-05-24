@@ -1,5 +1,5 @@
 import {RESET_FORM} from './actions/actions'
-import {InferActionsTypes} from "./redux-store";
+import {InferActionsTypes} from "./redux-store"
 
 
 const initialState = {
@@ -37,9 +37,9 @@ const dialogsReducer = (state = initialState, action: ActionsTypes): InitialStat
                 text: action.message,
                 from: 'Vsevolod'
             }
-            
+
             stateCopy.dialogsData[action.id - 1].messages.push(newMessage)
-            
+
             return stateCopy
         }
 

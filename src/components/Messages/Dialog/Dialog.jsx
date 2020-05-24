@@ -7,7 +7,7 @@ const Dialog = props => {
     return(
         <li>
             <NavLink to={"/messages/" + props.id} className={s.item} activeClassName={s.active}>
-                <div className={s.img} alt={props.name} />
+                <div className={s.img} />
                 <div>{props.name}</div>
             </NavLink>
         </li>

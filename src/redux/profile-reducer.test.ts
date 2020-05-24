@@ -1,9 +1,10 @@
 import profileReducer, { actions, initialState } from './profile-reducer';
+import {InitialStateType} from "./profile-reducer";
 
 const messagePost = 'text from test';
 const newStateAfterAddPost = profileReducer(initialState, actions.addPost(messagePost));
 
-const getPostDataLength = state => state.postsData.length;
+const getPostDataLength = (state: InitialStateType) => state.postsData.length;
 
 
 it('the number of posts should increase', () => {

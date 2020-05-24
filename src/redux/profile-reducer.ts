@@ -26,7 +26,7 @@ export const initialState = {
     isFetching: false
 };
 
-type InitialStateType = typeof initialState
+export type InitialStateType = typeof initialState
 type ActionsTypes = InferActionsTypes<typeof actions>
 
 const profileReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
@@ -59,7 +59,7 @@ const profileReducer = (state = initialState, action: ActionsTypes): InitialStat
         default:
             return state
     }
-};
+}
 
 export const actions = {
     addPost: (message: string) => ({type: "profile/ADD_POST", message} as const),
@@ -96,7 +96,7 @@ export const updateUserStatusThunkCreator = (status: string) => async (dispatch:
     }
 }
 
-export const setUserPhotoThunkCreator = (photo: string) => async (dispatch: Dispatch<ActionsTypes>) => {
+export const setUserPhotoThunkCreator = (photo: File) => async (dispatch: Dispatch<ActionsTypes>) => {
     const response = await profileAPI.updateUserPhoto(photo)
 
     if(response.resultCode === 0) {
