@@ -28,3 +28,9 @@ export type ProfileType = {
     }
     photos: PhotosType
 }
+
+export type DialogType = {
+    id: number
+    name: string
+    messages: Array<{id: number, text: string, from: string}>
+}

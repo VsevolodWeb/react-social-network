@@ -4,17 +4,17 @@ import { Route } from 'react-router-dom';
 import s from './Messages.module.css';
 import Dialog from './Dialog/Dialog'
 import MessageList from './MessageList/MessageList'
+import {MapDispatchToPropsType, MapStateToPropsType} from "./MessagesContainer";
 
-const Messages = (props) => {
-    let dialogElements = props.dialogs.dialogsData.map(dialog => <Dialog id={dialog.id} name={dialog.name} key={dialog.id} />);
-    let messageListRoute = props.dialogs.dialogsData
+const Messages: React.FC<MapStateToPropsType & MapDispatchToPropsType> = (props) => {
+    let dialogElements = props.dialogs.map(dialog => <Dialog id={dialog.id} name={dialog.name} key={dialog.id} />);
+    let messageListRoute = props.dialogs
             .map(dialog => <Route path={"/messages/" + dialog.id} key={dialog.id}
                                 render={() => <MessageList
                                     dialog={dialog}
                                     addMessage={props.addMessage} resetMessage={props.resetMessage} />}
                             />
                 );
-
     return (
         <>
             <h1 className="title">Messages</h1>
