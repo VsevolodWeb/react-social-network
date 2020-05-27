@@ -1,8 +1,12 @@
-import React from 'react';
-import Message from './Message/Message';
-import MessageForm from './MessageForm/MessageForm';
-import {DialogType} from "../../../redux/types/types";
-import {actions} from "../../../redux/dialogs-reducer";
+import React from 'react'
+import Message from './Message/Message'
+import MessageForm from './MessageForm/MessageForm'
+import {DialogType} from "../../../redux/types/types"
+import {actions} from "../../../redux/dialogs-reducer"
+
+export type MessageFormType = {
+    message: string
+}
 
 type PropsType = {
     dialog: DialogType
@@ -13,20 +17,20 @@ type PropsType = {
 const MessageList: React.FC<PropsType> = props => {
     let messageList = props.dialog.messages.map(item => {
         return <Message name={props.dialog.name} data={item} key={item.id} />
-    });
+    })
 
-    const addMessage = data => {
+    const addMessage = (data: MessageFormType) => {
         props.addMessage(props.dialog.id, data.message);
         props.resetMessage();
-    };
+    }
 
     messageList.push(
         <div key="0">
             <MessageForm onSubmit={addMessage} />
         </div>
-    );
+    )
 
-    return messageList
-};
+    return <>{messageList}</>
+}
 
-export default MessageList;
+export default MessageList

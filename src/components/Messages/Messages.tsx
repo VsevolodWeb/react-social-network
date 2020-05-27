@@ -7,8 +7,8 @@ import MessageList from './MessageList/MessageList'
 import {MapDispatchToPropsType, MapStateToPropsType} from "./MessagesContainer";
 
 const Messages: React.FC<MapStateToPropsType & MapDispatchToPropsType> = (props) => {
-    let dialogElements = props.dialogs.map(dialog => <Dialog id={dialog.id} name={dialog.name} key={dialog.id} />);
-    let messageListRoute = props.dialogs
+    let dialogElements = props.dialogs.dialogsData.map(dialog => <Dialog id={dialog.id} name={dialog.name} key={dialog.id} />);
+    let messageListRoute = props.dialogs.dialogsData
             .map(dialog => <Route path={"/messages/" + dialog.id} key={dialog.id}
                                 render={() => <MessageList
                                     dialog={dialog}
