@@ -6,13 +6,13 @@ import { required } from '../../../utils/validators';
 import s from'./LoginForm.module.css';
 import {AuthLoginFormDataType} from "../../../api/auth-api";
 
-type OwnPropsType = {
+export type OwnPropsType = {
 	captchaURL: string | null
 }
 
 type PropsType = InjectedFormProps<AuthLoginFormDataType, OwnPropsType> & OwnPropsType
 
-const LoginForm: React.FC<PropsType> = props => {
+export const LoginForm: React.FC<PropsType> = props => {
     return (
         <div className={s.container}>
             <form onSubmit={props.handleSubmit}>

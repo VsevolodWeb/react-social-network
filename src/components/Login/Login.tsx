@@ -19,7 +19,7 @@ type OwnType = {}
 type PropsType = MapStateToPropsType & MapDispatchToProps & OwnType;
 
 const Login: React.FC<PropsType> = props => {
-    const loginSubmit = (formData: any) => {
+    const loginSubmit = (formData: AuthLoginFormDataType) => {
         props.authLogin(formData);
     };
 
