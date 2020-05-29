@@ -1,9 +1,14 @@
 import React from 'react';
 import s from './FormsControls.module.css';
-import {WrappedFieldMetaProps, WrappedFieldProps} from "redux-form";
+import {BaseFieldProps, Field, GenericFieldHTMLAttributes, WrappedFieldMetaProps, WrappedFieldProps} from "redux-form";
+
 
 type FormsControlType = {
 	meta: WrappedFieldMetaProps
+}
+
+export const CustomField: React.FC = props => {
+    return <Field {...props}/>
 }
 const FormControl: React.FC<FormsControlType> = (props) => {
     const hasError = props.meta.touched && props.meta.error;
