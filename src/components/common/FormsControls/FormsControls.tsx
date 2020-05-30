@@ -1,15 +1,24 @@
-import React from 'react';
+import React, {InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes} from 'react';
 import s from './FormsControls.module.css';
-import {BaseFieldProps, Field, GenericFieldHTMLAttributes, WrappedFieldMetaProps, WrappedFieldProps} from "redux-form";
+import {
+    BaseFieldProps,
+    Field,
+    WrappedFieldMetaProps,
+    WrappedFieldProps
+} from "redux-form";
 
 
 type FormsControlType = {
-	meta: WrappedFieldMetaProps
+    meta: WrappedFieldMetaProps
 }
 
-export const CustomField: React.FC = props => {
+type FieldProps = InputHTMLAttributes<HTMLInputElement> &
+    SelectHTMLAttributes<HTMLSelectElement> &
+    TextareaHTMLAttributes<HTMLTextAreaElement> & BaseFieldProps<InputType>
+export const CustomField = <T extends String>(props: FieldProps & {name: T}) => {
     return <Field {...props}/>
 }
+
 const FormControl: React.FC<FormsControlType> = (props) => {
     const hasError = props.meta.touched && props.meta.error;
 
@@ -30,7 +39,7 @@ export const Textarea: React.FC<WrappedFieldProps> = ({input, meta, ...props}) =
 };
 
 type InputType = WrappedFieldProps & {
-	labelText: string
+    labelText: string
 }
 export const Input: React.FC<InputType> = ({input, meta, labelText, ...props}) => {
     return (

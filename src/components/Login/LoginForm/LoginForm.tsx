@@ -1,7 +1,7 @@
 import React from 'react';
-import {reduxForm, Field, InjectedFormProps} from 'redux-form';
+import {reduxForm, InjectedFormProps} from 'redux-form';
 
-import { Input } from '../../common/FormsControls/FormsControls';
+import {CustomField, Input} from '../../common/FormsControls/FormsControls';
 import { required } from '../../../utils/validators';
 import s from'./LoginForm.module.css';
 import {AuthLoginFormDataType} from "../../../api/auth-api";
@@ -10,6 +10,7 @@ export type OwnPropsType = {
 	captchaURL: string | null
 }
 
+type FieldNameType = "email" | "password" | "rememberMe" | "captcha"
 type PropsType = InjectedFormProps<AuthLoginFormDataType, OwnPropsType> & OwnPropsType
 
 export const LoginForm: React.FC<PropsType> = props => {
@@ -17,11 +18,11 @@ export const LoginForm: React.FC<PropsType> = props => {
         <div className={s.container}>
             <form onSubmit={props.handleSubmit}>
                 <div className="form">
-                    <Field component={Input} name="email" placeholder="Login" validate={[required]} />
-                    <Field component={Input} name="password" type="password" placeholder="Password" validate={[required]} />
+                    <CustomField<FieldNameType> component={Input} name="email" placeholder="Login" validate={[required]} />
+                    <CustomField<FieldNameType> component={Input} name="password" type="password" placeholder="Password" validate={[required]} />
                     <div className="formGroup">
                         <label htmlFor="remember-me">
-                            <Field component="input" name="rememberMe" type="checkbox" id="remember-me" /> Remember me
+                            <CustomField<FieldNameType> component="input" name="rememberMe" type="checkbox" id="remember-me" /> Remember me
                         </label>
                     </div>
                     {props.error ? <div className="formGroup">
@@ -30,7 +31,7 @@ export const LoginForm: React.FC<PropsType> = props => {
                     {props.captchaURL ?
                         <>
                             <img src={props.captchaURL} alt="captcha" width="150"/>
-                            <Field component={Input} name="captcha" validate={[required]}/>
+                            <CustomField<FieldNameType> component={Input} name="captcha" validate={[required]}/>
                         </>
                         : null}
                     <div className="formGroup">
