@@ -5,7 +5,12 @@ import { Textarea } from '../../../common/FormsControls/FormsControls';
 
 const maxLength30 = maxLength(30);
 
-const PostsForm = props => {
+type FormDataType = {
+
+}
+type PropsType = InjectedFormProps<AuthLoginFormDataType, OwnPropsType> & OwnPropsType;
+
+const PostsForm: React.FC<PropsType> = props => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div className="form">

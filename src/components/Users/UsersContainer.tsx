@@ -52,9 +52,10 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
     data: getUsers(state)
 });
 
-export default compose(
+export default compose<React.ComponentType>(
     connect<MapStateToPropsType, MapDispatchToPropsType, OwnType, AppStateType>(mapStateToProps, {
 	    setCurrentPage: actions.setCurrentPage,
         follow: followThunkCreator, unfollow: unfollowThunkCreator, getUsers: getUsersThunkCreator
-    }), withAuthRedirect
+    }),
+    withAuthRedirect
 )(UsersContainer);

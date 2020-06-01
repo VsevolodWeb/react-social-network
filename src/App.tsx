@@ -24,7 +24,7 @@ type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsType;
 const App: React.FC<PropsType> = props => {
 	useEffect(() => {
 		props.initialize()
-	}, [])
+	}, [props])
 	
 	if (!props.initialized) {
 		return <Preloader/>

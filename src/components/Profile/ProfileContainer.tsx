@@ -9,9 +9,18 @@ import {actions, getUserProfileThunkCreator, getUserStatusThunkCreator,
 import Profile from './Profile';
 import Preloader from '../common/Preloader/Preloader';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
+import {ProfileType} from "../../redux/types/types";
 
+type MapStateToPropsType = {
+    data: ProfileType
+    userId: number
+}
 
-class ProfileContainer extends React.Component {
+type MapDispatchToPropsType = {
+
+}
+
+class ProfileContainer extends React.Component<> {
     getUserInfo() {
         let resultUserId = this.props.match.params.userId || this.props.userId;
         if(resultUserId) {

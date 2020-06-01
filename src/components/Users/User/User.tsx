@@ -2,12 +2,16 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import s from './User.module.css'
 import avatar from '../../../components/Profile/Info/avatar.jpg';
+import {UserType} from "../../../redux/types/types";
 
-const User = props => {
-    let imgSource = "";
-    try {
-        imgSource = props.user.photos.large;
-    } catch {}
+type PropsType = {
+    user: UserType
+    action: (userId: number) => void
+    isFollowingArray: Array<number>
+}
+
+const User: React.FC<PropsType> = props => {
+    let imgSource = props.user.photos.large || ""
 
     return <div className={s.item}>
                 <NavLink to={`profile/${props.user.id}`}>
@@ -15,7 +19,10 @@ const User = props => {
                 </NavLink>
                 <div className={s.name}>{props.user.name}</div>
                 <div className={s.status}>{props.user.status}</div>
-                <button className={s.button + " button"} onClick={() => props.action(props.user.id)} disabled={props.isFollowing.some(el => el === props.user.id) ? 'disabled': ''}>
+                <button className={s.button + " button"}
+                        onClick={() => props.action(props.user.id)}
+                        disabled={props.isFollowingArray.some(el => el === props.user.id) ? true: undefined}
+                >
                     {props.user.followed ? 'Unfollow': 'Follow'}
                 </button>
            </div>
