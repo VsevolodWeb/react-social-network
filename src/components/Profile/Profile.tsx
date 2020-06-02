@@ -4,8 +4,9 @@ import s from './Profile.module.css';
 import Banner from './Banner/Banner';
 import Info from './Info/Info';
 import Posts from './Posts/Posts';
+import {PropsType} from "./ProfileContainer";
 
-const Profile = props => {
+const Profile = (props: PropsType) => {
     return (
         <>
             <h1 className="title">Profile</h1>

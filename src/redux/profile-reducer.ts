@@ -7,14 +7,14 @@ import {AppStateType, InferActionsTypes} from './redux-store'
 import {profileAPI} from "../api/profile-api";
 
 
-type PostType = {
+export type PostType = {
     id: number
     text: string
     name: string
     likeCount: number
 }
 
-const PostsData: Array<PostType> = [
+export const PostsData: Array<PostType> = [
     {id: 1, text: 'Hello', name: 'Vsevolod', likeCount: 1},
     {id: 2, text: 'Hello', name: 'Ekaterina', likeCount: 3}
 ]

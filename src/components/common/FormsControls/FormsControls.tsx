@@ -51,3 +51,5 @@ export const Input: React.FC<InputType> = ({input, meta, labelText, ...props}) =
         </FormControl>
     )
 };
+
+export type FieldNames<T> = Extract<keyof T, string>

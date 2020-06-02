@@ -1,7 +1,7 @@
 import React from 'react';
 import {reduxForm, InjectedFormProps} from 'redux-form';
 
-import {CustomField, Input} from '../../common/FormsControls/FormsControls';
+import {CustomField, FieldNames, Input} from '../../common/FormsControls/FormsControls';
 import { required } from '../../../utils/validators';
 import s from'./LoginForm.module.css';
 import {AuthLoginFormDataType} from "../../../api/auth-api";
@@ -9,8 +9,7 @@ import {AuthLoginFormDataType} from "../../../api/auth-api";
 export type OwnPropsType = {
 	captchaURL: string | null
 }
-
-type FieldNameType = "email" | "password" | "rememberMe" | "captcha"
+type FieldNameType = FieldNames<AuthLoginFormDataType>
 type PropsType = InjectedFormProps<AuthLoginFormDataType, OwnPropsType> & OwnPropsType
 
 export const LoginForm: React.FC<PropsType> = props => {

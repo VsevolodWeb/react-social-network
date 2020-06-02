@@ -39,9 +39,7 @@ const App: React.FC<PropsType> = props => {
 					<div className="content">
 						<Switch>
 							<Redirect exact from="/" to="/profile"/>
-							<Route path="/profile/:userId?" render={() => {
-								return <Suspense fallback={<Preloader/>}><ProfileContainer/></Suspense>
-							}}/>
+							<Route path="/profile/:userId?" render={() => <Suspense fallback={<Preloader/>}><ProfileContainer/></Suspense>}/>
 							<Route path="/messages" component={MessagesContainer}/>
 							<Route path="/users" render={() => {
 								return <Suspense fallback={<Preloader/>}><UsersContainer/></Suspense>

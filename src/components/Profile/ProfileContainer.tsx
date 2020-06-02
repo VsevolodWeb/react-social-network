@@ -1,26 +1,36 @@
 import React from 'react';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
+import {withRouter, RouteComponentProps} from 'react-router-dom';
 
-import {actions, getUserProfileThunkCreator, getUserStatusThunkCreator,
-        updateUserStatusThunkCreator, setUserPhotoThunkCreator,
-        saveUserProfileThunkCreator} from '../../redux/profile-reducer'
+import {
+    actions, getUserProfileThunkCreator, getUserStatusThunkCreator,
+    updateUserStatusThunkCreator, setUserPhotoThunkCreator,
+    saveUserProfileThunkCreator, InitialStateType
+} from '../../redux/profile-reducer'
 import Profile from './Profile';
 import Preloader from '../common/Preloader/Preloader';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {ProfileType} from "../../redux/types/types";
+import {AppStateType} from "../../redux/redux-store";
 
 type MapStateToPropsType = {
-    data: ProfileType
-    userId: number
+    data: InitialStateType
+    userId: null | number
 }
-
 type MapDispatchToPropsType = {
-
+    addPost: typeof actions.addPost
+    getUserProfile: (userId: number) => void
+    getUserStatus: (userId: number) => void
+    updateUserStatus: (status: string) => void
+    resetForm: typeof actions.resetForm
+    updateUserPhoto: (photo: File) => void
+    saveUserProfile: (userInfo: ProfileType) => void
 }
+type OwnPropsType = {}
+export type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsType & RouteComponentProps<{userId: number}>
 
-class ProfileContainer extends React.Component<> {
+class ProfileContainer extends React.Component<PropsType> {
     getUserInfo() {
         let resultUserId = this.props.match.params.userId || this.props.userId;
         if(resultUserId) {
@@ -45,7 +55,7 @@ class ProfileContainer extends React.Component<> {
 }
 
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: AppStateType) => {
     return {
         data: state.profile,
         userId: state.auth.id
@@ -53,8 +63,8 @@ const mapStateToProps = state => {
 };
 
 
-export default compose(
-    connect(mapStateToProps, {
+export default compose<React.ComponentType>(
+    connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
         addPost: actions.addPost, getUserProfile: getUserProfileThunkCreator, getUserStatus: getUserStatusThunkCreator,
         updateUserStatus: updateUserStatusThunkCreator, resetForm: actions.resetForm, updateUserPhoto: setUserPhotoThunkCreator,
         saveUserProfile: saveUserProfileThunkCreator

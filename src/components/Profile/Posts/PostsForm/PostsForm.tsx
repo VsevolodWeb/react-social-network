@@ -1,20 +1,20 @@
 import React from 'react';
-import {reduxForm, Field} from 'redux-form';
+import {reduxForm, Field, InjectedFormProps} from 'redux-form';
 import { required, maxLength } from '../../../../utils/validators';
-import { Textarea } from '../../../common/FormsControls/FormsControls';
+import {CustomField, FieldNames, Textarea} from '../../../common/FormsControls/FormsControls';
+import {FormDataType} from "../Posts";
 
 const maxLength30 = maxLength(30);
 
-type FormDataType = {
-
-}
-type PropsType = InjectedFormProps<AuthLoginFormDataType, OwnPropsType> & OwnPropsType;
+type OwnPropsType = {}
+type PropsType = InjectedFormProps<FormDataType, OwnPropsType> & OwnPropsType;
+type FieldNameType = FieldNames<FormDataType>
 
 const PostsForm: React.FC<PropsType> = props => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div className="form">
-                <Field name="postMessage" placeholder="Сообщение" component={Textarea} validate={[required, maxLength30]} />
+                <CustomField<FieldNameType> name="postMessage" placeholder="Сообщение" component={Textarea} validate={[required, maxLength30]} />
                 <div className="formGroup">
                     <button className="button">Отправить</button>
                 </div>
@@ -23,6 +23,6 @@ const PostsForm: React.FC<PropsType> = props => {
     )
 };
 
-export default reduxForm({
+export default reduxForm<FormDataType, OwnPropsType>({
     form: 'addPost'
 })(PostsForm);
