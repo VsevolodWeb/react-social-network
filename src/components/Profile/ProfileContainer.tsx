@@ -6,7 +6,7 @@ import {withRouter, RouteComponentProps} from 'react-router-dom';
 import {
     actions, getUserProfileThunkCreator, getUserStatusThunkCreator,
     updateUserStatusThunkCreator, setUserPhotoThunkCreator,
-    saveUserProfileThunkCreator, InitialStateType
+    saveUserProfileThunkCreator
 } from '../../redux/profile-reducer'
 import Profile from './Profile';
 import Preloader from '../common/Preloader/Preloader';
@@ -14,10 +14,7 @@ import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {ProfileType} from "../../redux/types/types";
 import {AppStateType} from "../../redux/redux-store";
 
-type MapStateToPropsType = {
-    data: InitialStateType
-    userId: null | number
-}
+type MapStateToPropsType = ReturnType<typeof mapStateToProps>
 type MapDispatchToPropsType = {
     addPost: typeof actions.addPost
     getUserProfile: (userId: number) => void
@@ -28,11 +25,12 @@ type MapDispatchToPropsType = {
     saveUserProfile: (userInfo: ProfileType) => void
 }
 type OwnPropsType = {}
-export type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsType & RouteComponentProps<{userId: number}>
+export type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsType & RouteComponentProps<{userId?: string}>
 
 class ProfileContainer extends React.Component<PropsType> {
     getUserInfo() {
-        let resultUserId = this.props.match.params.userId || this.props.userId;
+        let resultUserId = this.props.match.params.userId ? parseInt(this.props.match.params.userId) : this.props.userId;
+
         if(resultUserId) {
             this.props.getUserProfile(resultUserId);
             this.props.getUserStatus(resultUserId);
@@ -42,8 +40,8 @@ class ProfileContainer extends React.Component<PropsType> {
     componentDidMount() {
         this.getUserInfo();
     }
-    
-    componentDidUpdate(prevProps, prevState, snapshot) {
+
+    componentDidUpdate(prevProps: PropsType, prevState: PropsType) {
         if(prevProps.match.params.userId !== this.props.match.params.userId) {
             this.getUserInfo();
         }

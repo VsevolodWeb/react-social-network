@@ -15,7 +15,7 @@ type FormsControlType = {
 type FieldProps = InputHTMLAttributes<HTMLInputElement> &
     SelectHTMLAttributes<HTMLSelectElement> &
     TextareaHTMLAttributes<HTMLTextAreaElement> & BaseFieldProps<InputType>
-export const CustomField = <T extends String>(props: FieldProps & {name: T}) => {
+export const CustomField = <T extends String>(props: FieldProps & {name: T, labelText?: string}) => {
     return <Field {...props}/>
 }
 

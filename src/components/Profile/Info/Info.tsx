@@ -1,12 +1,23 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import s from './Info.module.css'
 import avatar from './avatar.jpg';
 import StatusWithHooks from './Status/StatusWithHooks';
 import Data from './Data/Data';
 import DataForm from './DataForm/DataForm';
+import {ProfileType} from "../../../redux/types/types";
 
-const Info = props => {
-    let imgSource = "";
+
+type PropsType = ProfileType & {
+    userStatus: string
+    updateUserStatus: (status: string) => void
+    loginUserId: number | null
+    aboutMe: string
+    updateUserPhoto: (photo: File) => void
+    saveUserProfile: (userInfo: ProfileType) => Promise<any>
+}
+
+const Info: React.FC<PropsType> = props => {
+    let imgSource: string | null = "";
     let editingAbility = props.loginUserId === props.userId;
     let [editModeProfile, setEditModeProfile] = useState(false);
 
@@ -14,11 +25,13 @@ const Info = props => {
         imgSource = props.photos.large;
     } catch {}
 
-    const onPhotoSelected = e => {
-        props.updateUserPhoto(e.target.files[0]);
+    const onPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
+        if(e.target.files?.length) {
+            props.updateUserPhoto(e.target.files[0]);
+        }
     };
 
-    const dataFormSubmit = formData => {
+    const dataFormSubmit = (formData: ProfileType) => {
         props.saveUserProfile(formData).then(() => {
             setEditModeProfile(false);
         });
@@ -40,13 +53,13 @@ const Info = props => {
                                                     updateUserStatus={props.updateUserStatus} /> : null}
             </div>
             <div className={s.text}>
-                <button className={"button " + s.button} onClick={changeEditModeProfile}>Edit</button>
+                {editingAbility ? <button className={"button " + s.button} onClick={changeEditModeProfile}>Edit</button> : null}
                 {editModeProfile ?
-                    <DataForm onSubmit={dataFormSubmit} initialValues={props} aboutMe={props.aboutMe} contacts={props.contacts}
-                            lookingForAJob={props.lookingForAJob} lookingForAJobDescription={props.lookingForAJobDescription} /> :
+                    <DataForm onSubmit={dataFormSubmit} contacts={props.contacts}
+                            lookingForAJob={props.lookingForAJob} lookingForAJobDescription={props.lookingForAJobDescription} aboutMe={props.aboutMe} /> :
                     <>
-                        <Data aboutMe={props.aboutMe} contacts={props.contacts} lookingForAJob={props.lookingForAJob}
-                            lookingForAJobDescription={props.lookingForAJobDescription} className={s.info} />
+                        <Data contacts={props.contacts} lookingForAJob={props.lookingForAJob}
+                            lookingForAJobDescription={props.lookingForAJobDescription} aboutMe={props.aboutMe} />
                     </>
                 }
             </div>

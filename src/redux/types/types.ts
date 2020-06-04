@@ -11,21 +11,23 @@ export type UserType = {
     followed: boolean
 }
 
+export type ProfileContactsType = {
+    github: string
+    vk: string
+    facebook: string
+    instagram: string
+    twitter: string
+    website: string
+    youtube: string
+    mainLink: string
+}
 export type ProfileType = {
     userId: number
     lookingForAJob: boolean
     lookingForAJobDescription: string
+    aboutMe: string
     fullName: string
-    contacts: {
-        github: string
-        vk: string
-        facebook: string
-        instagram: string
-        twitter: string
-        website: string
-        youtube: string
-        mainLink: string
-    }
+    contacts: ProfileContactsType
     photos: PhotosType
 }
 

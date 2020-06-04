@@ -1,5 +1,5 @@
 import React from 'react';
-import {reduxForm, Field, InjectedFormProps} from 'redux-form';
+import {reduxForm, InjectedFormProps} from 'redux-form';
 import { required, maxLength } from '../../../../utils/validators';
 import {CustomField, FieldNames, Textarea} from '../../../common/FormsControls/FormsControls';
 import {FormDataType} from "../Posts";
