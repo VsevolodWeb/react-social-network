@@ -22,7 +22,7 @@ type MapDispatchToPropsType = {
     updateUserStatus: (status: string) => void
     resetForm: typeof actions.resetForm
     updateUserPhoto: (photo: File) => void
-    saveUserProfile: (userInfo: ProfileType) => void
+    saveUserProfile: (userInfo: ProfileType) => Promise<any>
 }
 type OwnPropsType = {}
 export type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsType & RouteComponentProps<{userId?: string}>
@@ -62,7 +62,7 @@ const mapStateToProps = (state: AppStateType) => {
 
 
 export default compose<React.ComponentType>(
-    connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
+    connect(mapStateToProps, {
         addPost: actions.addPost, getUserProfile: getUserProfileThunkCreator, getUserStatus: getUserStatusThunkCreator,
         updateUserStatus: updateUserStatusThunkCreator, resetForm: actions.resetForm, updateUserPhoto: setUserPhotoThunkCreator,
         saveUserProfile: saveUserProfileThunkCreator

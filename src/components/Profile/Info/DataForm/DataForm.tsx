@@ -1,14 +1,14 @@
 import React from 'react';
-import {reduxForm, Field, InjectedFormProps} from 'redux-form';
+import {reduxForm, InjectedFormProps} from 'redux-form';
 
 import {CustomField, FieldNames, Input} from '../../../common/FormsControls/FormsControls';
 import {ProfileContactsType, ProfileType} from "../../../../redux/types/types";
 
 type OwnPropsType = {
-    aboutMe: string
-    contacts: ProfileContactsType
-    lookingForAJob: boolean
-    lookingForAJobDescription: string
+    aboutMe?: string
+    contacts?: ProfileContactsType
+    lookingForAJob?: boolean
+    lookingForAJobDescription?: string
 }
 type PropsType = InjectedFormProps<ProfileType, OwnPropsType> & OwnPropsType;
 type FieldNameType = FieldNames<ProfileType>
@@ -25,8 +25,8 @@ const DataForm: React.FC<PropsType> = props => {
     }
 
     return  <>
-                {props.error ? props.error.map((item, index) => <div key={index} className="formGroup__errorText">{item}</div>) : null}
-                <form onSu bmit={props.handleSubmit}>
+                {props.error ? <div className="formGroup__errorText">{props.error}</div> : null}
+                <form onSubmit={props.handleSubmit}>
                     <div className="form">
                         <div className="formTitle">General info:</div>
                         <CustomField<FieldNameType> component={Input} name="fullName" type="text" placeholder="Full name" />

@@ -12,7 +12,7 @@ const Profile = (props: PropsType) => {
             <h1 className="title">Profile</h1>
             <div className={s.profile}>
                 <Banner />
-                <Info {...props.data.userProfile} userStatus={props.data.userStatus}
+                <Info userProfile={props.data.userProfile} userStatus={props.data.userStatus}
                         updateUserStatus={props.updateUserStatus} loginUserId={props.userId}
                         updateUserPhoto={props.updateUserPhoto} saveUserProfile={props.saveUserProfile} />
                 <Posts data={props.data.postsData} addPost={props.addPost} resetForm={props.resetForm} />

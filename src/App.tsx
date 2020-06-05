@@ -3,7 +3,7 @@ import {Redirect, Route, Switch} from 'react-router-dom';
 import './App.css';
 
 import HeaderContainer from './components/Header/HeaderContainer';
-import SidebarContainer from './components/Sidebar/SidebarContainer';
+import Sidebar from './components/Sidebar/Sidebar';
 import MessagesContainer from './components/Messages/MessagesContainer';
 import Login from './components/Login/Login';
 import Preloader from './components/common/Preloader/Preloader';
@@ -35,7 +35,7 @@ const App: React.FC<PropsType> = props => {
 			<HeaderContainer/>
 			<main>
 				<div className="container mainGrid">
-					<SidebarContainer/>
+					<Sidebar/>
 					<div className="content">
 						<Switch>
 							<Redirect exact from="/" to="/profile"/>
