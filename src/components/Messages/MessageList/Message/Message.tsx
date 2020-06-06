@@ -1,7 +1,12 @@
 import React from 'react';
 import s from './Message.module.css'
 
-const Message = (props) => {
+type PropsType = {
+    name: string
+    data: {id: number, text: string, from: string}
+}
+
+const Message: React.FC<PropsType> = (props) => {
     return (
         <div className={s.item + (props.name !== props.data.from ? ` ${s.altPosition}`: '')}>
             <div className={s.img} />

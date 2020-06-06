@@ -2,7 +2,7 @@ import React, {Suspense, useEffect} from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import './App.css';
 
-import HeaderContainer from './components/Header/HeaderContainer';
+import Header from './components/Header/Header';
 import Sidebar from './components/Sidebar/Sidebar';
 import MessagesContainer from './components/Messages/MessagesContainer';
 import Login from './components/Login/Login';
@@ -32,7 +32,7 @@ const App: React.FC<PropsType> = props => {
 
 	return (
 		<>
-			<HeaderContainer/>
+			<Header/>
 			<main>
 				<div className="container mainGrid">
 					<Sidebar/>

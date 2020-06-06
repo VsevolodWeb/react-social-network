@@ -8,7 +8,7 @@ import {ProfileType} from "../../../redux/types/types";
 
 
 type PropsType = {
-    userProfile: ProfileType | null
+    userProfile: Partial<ProfileType> | (ProfileType & Partial<ProfileType>)
     userStatus: string
     updateUserStatus: (status: string) => void
     loginUserId: number | null
@@ -17,7 +17,7 @@ type PropsType = {
 }
 
 const Info: React.FC<PropsType> = props => {
-    let imgSource = props.userProfile?.photos.large || ""
+    let imgSource = props.userProfile?.photos?.large || ""
     let editingAbility = props.loginUserId === props.userProfile?.userId;
     let [editModeProfile, setEditModeProfile] = useState(false);
 
@@ -30,7 +30,7 @@ const Info: React.FC<PropsType> = props => {
     const dataFormSubmit = (formData: ProfileType) => {
         props.saveUserProfile(formData).then(() => {
             setEditModeProfile(false);
-        });
+        }, () => {});
     };
 
     const changeEditModeProfile = () => {
@@ -51,8 +51,7 @@ const Info: React.FC<PropsType> = props => {
             <div className={s.text}>
                 {editingAbility ? <button className={"button " + s.button} onClick={changeEditModeProfile}>Edit</button> : null}
                 {editModeProfile ?
-                    <DataForm onSubmit={dataFormSubmit} contacts={props.userProfile?.contacts}
-                            lookingForAJob={props.userProfile?.lookingForAJob} lookingForAJobDescription={props.userProfile?.lookingForAJobDescription} aboutMe={props.userProfile?.aboutMe} /> :
+                    <DataForm onSubmit={dataFormSubmit} initialValues={props.userProfile} /> :
                     <>
                         <Data contacts={props.userProfile?.contacts} lookingForAJob={props.userProfile?.lookingForAJob}
                             lookingForAJobDescription={props.userProfile?.lookingForAJobDescription} aboutMe={props.userProfile?.aboutMe} />

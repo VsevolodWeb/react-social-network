@@ -2,9 +2,22 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 import logo from './logo.svg';
 import s from './Header.module.css'
+import {connect} from "react-redux";
+import {authLogout} from "../../redux/auth-reducer";
+import {AppStateType} from "../../redux/redux-store";
 
-const Header = props => {
-    const logoutLink = e => {
+type MapStateToPropsType = {
+    login: string | null
+    isAuth: boolean
+}
+type MapDispatchToPropsType = {
+    authLogout: () => void
+}
+type OwnPropsType = {}
+type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsType;
+
+const Header: React.FC<PropsType> = props => {
+    const logoutLink = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         e.preventDefault();
         props.authLogout();
     };
@@ -26,4 +39,11 @@ const Header = props => {
     )
 };
 
-export default Header
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        login: state.auth.login,
+        isAuth: state.auth.isAuth
+    }
+};
+
+export default connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, {authLogout})(Header);

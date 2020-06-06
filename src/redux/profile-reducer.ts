@@ -116,7 +116,9 @@ export const saveUserProfileThunkCreator = (userInfo: ProfileType) => async (dis
         const responseGetProfile = await profileAPI.getUserProfile(userId)
         dispatch(actions.setUserProfile(responseGetProfile))
     } else {
-        return dispatch(stopSubmit("edit-profile", {_error: responseSaveProfile.messages}))
+        dispatch(stopSubmit("edit-profile", {_error: responseSaveProfile.messages}))
+
+        return Promise.reject()
     }
 }
 

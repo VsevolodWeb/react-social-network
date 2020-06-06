@@ -6,7 +6,7 @@ import {withRouter, RouteComponentProps} from 'react-router-dom';
 import {
     actions, getUserProfileThunkCreator, getUserStatusThunkCreator,
     updateUserStatusThunkCreator, setUserPhotoThunkCreator,
-    saveUserProfileThunkCreator
+    saveUserProfileThunkCreator, PostType
 } from '../../redux/profile-reducer'
 import Profile from './Profile';
 import Preloader from '../common/Preloader/Preloader';
@@ -14,7 +14,15 @@ import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {ProfileType} from "../../redux/types/types";
 import {AppStateType} from "../../redux/redux-store";
 
-type MapStateToPropsType = ReturnType<typeof mapStateToProps>
+type MapStateToPropsType = {
+    data: {
+        postsData: PostType[]
+        userProfile: Partial<ProfileType> | (ProfileType & Partial<ProfileType>)
+        userStatus: string
+        isFetching: boolean
+    }
+    userId: number
+}
 type MapDispatchToPropsType = {
     addPost: typeof actions.addPost
     getUserProfile: (userId: number) => void
