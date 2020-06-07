@@ -1,7 +1,7 @@
 import dialogsReducer from './dialogs-reducer'
 import profileReducer from './profile-reducer'
 
-let store = {
+let _store = {
     _state: {
         profile: {
             postsData: [
@@ -57,4 +57,4 @@ let store = {
     }
 };
 
-export default store;
+export default _store;

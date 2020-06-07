@@ -14,19 +14,12 @@ type OwnPropsType = {
 type PropsType = MapStateToProps & MapDispatchToProps & OwnPropsType
 
 const Sidebar: React.FC<PropsType> = (props) => {
-    let friends = props.users
-                .filter((item) => item.followed)
-                .map((item) => {
-                    return <li key={item.id}>
-                                <span className={s.image} />
-                                <div className={s.name}>{item.name}</div>
-                            </li>
-    });
+    let friends = props.users.filter((item) => item.followed);
 
     return (
         <aside className={s.sidebar}>
             <Menu />
-            {friends.length ? <Friends data={friends} />: ''}
+            {friends.length ? <Friends friends={friends} />: ''}
         </aside>
     )
 };

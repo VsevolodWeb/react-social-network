@@ -6,16 +6,3 @@
 	gap: 50px;
 	grid-auto-rows: max-content;
 }
-
-.image {
-    border-radius: 50%;
-    height: 30px;
-    width: 30px;
-    background-color: #a01f52;
-    display: inline-block;
-    margin-bottom: 5px;
-}
-
-.name {
-    word-break: break-all
-}

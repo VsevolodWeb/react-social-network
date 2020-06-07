@@ -5,7 +5,7 @@ import StatusWithHooks from "./StatusWithHooks";
 
 describe("Status component", () => {
     const componentStatusText = "test status";
-    const component = create(<StatusWithHooks editingAbility="true" status={componentStatusText}/>);
+    const component = create(<StatusWithHooks editingAbility={true} status={componentStatusText}/>);
 
     it("status should be created successfully", () => {
         expect(component.toJSON()).toMatchSnapshot();

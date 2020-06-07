@@ -4,7 +4,7 @@ import s from './Status.module.css'
 type PropsType = {
     status: string
     editingAbility: boolean
-    updateUserStatus: (status: string) => void
+    updateUserStatus?: (status: string) => void
 }
 
 const StatusWithHooks: React.FC<PropsType> = props => {
@@ -20,7 +20,7 @@ const StatusWithHooks: React.FC<PropsType> = props => {
         setEditMode(!editMode);
 
         if(props.status !== status) {
-            props.updateUserStatus(status);
+            props.updateUserStatus!(status);
         }
     };
 
