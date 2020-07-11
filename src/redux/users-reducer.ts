@@ -83,6 +83,7 @@ export const actions = {
 
 
 export const getUsersThunkCreator = (currentPage: number, pageSize: number) => async (dispatch: Dispatch<ActionsTypes>) => {
+    dispatch(actions.setIsFetching(true))
     const response = await usersAPI.getUsers(currentPage, pageSize)
 
     dispatch(actions.setTotalUsersCount(response.totalCount))
