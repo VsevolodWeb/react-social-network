@@ -31,6 +31,17 @@ body {
 	margin-bottom: 50px;
 }
 
+.textElement {
+	padding: 6px;
+	border-radius: 3px;
+	border: 1px solid #c7c7c7;
+	width: 100%;
+}
+
+.textElement:focus {
+	outline: none;
+}
+
 .form {
 	display: grid;
 	grid-gap: 15px;

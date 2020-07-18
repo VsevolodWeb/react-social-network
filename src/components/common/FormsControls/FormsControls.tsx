@@ -1,5 +1,4 @@
 import React, {InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes} from 'react';
-import s from './FormsControls.module.css';
 import {
     BaseFieldProps,
     Field,
@@ -33,7 +32,7 @@ const FormControl: React.FC<FormsControlType> = (props) => {
 export const Textarea: React.FC<WrappedFieldProps> = ({input, meta, ...props}) => {
     return (
         <FormControl meta={meta}>
-            <textarea className={s.textElement} rows={4} {...input} {...props}/>
+            <textarea className="textElement" rows={4} {...input} {...props}/>
         </FormControl>
     )
 };
@@ -46,7 +45,7 @@ export const Input: React.FC<InputType> = ({input, meta, labelText, ...props}) =
         <FormControl meta={meta}>
             <label className="label label_inline">
                 {labelText}
-                <input className={s.textElement} {...input} {...props}/>
+                <input className="textElement" {...input} {...props}/>
             </label>
         </FormControl>
     )

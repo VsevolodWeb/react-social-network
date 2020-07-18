@@ -74,6 +74,7 @@ export const actions = {
     follow: (userId: number) => ({type: 'FOLLOW', userId} as const),
     unfollow: (userId: number) => ({type: 'UNFOLLOW', userId} as const),
     setIsFetching: (isFetching: boolean) => ({type: 'SET_IS_FETCHING', isFetching} as const),
+    setFilter: (term: string) => ({type: 'SET_FILTER', term} as const),
     setIsFollowing: (userId: number, isFetching: boolean) => ({
         type: 'SET_IS_FOLLOWING',
         userId,
@@ -82,7 +83,7 @@ export const actions = {
 }
 
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number) => async (dispatch: Dispatch<ActionsTypes>) => {
+export const getUsersThunkCreator = (currentPage: number, pageSize: number, term: string) => async (dispatch: Dispatch<ActionsTypes>) => {
     dispatch(actions.setIsFetching(true))
     const response = await usersAPI.getUsers(currentPage, pageSize)
 

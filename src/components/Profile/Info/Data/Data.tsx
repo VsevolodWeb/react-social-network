@@ -14,8 +14,8 @@ const Data: React.FC<PropsType> = props => {
                 {props.lookingForAJobDescription ? <div><b>My skills</b>: {props.lookingForAJobDescription}</div> : null}
                 {props.aboutMe ? <div><b>AboutMe</b>: {props.aboutMe}</div> : null}
                 {props.contacts ? <ul>{Object.keys(props.contacts)
-                               .map((socialTitle) => {
-                                    return props.contacts![socialTitle as keyof ProfileContactsType] ? <li>{socialTitle}: {props.contacts![socialTitle as keyof ProfileContactsType]}</li> : null
+                               .map((socialTitle, index) => {
+                                    return props.contacts![socialTitle as keyof ProfileContactsType] ? <li key={index}>{socialTitle}: {props.contacts![socialTitle as keyof ProfileContactsType]}</li> : null
                                 })}</ul> : null}
     </>
 }
