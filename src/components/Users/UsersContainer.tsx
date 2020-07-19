@@ -9,7 +9,7 @@ import {
     unfollowThunkCreator,
     getUsersThunkCreator,
     InitialStateType,
-    actions
+    actions, UsersFilterType
 } from '../../redux/users-reducer'
 import {withAuthRedirect} from '../../hoc/withAuthRedirect'
 import {getUsers} from '../../redux/users-selectors'
@@ -33,19 +33,28 @@ type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnType;
 
 class UsersContainer extends React.Component<PropsType> {
     componentDidMount() {
-        this.props.getUsers(this.props.data.currentPage, this.props.data.pageSize, "")
+        this.props.getUsers(this.props.data.currentPage, this.props.data.pageSize, '')
     }
 
     setCurrentPage = (pageId: number) => {
-        this.props.getUsers(pageId, this.props.data.pageSize, "")
+        this.props.getUsers(pageId, this.props.data.pageSize, this.props.data.filter.term)
         this.props.setCurrentPage(pageId)
     }
+
+    onFilterChanged = (filter: UsersFilterType) => {
+        const {pageSize} = this.props.data
+        this.props.getUsers(1, pageSize, filter.term)
+    }
+
 
     render() {
         return this.props.data.isFetching ? <Preloader/> :
             <>
                 <Users list={this.props.data.list} followUser={this.props.follow} unfollowUser={this.props.unfollow}
-                       isFollowingArray={this.props.data.isFollowing} isFetching={this.props.data.isFetching}/>
+                       isFollowingArray={this.props.data.isFollowing} isFetching={this.props.data.isFetching}
+                       onFilterChanged={this.onFilterChanged} filter={this.props.data.filter}
+                       setCurrentPage={this.setCurrentPage}
+                />
                 <Pagination setCurrentPage={this.setCurrentPage} currentPage={this.props.data.currentPage}
                             totalCount={this.props.data.totalUsersCount} pageSize={this.props.data.pageSize}/>
             </>

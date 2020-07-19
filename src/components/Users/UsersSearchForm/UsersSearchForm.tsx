@@ -3,22 +3,22 @@ import s from './UsersSearchForm.module.css'
 import {Field, Form, Formik, FormikHelpers} from 'formik'
 import validate from './UsersSearchForm.validate'
 import cn from 'classnames'
+import {UsersFilterType} from '../../../redux/users-reducer'
 
-type ValuesType = {
-    term: string
+type PropsType = {
+    onFilterChanged: (filter: UsersFilterType) => void
+    setCurrentPage: (pageId: number) => void
+    filter: UsersFilterType
 }
 
-const UsersSearchForm = () => {
-    const onSubmit = (values: ValuesType, {setSubmitting}: FormikHelpers<ValuesType>) => {
-        setTimeout(() => {
-            alert(JSON.stringify(values, null, 2))
-            setSubmitting(false)
-        }, 400)
+const UsersSearchForm: React.FC<PropsType> = React.memo(props => {
+    const onSubmit = (values: UsersFilterType, {setSubmitting}: FormikHelpers<UsersFilterType>) => {
+        props.onFilterChanged(values)
     }
 
     return (
-        <Formik<ValuesType>
-            initialValues={{term: ''}}
+        <Formik<UsersFilterType>
+            initialValues={{term: props.filter.term}}
             validate={validate}
             onSubmit={onSubmit}
         >
@@ -26,6 +26,15 @@ const UsersSearchForm = () => {
                 <Form>
                     <div className={cn('form', s.form)}>
                         <Field type="text" name="term" placeholder="Search fo users" className="textElement"/>
+                        <Field
+                            name="friend"
+                            className="textElement"
+                            as="select"
+                        >
+                            <option value="">All</option>
+                            <option value="">Only followed</option>
+                            <option value="">Only unfollowed</option>
+                        </Field>
                         <button type="submit" className="button" disabled={isSubmitting}>
                             Find
                         </button>
@@ -34,6 +43,6 @@ const UsersSearchForm = () => {
             )}
         </Formik>
     )
-}
+})
 
 export default UsersSearchForm
