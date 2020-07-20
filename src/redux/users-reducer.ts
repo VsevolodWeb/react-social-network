@@ -92,11 +92,11 @@ export const actions = {
 }
 
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number, term: string) => async (dispatch: Dispatch<ActionsTypes>) => {
+export const getUsersThunkCreator = (currentPage: number, pageSize: number, filter: UsersFilterType) => async (dispatch: Dispatch<ActionsTypes>) => {
     dispatch(actions.setIsFetching(true))
-    const response = await usersAPI.getUsers(currentPage, pageSize, term)
+    const response = await usersAPI.getUsers(currentPage, pageSize, filter.term, filter.friend)
 
-    dispatch(actions.setFilter({term}))
+    dispatch(actions.setFilter(filter))
     dispatch(actions.setTotalUsersCount(response.totalCount))
     dispatch(actions.setUsers(response.items))
     dispatch(actions.setIsFetching(false))
