@@ -12,7 +12,6 @@ import {
     actions, UsersFilterType
 } from '../../redux/users-reducer'
 import {withAuthRedirect} from '../../hoc/withAuthRedirect'
-import {getUsers} from '../../redux/users-selectors'
 import {AppStateType} from '../../redux/redux-store'
 import Preloader from '../common/Preloader/Preloader'
 
@@ -31,6 +30,25 @@ type OwnType = {}
 
 type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnType;
 
+type UsersPageType = MapDispatchToPropsType
+
+const UsersPage: React.FC<UsersPageType> = ({follow, unfollow, setCurrentPage}) => {
+    const onFilterChanged = (filter: UsersFilterType) => {
+        const {pageSize} = this.props.data
+        this.props.getUsers(1, pageSize, filter)
+    }
+
+    return props.data.isFetching ? <Preloader/> :
+        <>
+            <Users followUser={this.props.follow} unfollowUser={this.props.unfollow}
+                   onFilterChanged={this.onFilterChanged} setCurrentPage={this.setCurrentPage}
+            />
+            <Pagination setCurrentPage={this.setCurrentPage} currentPage={this.props.data.currentPage}
+                        totalCount={this.props.data.totalUsersCount} pageSize={this.props.data.pageSize}/>
+        </>
+    />
+}
+
 class UsersContainer extends React.Component<PropsType> {
     componentDidMount() {
         this.props.getUsers(this.props.data.currentPage, this.props.data.pageSize, this.props.data.filter)
@@ -41,18 +59,12 @@ class UsersContainer extends React.Component<PropsType> {
         this.props.setCurrentPage(pageId)
     }
 
-    onFilterChanged = (filter: UsersFilterType) => {
-        const {pageSize} = this.props.data
-        this.props.getUsers(1, pageSize, filter)
-    }
-
 
     render() {
         return this.props.data.isFetching ? <Preloader/> :
             <>
-                <Users list={this.props.data.list} followUser={this.props.follow} unfollowUser={this.props.unfollow}
-                       isFollowingArray={this.props.data.isFollowing} isFetching={this.props.data.isFetching}
-                       onFilterChanged={this.onFilterChanged} filter={this.props.data.filter}
+                <Users followUser={this.props.follow}
+                       unfollowUser={this.props.unfollow}
                        setCurrentPage={this.setCurrentPage}
                 />
                 <Pagination setCurrentPage={this.setCurrentPage} currentPage={this.props.data.currentPage}
@@ -62,7 +74,7 @@ class UsersContainer extends React.Component<PropsType> {
 }
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
-    data: getUsers(state)
+    data: state.users
 })
 
 export default compose<React.ComponentType>(
