@@ -5,17 +5,20 @@ import './App.css';
 import Header from './components/Header/Header';
 import Sidebar from './components/Sidebar/Sidebar';
 import MessagesContainer from './components/Messages/MessagesContainer';
-import Login from './components/Login/Login';
+import {Login} from './components/Login/Login';
 import Preloader from './components/common/Preloader/Preloader';
-import {connect} from "react-redux";
-import {initializeThunkCreator} from "./redux/app-reducer";
-import {AppStateType} from "./redux/redux-store";
+import {connect} from 'react-redux';
+import {initializeThunkCreator} from './redux/app-reducer';
+import {AppStateType} from './redux/redux-store';
 
-const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
+const UsersContainer = React.lazy(
+	() => import('./components/Users/UsersContainer')
+		.then(module => ({default: module.UsersPage}))
+);
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 
 type MapDispatchToPropsType = {
-  initialize: () => void
+	initialize: () => void
 }
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>
 type OwnPropsType = {}
@@ -25,7 +28,7 @@ const App: React.FC<PropsType> = props => {
 	useEffect(() => {
 		props.initialize()
 	}, [props])
-	
+
 	if (!props.initialized) {
 		return <Preloader/>
 	}
@@ -39,7 +42,8 @@ const App: React.FC<PropsType> = props => {
 					<div className="content">
 						<Switch>
 							<Redirect exact from="/" to="/profile"/>
-							<Route path="/profile/:userId?" render={() => <Suspense fallback={<Preloader/>}><ProfileContainer/></Suspense>}/>
+							<Route path="/profile/:userId?"
+							       render={() => <Suspense fallback={<Preloader/>}><ProfileContainer/></Suspense>}/>
 							<Route path="/messages" component={MessagesContainer}/>
 							<Route path="/users" render={() => {
 								return <Suspense fallback={<Preloader/>}><UsersContainer/></Suspense>
@@ -56,9 +60,9 @@ const App: React.FC<PropsType> = props => {
 
 
 const mapStateToProps = (state: AppStateType) => ({
-  initialized: state.app.initialization
+	initialized: state.app.initialization
 });
 
 
 export default connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>
-  (mapStateToProps, {initialize: initializeThunkCreator})(App);
+(mapStateToProps, {initialize: initializeThunkCreator})(App);

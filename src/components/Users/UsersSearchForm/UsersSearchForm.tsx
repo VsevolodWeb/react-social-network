@@ -7,16 +7,12 @@ import {getUsersThunkCreator, UsersFilterType} from '../../../redux/users-reduce
 import {useDispatch, useSelector} from "react-redux";
 import {getUsersFilter, getUsersPageSize} from "../../../redux/users-selectors";
 
-type PropsType = {
-	setCurrentPage: (pageId: number) => void
-}
-
 type ValuesType = {
 	term: string
 	friend: 'null' | 'true' | 'false'
 }
 
-const UsersSearchForm: React.FC<PropsType> = React.memo(props => {
+const UsersSearchForm: React.FC = React.memo(() => {
 	const pageSize = useSelector(getUsersPageSize),
         filter = useSelector(getUsersFilter)
 

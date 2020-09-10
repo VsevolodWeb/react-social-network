@@ -1,41 +1,25 @@
 import React from 'react';
 import LoginForm from './LoginForm/LoginForm';
-import {authLoginThunkCreator, authMeThunkCreator} from '../../redux/auth-reducer';
-import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import {AppStateType} from "../../redux/redux-store";
 import {AuthLoginFormDataType} from "../../api/auth-api";
+import {useDispatch, useSelector} from "react-redux";
+import {authLoginThunkCreator} from "../../redux/auth-reducer";
+import {getAuthIsAuth} from "../../redux/auth-selectors";
 
-type MapStateToPropsType = {
-	isAuth: boolean
-	captchaURL: string | null
-}
-type MapDispatchToProps = {
-	authLogin: (formData: AuthLoginFormDataType) => void
-	authMe: () => void
-}
-type OwnType = {}
-type PropsType = MapStateToPropsType & MapDispatchToProps & OwnType;
 
-const Login: React.FC<PropsType> = props => {
+export const Login: React.FC = () => {
+	const isAuth = useSelector(getAuthIsAuth)
+	const dispatch = useDispatch()
+
     const loginSubmit = (formData: AuthLoginFormDataType) => {
-        props.authLogin(formData);
+        dispatch(authLoginThunkCreator(formData))
     };
 
-    return !props.isAuth ? (<>
+    return !isAuth ? (<>
             <h1 className="title">Login</h1>
             <div>
-                <LoginForm onSubmit={loginSubmit} captchaURL={props.captchaURL} />
+                <LoginForm onSubmit={loginSubmit}/>
             </div>
     </>) : <Redirect to="/profile" />
 };
-
-const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
-    isAuth: state.auth.isAuth,
-    captchaURL: state.security.captchaURL
-});
-
-export default connect<MapStateToPropsType, MapDispatchToProps, OwnType, AppStateType>(mapStateToProps,
-    {authLogin: authLoginThunkCreator, authMe: authMeThunkCreator}
-    )(Login);

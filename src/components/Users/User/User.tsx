@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import s from './User.module.css'
 import avatar from '../../../components/Profile/Info/avatar.jpg';
 import {UserType} from "../../../redux/types/types";
+import {useDispatch} from "react-redux";
 
 type PropsType = {
     user: UserType
@@ -11,6 +12,8 @@ type PropsType = {
 }
 
 const User: React.FC<PropsType> = props => {
+    const dispatch = useDispatch()
+
     let imgSource = props.user.photos.large || ""
 
     return <div className={s.item}>
@@ -20,7 +23,7 @@ const User: React.FC<PropsType> = props => {
                 <div className={s.name}>{props.user.name}</div>
                 <div className={s.status}>{props.user.status}</div>
                 <button className={s.button + " button"}
-                        onClick={() => props.action(props.user.id)}
+                        onClick={() => dispatch(props.action(props.user.id))}
                         disabled={props.isFollowingArray.some(el => el === props.user.id) ? true: undefined}
                 >
                     {props.user.followed ? 'Unfollow': 'Follow'}

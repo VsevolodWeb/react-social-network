@@ -5,14 +5,16 @@ import {CustomField, FieldNames, Input} from '../../common/FormsControls/FormsCo
 import { required } from '../../../utils/validators';
 import s from'./LoginForm.module.css';
 import {AuthLoginFormDataType} from "../../../api/auth-api";
+import {useSelector} from "react-redux";
+import {getSecurityCaptchaURL} from "../../../redux/security-selectors";
 
-export type OwnPropsType = {
-	captchaURL: string | null
-}
+export type OwnPropsType = {}
 type FieldNameType = FieldNames<AuthLoginFormDataType>
 type PropsType = InjectedFormProps<AuthLoginFormDataType, OwnPropsType> & OwnPropsType
 
 export const LoginForm: React.FC<PropsType> = props => {
+    const captchaURL = useSelector(getSecurityCaptchaURL)
+
     return (
         <div className={s.container}>
             <form onSubmit={props.handleSubmit}>
@@ -21,15 +23,15 @@ export const LoginForm: React.FC<PropsType> = props => {
                     <CustomField<FieldNameType> component={Input} name="password" type="password" placeholder="Password" validate={[required]} />
                     <div className="formGroup">
                         <label htmlFor="remember-me">
-                            <CustomField<FieldNameType> component="input" name="rememberMe" type="checkbox" id="remember-me" /> Remember me
+                            <CustomField<FieldNameType> component="input" name="rememberMe" type="checkbox" id="remember-me"/> Remember me
                         </label>
                     </div>
                     {props.error ? <div className="formGroup">
                         <span className="formGroup__errorText">{props.error}</span>
                     </div> : null}
-                    {props.captchaURL ?
+                    {captchaURL ?
                         <>
-                            <img src={props.captchaURL} alt="captcha" width="150"/>
+                            <img src={captchaURL} alt="captcha" width="150"/>
                             <CustomField<FieldNameType> component={Input} name="captcha" validate={[required]}/>
                         </>
                         : null}
