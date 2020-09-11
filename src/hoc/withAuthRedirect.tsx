@@ -7,7 +7,6 @@ export const withAuthRedirect = (Component: React.ComponentType) => {
 
     type MapStateToPropsType = {
         isAuth: boolean
-        userId: number | null
     }
 
     type MapDispatchToProps = {}
@@ -24,8 +23,7 @@ export const withAuthRedirect = (Component: React.ComponentType) => {
     }
 
     const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
-        isAuth: state.auth.isAuth,
-        userId: state.auth.id
+        isAuth: state.auth.isAuth
     });
 
     return connect<MapStateToPropsType, MapDispatchToProps, OwProps, AppStateType>(mapStateToProps)(RedirectComponent);
