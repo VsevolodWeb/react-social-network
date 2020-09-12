@@ -8,7 +8,7 @@ type UseWithAuthRedirectType = () => false | JSX.Element
 const useWithAuthRedirect: UseWithAuthRedirectType = () => {
 	const isAuth = useSelector(getAuthIsAuth)
 
-	return isAuth && <Redirect to="/login"/>
+	return !isAuth && <Redirect to="/login"/>
 }
 
 export default useWithAuthRedirect

@@ -15,7 +15,9 @@ const UsersContainer = React.lazy(
 	() => import('./components/Users/UsersContainer')
 		.then(module => ({default: module.UsersPage}))
 );
-const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
+const ProfileContainer = React.lazy(
+	() => import('./components/Profile/ProfileContainer').then(module => ({default: module.ProfileContainer}))
+);
 
 type MapDispatchToPropsType = {
 	initialize: () => void
@@ -42,7 +44,7 @@ const App: React.FC<PropsType> = props => {
 					<div className="content">
 						<Switch>
 							<Redirect exact from="/" to="/profile"/>
-							<Route path="/profile/:userId?"
+							<Route path="/profile/:userIdParam?"
 							       render={() => <Suspense fallback={<Preloader/>}><ProfileContainer/></Suspense>}/>
 							<Route path="/messages" component={MessagesContainer}/>
 							<Route path="/users" render={() => {

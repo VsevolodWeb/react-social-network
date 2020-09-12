@@ -5,6 +5,10 @@ import StatusWithHooks from './Status/StatusWithHooks';
 import Data from './Data/Data';
 import DataForm from './DataForm/DataForm';
 import {ProfileType} from "../../../redux/types/types";
+import {useDispatch, useSelector} from 'react-redux'
+import {getUserId, getUserPhoto} from '../../../redux/profile-selectors'
+import {getAuthUserId} from '../../../redux/auth-selectors'
+import {saveUserProfileThunkCreator, setUserPhotoThunkCreator} from '../../../redux/profile-reducer'
 
 
 type PropsType = {
@@ -17,19 +21,24 @@ type PropsType = {
 }
 
 const Info: React.FC<PropsType> = props => {
-    let imgSource = props.userProfile?.photos?.large || ""
-    let editingAbility = props.loginUserId === props.userProfile?.userId;
+    const userPhoto = useSelector(getUserPhoto)
+    const userId = useSelector(getUserId)
+    const authUserId = useSelector(getAuthUserId)
+    const dispatch = useDispatch()
+
+    let editingAbility = authUserId === userId
     let [editModeProfile, setEditModeProfile] = useState(false);
 
     const onPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if(e.target.files?.length) {
-            props.updateUserPhoto(e.target.files[0]);
+            dispatch(setUserPhotoThunkCreator(e.target.files[0]))
         }
     };
 
     const dataFormSubmit = (formData: ProfileType) => {
-        props.saveUserProfile(formData).then(() => {
-            setEditModeProfile(false);
+        dispatch(saveUserProfileThunkCreator(formData))
+        props.saveUserProfile().then(() => {
+
         }, () => {});
     };
 
@@ -40,7 +49,7 @@ const Info: React.FC<PropsType> = props => {
     return (
         <div className={s.info}>
             <div className={s.avatarWrapper}>
-                <div className={s.avatar} style={{ backgroundImage: `url(${imgSource || avatar})` }} />
+                <div className={s.avatar} style={{ backgroundImage: `url(${userPhoto || avatar})` }} />
                 {editingAbility ? <input className="button" type="file" onChange={onPhotoSelected} /> : null}
             </div>
             <div>
