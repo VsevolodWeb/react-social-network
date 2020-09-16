@@ -1,21 +1,18 @@
 import React from 'react';
-import {ProfileContactsType} from "../../../../redux/types/types";
+import {ProfileContactsType, ProfileType} from '../../../../redux/types/types'
 
 type PropsType = {
-    aboutMe?: string
-    contacts?: ProfileContactsType
-    lookingForAJob?: boolean
-    lookingForAJobDescription?: string
+    userProfile: ProfileType
 }
 
-const Data: React.FC<PropsType> = props => {
+const Data: React.FC<PropsType> = ({userProfile}) => {
     return <>
-        {props.lookingForAJob ? <div><b>Looking for job</b></div> : null}
-                {props.lookingForAJobDescription ? <div><b>My skills</b>: {props.lookingForAJobDescription}</div> : null}
-                {props.aboutMe ? <div><b>AboutMe</b>: {props.aboutMe}</div> : null}
-                {props.contacts ? <ul>{Object.keys(props.contacts)
+        {userProfile.lookingForAJob ? <div><b>Looking for job</b></div> : null}
+                {userProfile.lookingForAJobDescription ? <div><b>My skills</b>: {userProfile.lookingForAJobDescription}</div> : null}
+                {userProfile.aboutMe ? <div><b>AboutMe</b>: {userProfile.aboutMe}</div> : null}
+                {userProfile.contacts ? <ul>{Object.keys(userProfile.contacts)
                                .map((socialTitle, index) => {
-                                    return props.contacts![socialTitle as keyof ProfileContactsType] ? <li key={index}>{socialTitle}: {props.contacts![socialTitle as keyof ProfileContactsType]}</li> : null
+                                    return userProfile.contacts![socialTitle as keyof ProfileContactsType] ? <li key={index}>{socialTitle}: {userProfile.contacts![socialTitle as keyof ProfileContactsType]}</li> : null
                                 })}</ul> : null}
     </>
 }

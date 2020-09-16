@@ -6,27 +6,19 @@ import Data from './Data/Data';
 import DataForm from './DataForm/DataForm';
 import {ProfileType} from "../../../redux/types/types";
 import {useDispatch, useSelector} from 'react-redux'
-import {getUserId, getUserPhoto} from '../../../redux/profile-selectors'
+import {getUserProfile, getUserStatus} from '../../../redux/profile-selectors'
 import {getAuthUserId} from '../../../redux/auth-selectors'
 import {saveUserProfileThunkCreator, setUserPhotoThunkCreator} from '../../../redux/profile-reducer'
+import classNames from 'classnames'
 
 
-type PropsType = {
-    userProfile: Partial<ProfileType> | (ProfileType & Partial<ProfileType>)
-    userStatus: string
-    updateUserStatus: (status: string) => void
-    loginUserId: number | null
-    updateUserPhoto: (photo: File) => void
-    saveUserProfile: (userInfo: ProfileType) => Promise<any>
-}
-
-const Info: React.FC<PropsType> = props => {
-    const userPhoto = useSelector(getUserPhoto)
-    const userId = useSelector(getUserId)
+export function Info() {
+    const userProfile = useSelector(getUserProfile)
+    const userStatus = useSelector(getUserStatus)
     const authUserId = useSelector(getAuthUserId)
     const dispatch = useDispatch()
 
-    let editingAbility = authUserId === userId
+    let editingAbility = authUserId === userProfile?.userId
     let [editModeProfile, setEditModeProfile] = useState(false);
 
     const onPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
@@ -37,9 +29,7 @@ const Info: React.FC<PropsType> = props => {
 
     const dataFormSubmit = (formData: ProfileType) => {
         dispatch(saveUserProfileThunkCreator(formData))
-        props.saveUserProfile().then(() => {
-
-        }, () => {});
+        setEditModeProfile(false)
     };
 
     const changeEditModeProfile = () => {
@@ -49,22 +39,20 @@ const Info: React.FC<PropsType> = props => {
     return (
         <div className={s.info}>
             <div className={s.avatarWrapper}>
-                <div className={s.avatar} style={{ backgroundImage: `url(${userPhoto || avatar})` }} />
+                <div className={s.avatar} style={{ backgroundImage: `url(${userProfile?.photos.large || avatar})` }} />
                 {editingAbility ? <input className="button" type="file" onChange={onPhotoSelected} /> : null}
             </div>
             <div>
-                <h1 className={s.name}>{props.userProfile?.fullName}</h1>
-                {props.userStatus ? <StatusWithHooks status={props.userStatus} editingAbility={editingAbility}
-                                                    updateUserStatus={props.updateUserStatus} /> : null}
+                <h1 className={s.name}>{userProfile?.fullName}</h1>
+                {userStatus ? <StatusWithHooks status={userStatus} editingAbility={editingAbility}/> : null}
             </div>
             <div className={s.text}>
-                {editingAbility ? <button className={"button " + s.button} onClick={changeEditModeProfile}>Edit</button> : null}
-                {editModeProfile ?
-                    <DataForm onSubmit={dataFormSubmit} initialValues={props.userProfile} /> :
+                {editingAbility ? <button className={classNames("button", s.button)} onClick={changeEditModeProfile}>Edit</button> : null}
+                {userProfile && (editModeProfile ?
+                    <DataForm onSubmit={dataFormSubmit} initialValues={userProfile}/> :
                     <>
-                        <Data contacts={props.userProfile?.contacts} lookingForAJob={props.userProfile?.lookingForAJob}
-                            lookingForAJobDescription={props.userProfile?.lookingForAJobDescription} aboutMe={props.userProfile?.aboutMe} />
-                    </>
+                        <Data userProfile={userProfile}/>
+                    </>)
                 }
             </div>
         </div>

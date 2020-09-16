@@ -25,5 +25,5 @@ export const ProfileContainer: React.FC = props => {
 		}
 	}, [dispatch, userIdParam, authUserId])
 
-	return isFetching ? <Preloader/> : isRedirect || <Profile {...props}/>
+	return isFetching ? <Preloader/> : isRedirect || <Profile/>
 }

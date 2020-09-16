@@ -14,7 +14,6 @@ type PropsType = {
 }
 
 const Users: React.FC<PropsType> = props => {
-
 	const list = useSelector(getUsers),
 		isFollowingArray = useSelector(getUsersIsFollowingArray)
 

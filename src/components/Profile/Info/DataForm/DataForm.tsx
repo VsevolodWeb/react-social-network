@@ -20,17 +20,16 @@ const DataForm: React.FC<PropsType> = props => {
                         placeholder={value.charAt(0).toUpperCase() + value.substring(1)}
                         value={value} />));
     }
-    console.log(props.initialValues!.fullName)
 
     return  <>
                 {props.error ? <div className="formGroup__errorText">{props.error}</div> : null}
                 <form onSubmit={props.handleSubmit}>
                     <div className="form">
                         <div className="formTitle">General info:</div>
-                        <CustomField<FieldNameType> component={Input} defaultValue={"asda"} name="fullName" type="text" placeholder="Full name" />
-                        <CustomField<FieldNameType> component={Input}  name="aboutMe" type="text" placeholder="About Me" />
-                        <CustomField<FieldNameType> component={Input}  name="lookingForAJob" type="checkbox" labelText="Looking for job" />
-                        <CustomField<FieldNameType> component={Input}  name="lookingForAJobDescription" placeholder="My skills" />
+                        <CustomField<FieldNameType> component={Input} name="fullName" type="text" placeholder="Full name" />
+                        <CustomField<FieldNameType> component={Input} name="aboutMe" type="text" placeholder="About Me" />
+                        <CustomField<FieldNameType> component={Input} name="lookingForAJob" type="checkbox" labelText="Looking for job" />
+                        <CustomField<FieldNameType> component={Input} name="lookingForAJobDescription" placeholder="My skills" />
                         <div className="formTitle">Contacts:</div>
                         {contactsFields}
                         <div className="formGroup">
