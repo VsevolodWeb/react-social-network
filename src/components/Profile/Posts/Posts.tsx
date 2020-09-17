@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 
-import Post from './Post/Post';
+import Post from './Post/Post'
 import s from './Posts.module.css'
-import PostsForm from './PostsForm/PostsForm';
-import {actions, PostsData} from "../../../redux/profile-reducer";
+import PostsForm from './PostsForm/PostsForm'
+import {actions} from '../../../redux/profile-reducer'
 import {useDispatch, useSelector} from 'react-redux'
 import {getPostsData} from '../../../redux/profile-selectors'
 

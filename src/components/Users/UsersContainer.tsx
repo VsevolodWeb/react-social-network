@@ -2,6 +2,7 @@ import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import queryString from 'query-string'
+import useQueryParams, { NumberParam, StringParam } from 'use-query-params'
 
 import Users from './Users'
 import Pagination from '../common/Pagination/Pagination'
@@ -23,6 +24,12 @@ export const UsersPage = () => {
 		pageSize = useSelector(getUsersPageSize),
 		filter = useSelector(getUsersFilter)
 
+	const [query, setQuery] = useQueryParams({
+		term: StringParam,
+		friend: StringParam,
+		page: NumberParam,
+	});
+
 	const dispatch = useDispatch()
 	const history = useHistory()
 	const isRedirect = useWithAuthRedirect()
@@ -31,18 +38,27 @@ export const UsersPage = () => {
 		dispatch(actions.setCurrentPage(pageId))
 	}
 
-	useEffect(() => {
+	const getUriParamsEffect = () => {
 		const searchParsed = queryString.parse(history.location.search)
 
-		dispatch(getUsersThunkCreator(currentPage, pageSize, filter))
-	}, [currentPage, pageSize, filter, dispatch])
+		let actualPage = currentPage
+		let actualFilter = filter
+
+		if(searchParsed.page) actualPage = +searchParsed.page
+		if(searchParsed.term) actualFilter = {...actualFilter, term: searchParsed.term as string}
+		if(searchParsed.friend) actualFilter = {...actualFilter, friend: JSON.parse(searchParsed.friend as string)}
+
+		dispatch(actions.setCurrentPage(actualPage))
+		dispatch(getUsersThunkCreator(actualPage, pageSize, actualFilter))
+	}
+	useEffect(getUriParamsEffect, [])
 
 	useEffect(() => {
 		history.push({
 			pathname: '/users',
 			search: `?term=${filter.term}&friend=${filter.friend}&page=${currentPage}`
 		})
-	}, [filter, currentPage])
+	}, [filter, currentPage, history])
 
 	return isFetching ? <Preloader/> : isRedirect || <>
 			<Users isFetching={isFetching}/>
