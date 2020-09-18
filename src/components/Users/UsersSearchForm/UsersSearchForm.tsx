@@ -23,15 +23,16 @@ const UsersSearchForm: React.FC = React.memo(() => {
 	}
 
 	const onSubmit = (values: ValuesType) => {
-		onFilterChanged({...values, friend: JSON.parse(values.friend)})
+		onFilterChanged({...values, friend: values.friend})
 	}
 
 	return (
 		<Formik<ValuesType>
+			enableReinitialize
 			initialValues={
 				{
 					term: filter.term,
-					friend: JSON.stringify(filter.friend)
+					friend: filter.friend
 				} as ValuesType
 			}
 			validate={validate}

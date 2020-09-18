@@ -12,14 +12,17 @@ const initialState = {
     currentPage: 1,
     isFetching: true,
     isFollowing: [] as Array<number>,
-    filter: {
+    filter: <UsersFilterType>{
         term: '',
-        friend: null as null | boolean
+        friend: 'null'
     }
 }
 
 export type InitialStateType = typeof initialState
-export type UsersFilterType = typeof initialState.filter
+export type UsersFilterType = {
+    term?: string
+    friend?: string
+}
 
 type ActionsTypes = InferActionsTypes<typeof actions>
 

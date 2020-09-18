@@ -10,6 +10,7 @@ import Preloader from './components/common/Preloader/Preloader';
 import {connect} from 'react-redux';
 import {initializeThunkCreator} from './redux/app-reducer';
 import {AppStateType} from './redux/redux-store';
+import {QueryParamProvider} from 'use-query-params'
 
 const UsersContainer = React.lazy(
 	() => import('./components/Users/UsersContainer')
@@ -48,7 +49,11 @@ const App: React.FC<PropsType> = props => {
 							       render={() => <Suspense fallback={<Preloader/>}><ProfileContainer/></Suspense>}/>
 							<Route path="/messages" component={MessagesContainer}/>
 							<Route path="/users" render={() => {
-								return <Suspense fallback={<Preloader/>}><UsersContainer/></Suspense>
+								return <Suspense fallback={<Preloader/>}>
+									<QueryParamProvider ReactRouterRoute={Route}>
+										<UsersContainer/>
+									</QueryParamProvider>
+								</Suspense>
 							}}/>
 							<Route path="/login" component={Login}/>
 							<Route render={() => <div>404</div>}/>
