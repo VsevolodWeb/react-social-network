@@ -12,10 +12,10 @@ const initialState = {
     currentPage: 1,
     isFetching: true,
     isFollowing: [] as Array<number>,
-    filter: <UsersFilterType>{
+    filter: {
         term: '',
         friend: 'null'
-    }
+    } as UsersFilterType
 }
 
 export type InitialStateType = typeof initialState
