@@ -1,4 +1,5 @@
 import React, {ChangeEvent, useState} from 'react';
+import {Button} from "antd";
 import s from './Info.module.css'
 import avatar from './avatar.jpg';
 import StatusWithHooks from './Status/StatusWithHooks';
@@ -9,54 +10,53 @@ import {useDispatch, useSelector} from 'react-redux'
 import {getUserProfile, getUserStatus} from '../../../redux/profile-selectors'
 import {getAuthUserId} from '../../../redux/auth-selectors'
 import {saveUserProfileThunkCreator, setUserPhotoThunkCreator} from '../../../redux/profile-reducer'
-import classNames from 'classnames'
 
 
 export function Info() {
-    const userProfile = useSelector(getUserProfile)
-    const userStatus = useSelector(getUserStatus)
-    const authUserId = useSelector(getAuthUserId)
-    const dispatch = useDispatch()
+	const userProfile = useSelector(getUserProfile)
+	const userStatus = useSelector(getUserStatus)
+	const authUserId = useSelector(getAuthUserId)
+	const dispatch = useDispatch()
 
-    let editingAbility = authUserId === userProfile?.userId
-    let [editModeProfile, setEditModeProfile] = useState(false);
+	let editingAbility = authUserId === userProfile?.userId
+	let [editModeProfile, setEditModeProfile] = useState(false);
 
-    const onPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
-        if(e.target.files?.length) {
-            dispatch(setUserPhotoThunkCreator(e.target.files[0]))
-        }
-    };
+	const onPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files?.length) {
+			dispatch(setUserPhotoThunkCreator(e.target.files[0]))
+		}
+	};
 
-    const dataFormSubmit = (formData: ProfileType) => {
-        dispatch(saveUserProfileThunkCreator(formData))
-        setEditModeProfile(false)
-    };
+	const dataFormSubmit = (formData: ProfileType) => {
+		dispatch(saveUserProfileThunkCreator(formData))
+		setEditModeProfile(false)
+	};
 
-    const changeEditModeProfile = () => {
-        setEditModeProfile(!editModeProfile);
-    };
+	const changeEditModeProfile = () => {
+		setEditModeProfile(!editModeProfile);
+	};
 
-    return (
-        <div className={s.info}>
-            <div className={s.avatarWrapper}>
-                <div className={s.avatar} style={{ backgroundImage: `url(${userProfile?.photos.large || avatar})` }} />
-                {editingAbility ? <input className="button" type="file" onChange={onPhotoSelected} /> : null}
-            </div>
-            <div>
-                <h1 className={s.name}>{userProfile?.fullName}</h1>
-                {userStatus ? <StatusWithHooks status={userStatus} editingAbility={editingAbility}/> : null}
-            </div>
-            <div className={s.text}>
-                {editingAbility ? <button className={classNames("button", s.button)} onClick={changeEditModeProfile}>Edit</button> : null}
-                {userProfile && (editModeProfile ?
-                    <DataForm onSubmit={dataFormSubmit} initialValues={userProfile}/> :
-                    <>
-                        <Data userProfile={userProfile}/>
-                    </>)
-                }
-            </div>
-        </div>
-    )
-};
+	return (
+		<div className={s.info}>
+			<div className={s.avatarWrapper}>
+				<div className={s.avatar} style={{backgroundImage: `url(${userProfile?.photos.large || avatar})`}}/>
+				{editingAbility ? <input className="button" type="file" onChange={onPhotoSelected}/> : null}
+			</div>
+			<div>
+				<h1 className={s.name}>{userProfile?.fullName}</h1>
+				{userStatus ? <StatusWithHooks status={userStatus} editingAbility={editingAbility}/> : null}
+			</div>
+			<div className={s.text}>
+				{editingAbility ? <Button className={s.button} type="primary" onClick={changeEditModeProfile}>Edit</Button> : null}
+				{userProfile && (editModeProfile ?
+					<DataForm onSubmit={dataFormSubmit} initialValues={userProfile}/> :
+					<>
+						<Data userProfile={userProfile}/>
+					</>)
+				}
+			</div>
+		</div>
+	)
+}
 
 export default Info;
