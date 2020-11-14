@@ -1,8 +1,0 @@
-.sidebar {
-	background-color: #f7f7f7;
-	padding: 20px;
-	grid-area: column;
-	display: grid;
-	gap: 50px;
-	grid-auto-rows: max-content;
-}

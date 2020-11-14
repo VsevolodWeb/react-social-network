@@ -10,7 +10,7 @@ import {getAuthUserId} from '../../redux/auth-selectors'
 import {getProfileIsFetching} from '../../redux/profile-selectors'
 
 
-export const ProfileContainer: React.FC = props => {
+export const ProfileContainer: React.FC = () => {
 	const authUserId = useSelector(getAuthUserId),
 		isFetching = useSelector(getProfileIsFetching)
 	const dispatch = useDispatch()
