@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {Menu} from 'antd'
 import {connect} from 'react-redux'
 import Friends from './Friends/Friends'
 import {AppStateType} from '../../redux/redux-store'
 import {UserType} from '../../redux/types/types'
-import {Link} from 'react-router-dom'
+import {NavLink, useHistory} from 'react-router-dom'
+import s from './MainMenu.module.css'
 
 type MapStateToProps = {}
 type MapDispatchToProps = {}
@@ -14,22 +15,29 @@ type OwnPropsType = {
 type PropsType = MapStateToProps & MapDispatchToProps & OwnPropsType
 
 const MainMenu: React.FC<PropsType> = (props) => {
+	const history = useHistory()
+	const [selectedKeyMenu, setSelectedKeyMenu] = useState<string>('')
 	let friends = props.users.filter((item) => item.followed)
+
+	useEffect(() => {
+		setSelectedKeyMenu(history.location.pathname.substring(1))
+	}, [history.location.pathname])
 
 	return (
 		<>
 			<Menu
 				mode="inline"
-				style={{height: '100%'}}
+				className={s.menu}
+				selectedKeys={[selectedKeyMenu]}
 			>
-				<Menu.Item>
-					<Link to="/profile">My profile</Link>
+				<Menu.Item key={'profile'}>
+					<NavLink to="/profile">My profile</NavLink>
 				</Menu.Item>
-				<Menu.Item>
-					<Link to="/messages">Messages</Link>
+				<Menu.Item key={'messages'}>
+					<NavLink to="/messages">Messages</NavLink>
 				</Menu.Item>
-				<Menu.Item>
-					<Link to="/users">Users</Link>
+				<Menu.Item key={'users'}>
+					<NavLink to="/users">Users</NavLink>
 				</Menu.Item>
 			</Menu>
 			{friends.length ? <Friends friends={friends}/> : ''}

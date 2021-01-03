@@ -1,7 +1,7 @@
 import React, {Suspense, useEffect} from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
 import {QueryParamProvider} from 'use-query-params'
-import {Breadcrumb, Layout} from 'antd'
+import {Layout} from 'antd'
 import {connect, useSelector} from 'react-redux'
 import {AppStateType} from './redux/redux-store'
 import MainHeader from './components/MainHeader/MainHeader'
@@ -10,9 +10,8 @@ import {Login} from './components/Login/Login'
 import Preloader from './components/common/Preloader/Preloader'
 import {initializeThunkCreator} from './redux/app-reducer'
 import MainMenu from './components/MainMenu/MainMenu'
-import './App.css'
 import {getAuthIsAuth} from './redux/auth-selectors'
-
+import './App.css'
 const {Header, Content, Footer, Sider} = Layout
 
 const UsersContainer = React.lazy(
@@ -47,11 +46,6 @@ const App: React.FC<PropsType> = props => {
 				<MainHeader/>
 			</Header>
 			<Content style={{padding: '0 50px'}}>
-				{isAuth && <Breadcrumb style={{margin: '16px 0'}}>
-					<Breadcrumb.Item>Home</Breadcrumb.Item>
-					<Breadcrumb.Item>List</Breadcrumb.Item>
-					<Breadcrumb.Item>App</Breadcrumb.Item>
-				</Breadcrumb>}
 				<Layout className="site-layout-background" style={{padding: '24px 0'}}>
 					{isAuth && <Sider width={200}>
 						<MainMenu/>
