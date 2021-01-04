@@ -1,27 +1,25 @@
 import React, {useEffect, useState} from 'react'
 import {Menu} from 'antd'
-import {connect} from 'react-redux'
+import {useSelector} from 'react-redux'
+import {NavLink, useLocation} from 'react-router-dom'
 import Friends from './Friends/Friends'
-import {AppStateType} from '../../redux/redux-store'
-import {UserType} from '../../redux/types/types'
-import {NavLink, useHistory} from 'react-router-dom'
+import {getUsers} from '../../redux/users-selectors'
 import s from './MainMenu.module.css'
 
-type MapStateToProps = {}
-type MapDispatchToProps = {}
-type OwnPropsType = {
-	users: UserType[]
-}
-type PropsType = MapStateToProps & MapDispatchToProps & OwnPropsType
-
-const MainMenu: React.FC<PropsType> = (props) => {
-	const history = useHistory()
+const MainMenu: React.FC = () => {
+	const users = useSelector(getUsers)
+	const location = useLocation()
 	const [selectedKeyMenu, setSelectedKeyMenu] = useState<string>('')
-	let friends = props.users.filter((item) => item.followed)
+	let friends = users.filter((item) => item.followed)
 
 	useEffect(() => {
-		setSelectedKeyMenu(history.location.pathname.substring(1))
-	}, [history.location.pathname])
+		const match = location.pathname.match(/\/([^\\]+)\//)
+
+		if(match) {
+			const [, pageTitle] = match
+			setSelectedKeyMenu(pageTitle)
+		}
+	}, [location])
 
 	return (
 		<>
@@ -31,24 +29,22 @@ const MainMenu: React.FC<PropsType> = (props) => {
 				selectedKeys={[selectedKeyMenu]}
 			>
 				<Menu.Item key={'profile'}>
-					<NavLink to="/profile">My profile</NavLink>
+					<NavLink to="/profile/">My profile</NavLink>
 				</Menu.Item>
 				<Menu.Item key={'messages'}>
-					<NavLink to="/messages">Messages</NavLink>
+					<NavLink to="/messages/">Messages</NavLink>
 				</Menu.Item>
 				<Menu.Item key={'users'}>
-					<NavLink to="/users">Users</NavLink>
+					<NavLink to="/users/">Users</NavLink>
 				</Menu.Item>
 			</Menu>
-			{friends.length ? <Friends friends={friends}/> : ''}
+			{friends.length ? (
+				<div className={s.friends}>
+					<Friends friends={friends}/>
+				</div>
+			) : ''}
 		</>
 	)
 }
 
-const mapStateToProps = (state: AppStateType) => {
-	return {
-		users: state.users.list
-	}
-}
-
-export default connect(mapStateToProps)(MainMenu)
+export default MainMenu

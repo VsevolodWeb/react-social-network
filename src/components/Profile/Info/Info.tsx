@@ -1,23 +1,29 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Button, Upload} from 'antd'
+import {useDispatch, useSelector} from 'react-redux'
+import {UploadOutlined} from '@ant-design/icons'
+import {UploadChangeParam, UploadFile} from 'antd/lib/upload/interface'
 import avatar from './avatar.jpg'
 import StatusWithHooks from './Status/StatusWithHooks'
 import Data from './Data/Data'
 import DataForm from './DataForm/DataForm'
 import {ProfileType} from '../../../redux/types/types'
-import {useDispatch, useSelector} from 'react-redux'
 import {getUserProfile, getUserStatus} from '../../../redux/profile-selectors'
 import {getAuthUserId} from '../../../redux/auth-selectors'
 import {saveUserProfileThunkCreator, setUserPhotoThunkCreator} from '../../../redux/profile-reducer'
-import {UploadOutlined} from '@ant-design/icons'
 import s from './Info.module.css'
-import {UploadChangeParam, UploadFile} from 'antd/lib/upload/interface'
+import {useParams} from 'react-router-dom'
 
-const Info = () => {
+type PropsType = {
+    setUserIdParam: (userId: string) => void
+}
+
+const Info: React.FC<PropsType> = props => {
     const userProfile = useSelector(getUserProfile)
     const userStatus = useSelector(getUserStatus)
     const authUserId = useSelector(getAuthUserId)
     const dispatch = useDispatch()
+    const {userIdParam} = useParams()
 
     let editingAbility = authUserId === userProfile?.userId
     let [editModeProfile, setEditModeProfile] = useState(false)
@@ -36,6 +42,10 @@ const Info = () => {
     const changeEditModeProfile = () => {
         setEditModeProfile(!editModeProfile)
     }
+
+    useEffect(() => {
+        props.setUserIdParam(userIdParam)
+    }, [props, userIdParam])
 
     return (
         <div className={s.info}>

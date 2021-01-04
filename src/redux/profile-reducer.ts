@@ -88,14 +88,6 @@ export const getUserStatusThunkCreator = (userId: number) => async (dispatch: Di
     dispatch(actions.setIsFetching(false))
 }
 
-export const updateUserStatusThunkCreator = (status: string) => async (dispatch: Dispatch<ActionsTypes>) => {
-    const response = await profileAPI.updateUserStatus(status)
-
-    if(response.resultCode === 0) {
-        dispatch(actions.setUserStatus(status))
-    }
-}
-
 export const setUserPhotoThunkCreator = (photo: File) => async (dispatch: Dispatch<ActionsTypes>) => {
     const response = await profileAPI.updateUserPhoto(photo)
 

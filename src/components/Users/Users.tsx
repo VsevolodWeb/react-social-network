@@ -1,13 +1,11 @@
 import React from 'react'
 import {useSelector} from "react-redux";
-
-import s from './Users.module.css'
 import User from './User/User'
 import Preloader from '../common/Preloader/Preloader';
 import UsersSearchForm from './UsersSearchForm/UsersSearchForm'
 import {followThunkCreator, unfollowThunkCreator} from '../../redux/users-reducer'
 import {getUsers, getUsersIsFollowingArray} from "../../redux/users-selectors";
-
+import s from './Users.module.css'
 
 type PropsType = {
 	isFetching: boolean

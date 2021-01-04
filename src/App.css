@@ -103,3 +103,7 @@ body {
 	font-size: 12px;
 	white-space: nowrap;
 }
+
+.sidebar {
+	background-color: #fff
+}

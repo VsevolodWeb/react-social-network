@@ -1,16 +1,17 @@
-import React, {Suspense, useEffect} from 'react'
+import React, {Suspense, useEffect, useState} from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
 import {QueryParamProvider} from 'use-query-params'
 import {Layout} from 'antd'
-import {connect, useSelector} from 'react-redux'
+import {connect, useDispatch, useSelector} from 'react-redux'
 import {AppStateType} from './redux/redux-store'
 import MainHeader from './components/MainHeader/MainHeader'
-import MessagesContainer from './components/Messages/MessagesContainer'
+import {Messages} from './pages/Messages/Messages'
 import {Login} from './components/Login/Login'
 import Preloader from './components/common/Preloader/Preloader'
 import {initializeThunkCreator} from './redux/app-reducer'
 import MainMenu from './components/MainMenu/MainMenu'
-import {getAuthIsAuth} from './redux/auth-selectors'
+import {getAuthIsAuth, getAuthUserId} from './redux/auth-selectors'
+import {getUserProfileThunkCreator, getUserStatusThunkCreator} from './redux/profile-reducer'
 import './App.css'
 const {Header, Content, Footer, Sider} = Layout
 
@@ -30,11 +31,22 @@ type OwnPropsType = {}
 type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsType;
 
 const App: React.FC<PropsType> = props => {
+	const authUserId = useSelector(getAuthUserId)
 	const isAuth = useSelector(getAuthIsAuth)
+	const dispatch = useDispatch()
+	const [userIdParam, setUserIdParam] = useState('')
 
 	useEffect(() => {
 		props.initialize()
 	}, [props])
+
+	useEffect(() => {
+		let resultUserId = userIdParam ? parseInt(userIdParam) : authUserId;
+		if(resultUserId) {
+			dispatch(getUserProfileThunkCreator(resultUserId))
+			dispatch(getUserStatusThunkCreator(resultUserId))
+		}
+	}, [dispatch, userIdParam, authUserId])
 
 	if (!props.initialized) {
 		return <Preloader/>
@@ -47,23 +59,23 @@ const App: React.FC<PropsType> = props => {
 			</Header>
 			<Content style={{padding: '0 50px'}}>
 				<Layout className="site-layout-background" style={{padding: '24px 0'}}>
-					{isAuth && <Sider width={200}>
+					{isAuth && <Sider width={200} className="sidebar">
 						<MainMenu/>
 					</Sider>}
 					<Content style={{padding: '0 24px', minHeight: 280}}>
 						<Switch>
-							<Redirect exact from="/" to="/profile"/>
+							<Redirect exact from="/" to="/profile/"/>
 							<Route path="/profile/:userIdParam?"
-							       render={() => <Suspense fallback={<Preloader/>}><ProfileContainer/></Suspense>}/>
-							<Route path="/messages" component={MessagesContainer}/>
-							<Route path="/users" render={() => {
+							       render={() => <Suspense fallback={<Preloader/>}><ProfileContainer setUserIdParam={setUserIdParam}/></Suspense>}/>
+							<Route path="/messages/" component={Messages}/>
+							<Route path="/users/" render={() => {
 								return <Suspense fallback={<Preloader/>}>
 									<QueryParamProvider ReactRouterRoute={Route}>
 										<UsersContainer/>
 									</QueryParamProvider>
 								</Suspense>
 							}}/>
-							<Route path="/login" component={Login}/>
+							<Route path="/login/" component={Login}/>
 							<Route render={() => <div>404</div>}/>
 						</Switch>
 					</Content>
@@ -71,31 +83,6 @@ const App: React.FC<PropsType> = props => {
 			</Content>
 			<Footer style={{textAlign: 'center'}}>©{new Date().getFullYear()} React Social Network</Footer>
 		</Layout>
-		// <>
-		// 	<Header/>
-		// 	<main>
-		// 		<div className="container mainGrid">
-		// 			<Sidebar/>
-		// 			<div className="content">
-		// 				<Switch>
-		// 					<Redirect exact from="/" to="/profile"/>
-		// 					<Route path="/profile/:userIdParam?"
-		// 					       render={() => <Suspense fallback={<Preloader/>}><ProfileContainer/></Suspense>}/>
-		// 					<Route path="/messages" component={MessagesContainer}/>
-		// 					<Route path="/users" render={() => {
-		// 						return <Suspense fallback={<Preloader/>}>
-		// 							<QueryParamProvider ReactRouterRoute={Route}>
-		// 								<UsersContainer/>
-		// 							</QueryParamProvider>
-		// 						</Suspense>
-		// 					}}/>
-		// 					<Route path="/login" component={Login}/>
-		// 					<Route render={() => <div>404</div>}/>
-		// 				</Switch>
-		// 			</div>
-		// 		</div>
-		// 	</main>
-		// </>
 	)
 }
 

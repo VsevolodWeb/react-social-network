@@ -10,6 +10,7 @@
     flex-flow: wrap;
     list-style-type: none;
     padding: 0;
+    margin-bottom: 0;
 }
 
 .pagination__item {

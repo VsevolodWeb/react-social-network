@@ -17,7 +17,7 @@ const User: React.FC<PropsType> = props => {
     let imgSource = props.user.photos.large || ""
 
     return <div className={s.item}>
-                <NavLink to={`profile/${props.user.id}`}>
+                <NavLink to={`/profile/${props.user.id}`}>
                     <span className={s.avatar} style={{ backgroundImage: `url(${imgSource || avatar})` }} />
                 </NavLink>
                 <div className={s.name}>{props.user.name}</div>
