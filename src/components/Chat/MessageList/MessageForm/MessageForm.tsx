@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import {InjectedFormProps, reduxForm} from 'redux-form';
 
 import { required, maxLength } from '../../../../utils/validators';
-import {CustomField, Textarea} from '../../../../components/common/FormsControls/FormsControls';
+import {CustomField, Textarea} from '../../../common/FormsControls/FormsControls';
 import {MessageFormType} from "../MessageList";
 
 export type OwnPropsType = {}

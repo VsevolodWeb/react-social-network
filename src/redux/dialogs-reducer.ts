@@ -1,6 +1,12 @@
 import {RESET_FORM} from './actions/actions'
-import {InferActionsTypes} from "./redux-store"
+import {InferActionsTypes} from './redux-store'
 
+export type MessageType = {
+    message: string
+    photo: string
+    userId: number
+    userName: string
+}
 
 const initialState = {
     dialogsData: [
@@ -8,18 +14,19 @@ const initialState = {
             id: 1,
             name: 'Ekaterina',
             messages: [
-                {id: 1, text: 'Привет', from: 'Ekaterina'},
-                {id: 2, text: 'Привет!', from: 'Vsevolod'},
-                {id: 3, text: 'Как дела?', from: 'Ekaterina'}
-            ]
+                {message: 'Привет', userName: 'Ekaterina', photo: ''},
+                {message: 'Привет!', userName: 'Vsevolod', photo: ''},
+                {message: 'Как дела?', userName: 'Ekaterina', photo: ''},
+            ] as MessageType[]
         },
         {
             id: 2,
             name: 'Leonid',
             messages: [
-                {id: 1, text: 'Как дела?', from: 'Leonid'},
-                {id: 2, text: 'Отлично!', from: 'Vsevolod'}
-            ]
+                {message: 'Приветики', userName: 'Leonid', photo: ''},
+                {message: 'Привет!', userName: 'Vsevolod', photo: ''},
+                {message: 'Как делишки??', userName: 'Leonid', photo: ''},
+            ] as MessageType[]
         }
     ]
 }
@@ -30,12 +37,11 @@ type ActionsTypes = InferActionsTypes<typeof actions>
 
 const dialogsReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
-        case "actions/ADD_MESSAGE": {
-            let stateCopy = Object.assign({}, state);
+        case 'actions/ADD_MESSAGE': {
+            let stateCopy = JSON.parse(JSON.stringify(state))
             let newMessage = {
-                id: stateCopy.dialogsData[action.id - 1].messages.length + 1,
                 text: action.message,
-                from: 'Vsevolod'
+                userName: 'Vsevolod'
             }
 
             stateCopy.dialogsData[action.id - 1].messages.push(newMessage)
@@ -50,7 +56,7 @@ const dialogsReducer = (state = initialState, action: ActionsTypes): InitialStat
 
 
 export const actions = {
-    addMessage: (id: number, message: string) => ({type: "actions/ADD_MESSAGE", id, message} as const),
+    addMessage: (id: number, message: string) => ({type: 'actions/ADD_MESSAGE', id, message} as const),
     resetMessage: () => ({type: RESET_FORM} as const)
 }
 

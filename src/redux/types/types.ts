@@ -34,5 +34,5 @@ export type ProfileType = {
 export type DialogType = {
     id: number
     name: string
-    messages: Array<{id: number, text: string, from: string}>
+    messages: Array<{ message: string, userName: string }>
 }

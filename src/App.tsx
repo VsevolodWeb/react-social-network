@@ -5,7 +5,6 @@ import {Layout} from 'antd'
 import {connect, useDispatch, useSelector} from 'react-redux'
 import {AppStateType} from './redux/redux-store'
 import MainHeader from './components/MainHeader/MainHeader'
-import {Messages} from './pages/Messages/Messages'
 import {Login} from './components/Login/Login'
 import Preloader from './components/common/Preloader/Preloader'
 import {initializeThunkCreator} from './redux/app-reducer'
@@ -21,6 +20,10 @@ const UsersContainer = React.lazy(
 )
 const ProfileContainer = React.lazy(
 	() => import('./components/Profile/ProfileContainer').then(module => ({default: module.ProfileContainer}))
+)
+
+const Messages = React.lazy(
+	() => import('./pages/Messages/Messages').then(module => ({default: module.Messages}))
 )
 
 type MapDispatchToPropsType = {
@@ -67,7 +70,7 @@ const App: React.FC<PropsType> = props => {
 							<Redirect exact from="/" to="/profile/"/>
 							<Route path="/profile/:userIdParam?"
 							       render={() => <Suspense fallback={<Preloader/>}><ProfileContainer setUserIdParam={setUserIdParam}/></Suspense>}/>
-							<Route path="/messages/" component={Messages}/>
+							<Route path="/messages/" render={() => <Suspense fallback={<Preloader/>}><Messages/></Suspense>}/>
 							<Route path="/users/" render={() => {
 								return <Suspense fallback={<Preloader/>}>
 									<QueryParamProvider ReactRouterRoute={Route}>
