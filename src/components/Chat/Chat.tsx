@@ -1,22 +1,24 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useMemo, useState} from 'react'
 import s from './Chat.module.css'
 import {Route} from 'react-router-dom'
 import {useSelector} from 'react-redux'
 import {getDialogsData} from '../../redux/dialogs-selectors'
 import MessageList from './MessageList/MessageList'
 import Dialog from './Dialog/Dialog'
-
-const ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
+import {MessageType} from '../../redux/dialogs-reducer'
 
 export const Chat = () => {
-    const [messages, setMessages] = useState([])
+    const [messages, setMessages] = useState<MessageType[]>([])
+    const wsChannel = useMemo(() => {
+        return new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
+    }, [])
     const dialogsData = useSelector(getDialogsData)
 
     useEffect(() => {
-        ws.addEventListener('message', (e) => {
-            setMessages(JSON.parse(e.data))
+        wsChannel.addEventListener('message', e => {
+            setMessages(prevState => [...prevState, ...JSON.parse(e.data)])
         })
-    }, [])
+    }, [wsChannel])
 
     return (
         <div className={s.template}>
@@ -29,6 +31,7 @@ export const Chat = () => {
                 <div className={s.messageList}>
                     <Route path={'/messages/0'} key={0}
                            render={() => <MessageList
+                               wsChannel={wsChannel}
                                dialog={{
                                    id: 0,
                                    name: 'Chat',
@@ -38,7 +41,8 @@ export const Chat = () => {
                     {dialogsData
                         .map(dialog => <Route path={'/messages/' + dialog.id} key={dialog.id}
                                               render={() => <MessageList
-                                                  dialog={dialog}/>}
+                                                  dialog={dialog}
+                                                  wsChannel={wsChannel}/>}
                             />
                         )}
                 </div>

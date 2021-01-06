@@ -4,11 +4,6 @@
     grid-gap: 60px;
 }
 
-.messageList {
-    max-height: 400px;
-    overflow-y: auto;
-}
-
 .messageList, .dialogList {
     margin: 0;
     padding: 0;
@@ -16,5 +11,5 @@
 }
 
 .messageList {
-    margin-bottom: 50px;
+    padding-right: 10px;
 }

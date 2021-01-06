@@ -1,14 +1,20 @@
 import {RESET_FORM} from './actions/actions'
 import {InferActionsTypes} from './redux-store'
 
+export type DialogType = {
+    id: number
+    name: string
+    messages: MessageType[]
+}
+
 export type MessageType = {
     message: string
     photo: string
-    userId: number
+    userId?: number
     userName: string
 }
 
-const initialState = {
+const initialState: {dialogsData: DialogType[]} = {
     dialogsData: [
         {
             id: 1,
@@ -17,7 +23,7 @@ const initialState = {
                 {message: 'Привет', userName: 'Ekaterina', photo: ''},
                 {message: 'Привет!', userName: 'Vsevolod', photo: ''},
                 {message: 'Как дела?', userName: 'Ekaterina', photo: ''},
-            ] as MessageType[]
+            ]
         },
         {
             id: 2,
@@ -26,7 +32,7 @@ const initialState = {
                 {message: 'Приветики', userName: 'Leonid', photo: ''},
                 {message: 'Привет!', userName: 'Vsevolod', photo: ''},
                 {message: 'Как делишки??', userName: 'Leonid', photo: ''},
-            ] as MessageType[]
+            ]
         }
     ]
 }
@@ -40,7 +46,7 @@ const dialogsReducer = (state = initialState, action: ActionsTypes): InitialStat
         case 'actions/ADD_MESSAGE': {
             let stateCopy = JSON.parse(JSON.stringify(state))
             let newMessage = {
-                text: action.message,
+                message: action.message,
                 userName: 'Vsevolod'
             }
 
