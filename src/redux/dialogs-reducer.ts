@@ -1,18 +1,6 @@
 import {RESET_FORM} from './actions/actions'
 import {InferActionsTypes} from './redux-store'
-
-export type DialogType = {
-    id: number
-    name: string
-    messages: MessageType[]
-}
-
-export type MessageType = {
-    message: string
-    photo: string
-    userId?: number
-    userName: string
-}
+import {DialogType} from './types/types'
 
 const initialState: {dialogsData: DialogType[]} = {
     dialogsData: [

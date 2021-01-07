@@ -31,8 +31,15 @@ export type ProfileType = {
     photos: PhotosType
 }
 
+export type MessageType = {
+    message: string
+    photo: string
+    userId?: number
+    userName: string
+}
+
 export type DialogType = {
     id: number
     name: string
-    messages: Array<{ message: string, userName: string }>
+    messages: Array<MessageType>
 }

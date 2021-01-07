@@ -5,7 +5,7 @@ import {useSelector} from 'react-redux'
 import {getDialogsData} from '../../redux/dialogs-selectors'
 import MessageList from './MessageList/MessageList'
 import Dialog from './Dialog/Dialog'
-import {MessageType} from '../../redux/dialogs-reducer'
+import {MessageType} from '../../redux/types/types'
 
 export const Chat = () => {
     const [messages, setMessages] = useState<MessageType[]>([])

@@ -1,20 +1,20 @@
 import React from 'react'
-import s from './Message.module.css'
 import {useSelector} from 'react-redux'
 import {getUserProfile} from '../../../../redux/profile-selectors'
+import {MessageType} from '../../../../redux/types/types'
+import s from './Message.module.css'
 
 type PropsType = {
 	name: string
-	data: { message: string, userName: string }
+	data: MessageType
 }
 
 const Message: React.FC<PropsType> = props => {
-	console.log(props)
 	const userProfile = useSelector(getUserProfile)
 
 	return (
 		<div className={s.item + (props.data.userName === userProfile?.fullName ? ` ${s.altPosition}` : '')}>
-			<div className={s.img}/>
+			<img src={props.data.photo} className={s.img} alt=""/>
 			<div>
 				<b>{props.data.userName}</b>: {props.data.message}
 			</div>
