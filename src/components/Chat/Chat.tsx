@@ -16,33 +16,36 @@ export type WsChannelStatusType =
 export const Chat = () => {
 	const [messages, setMessages] = useState<MessageType[]>([])
 	const dialogsData = useSelector(getDialogsData)
-	const wsChannel = useRef<WebSocket>(new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx'))
+	const wsChannel = useRef<WebSocket | null>(null)
 	const [wsChannelStatus, setWsChannelStatus] = useState<WsChannelStatusType | null>(null)
-	const createChannel = useCallback(() => wsChannel.current = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx'), [])
+	const createChannel = useCallback(() => {
+		wsChannel.current?.close()
+		wsChannel.current = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
+	}, [])
 	const connect = useCallback(() => {
 		createChannel()
 
-		wsChannel.current.addEventListener('message', e => {
+		wsChannel.current?.addEventListener('message', e => {
 			setMessages(prevState => [...prevState, ...JSON.parse(e.data)])
 		})
 
-		wsChannel.current.addEventListener('open', () => {
+		wsChannel.current?.addEventListener('open', () => {
 			console.log('Socket is open.')
 		})
 
-		wsChannel.current.addEventListener('close', e => {
+		wsChannel.current?.addEventListener('close', e => {
 			console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason)
 
-			setTimeout(function () {
-				connect()
-			}, 1000)
+			setTimeout(connect, 1000)
 		})
 
-		wsChannel.current.addEventListener('error', e => {
+		wsChannel.current?.addEventListener('error', e => {
 			console.error('Socket encountered error: ', e, 'Closing socket')
 
-			wsChannel.current.close()
+			wsChannel.current?.close()
 		})
+
+
 	}, [createChannel, wsChannel])
 
 	useEffect(() => {
@@ -50,7 +53,7 @@ export const Chat = () => {
 	}, [connect])
 
 	useEffect(() => {
-		setWsChannelStatus(wsChannel.current.readyState)
+		wsChannel.current && setWsChannelStatus(wsChannel.current.readyState)
 	}, [wsChannel.current.readyState])
 
 	return (

@@ -13,7 +13,7 @@ export type MessageFormType = {
 
 type PropsType = {
 	dialog: DialogType
-	wsChannel: WebSocket
+	wsChannel: WebSocket | null
 	wsChannelStatus: WsChannelStatusType | null
 }
 
@@ -27,7 +27,7 @@ const MessageList: React.FC<PropsType> = React.memo(props => {
 
 	const addMessage = (data: MessageFormType) => {
 		if (props.dialog.id === 0) { // if chat id
-			props.wsChannel.send(data.message)
+			props.wsChannel?.send(data.message)
 		} else {
 			dispatch(actions.addMessage(props.dialog.id, data.message))
 		}
