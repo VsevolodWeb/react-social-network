@@ -2,7 +2,7 @@ import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import thunkMiddleware from 'redux-thunk'
 
 import {reducer as formReducer} from 'redux-form';
-import dialogsReducer from './dialogs-reducer'
+import chatReducer from './chat-reducer'
 import profileReducer from './profile-reducer'
 import usersReducer from './users-reducer'
 import authReducer from "./auth-reducer";
@@ -13,7 +13,7 @@ import {RESET_FORM} from './actions/actions'
 
 const rootReducer = combineReducers({
     auth: authReducer,
-    dialogs: dialogsReducer,
+    chat: chatReducer,
     profile: profileReducer,
     users: usersReducer,
     app: appReducer,

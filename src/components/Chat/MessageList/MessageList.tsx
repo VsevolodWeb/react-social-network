@@ -1,37 +1,27 @@
-import React, {useEffect, useRef} from 'react'
-import {useDispatch} from 'react-redux'
+import React, {FC, useEffect, useRef} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
 import Message from './Message/Message'
 import MessageForm from './MessageForm/MessageForm'
-import {DialogType} from '../../../redux/types/types'
-import {actions} from '../../../redux/dialogs-reducer'
+import {actions} from '../../../redux/chat-reducer'
 import s from './MessageList.module.css'
-import {WsChannelStatusType} from '../Chat'
+import {getChatMessages} from '../../../redux/chat-selectors'
 
 export type MessageFormType = {
 	message: string
 }
 
-type PropsType = {
-	dialog: DialogType
-	wsChannel: WebSocket | null
-	wsChannelStatus: WsChannelStatusType | null
-}
-
-const MessageList: React.FC<PropsType> = React.memo(props => {
+const MessageList = React.memo(props => {
 	const listRef = useRef<HTMLDivElement>(null)
 	const dispatch = useDispatch()
+	const messages = useSelector(getChatMessages)
 
-	let messages = props.dialog.messages.map((item, index) => {
-		return <Message name={props.dialog.name} data={item} key={index}/>
+	let messagesElements = messages.map((item, index) => {
+		return <Message data={item} key={index}/>
 	})
 
 	const addMessage = (data: MessageFormType) => {
-		if (props.dialog.id === 0) { // if chat id
-			props.wsChannel?.send(data.message)
-		} else {
-			dispatch(actions.addMessage(props.dialog.id, data.message))
-		}
-		dispatch(actions.resetMessage())
+		//props.wsChannel?.send(data.message)
+		//dispatch(actions.resetMessage())
 	}
 
 	useEffect(() => {
@@ -42,9 +32,9 @@ const MessageList: React.FC<PropsType> = React.memo(props => {
 
 	return <>
 		<div className={s.list} ref={listRef}>
-			{messages}
+			{messagesElements}
 		</div>
-		<MessageForm onSubmit={addMessage} wsChannelStatus={props.wsChannelStatus}/>
+		<MessageForm onSubmit={addMessage}/>
 	</>
 })
 

@@ -30,16 +30,3 @@ export type ProfileType = {
     contacts: ProfileContactsType
     photos: PhotosType
 }
-
-export type MessageType = {
-    message: string
-    photo: string
-    userId?: number
-    userName: string
-}
-
-export type DialogType = {
-    id: number
-    name: string
-    messages: Array<MessageType>
-}

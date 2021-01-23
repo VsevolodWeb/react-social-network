@@ -5,11 +5,8 @@ import {maxLength, required} from '../../../../utils/validators'
 import {CustomField, Textarea} from '../../../common/FormsControls/FormsControls'
 import {MessageFormType} from '../MessageList'
 import {Button} from 'antd'
-import {WsChannelStatusType} from '../../Chat'
 
-export type OwnPropsType = {
-	wsChannelStatus: WsChannelStatusType | null
-}
+export type OwnPropsType = {}
 
 type PropsType = InjectedFormProps<MessageFormType, OwnPropsType> & OwnPropsType
 type FieldNameType = 'message'
@@ -23,7 +20,7 @@ export const MessageForm: FC<PropsType> = props => (
 			                            validate={[required, maxLength100]}/>
 			<div className="formGroup">
 				<Button type="primary" htmlType="submit"
-				        disabled={props.wsChannelStatus !== WebSocket.OPEN}>Отправить</Button>
+				        /*disabled={props.wsChannelStatus !== WebSocket.OPEN}*/>Отправить</Button>
 			</div>
 		</div>
 	</form>

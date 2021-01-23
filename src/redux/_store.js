@@ -1,4 +1,4 @@
-import dialogsReducer from './dialogs-reducer'
+import chatReducer from './chat-reducer'
 import profileReducer from './profile-reducer'
 
 let _store = {
@@ -50,7 +50,7 @@ let _store = {
     },
 
     dispatch(action) {
-        this._state.dialogs = dialogsReducer(this._state.dialogs, action);
+        this._state.dialogs = chatReducer(this._state.dialogs, action);
         this._state.profile = profileReducer(this._state.profile, action);
 
         this._callSubscriber(this._state);

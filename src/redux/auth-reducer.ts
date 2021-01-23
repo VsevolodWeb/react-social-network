@@ -41,8 +41,6 @@ const authReducer = (state = initialState, action: ActionsTypes): InitialStateTy
     }
 }
 
-
-
 type UserDataType = {
     id: number
     login: string
