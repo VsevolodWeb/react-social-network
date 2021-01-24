@@ -1,41 +1,50 @@
 import {ChatMessageType} from '../redux/chat-reducer'
 
 let subscribers = [] as SubscribeCallbackType[]
+let wsChannel: WebSocket | null = null
 
-// const wsChannel = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
-//
-// const connect = () => {
-// 	wsChannel.addEventListener('message', e => {
-// 		const messages: ChatMessageType[] = JSON.parse(e.data)
-//
-// 		subscribers.forEach(subscriber => subscriber(messages))
-// 	})
-//
-// 	wsChannel.addEventListener('open', () => {
-// 		console.log('Socket is open.')
-// 	})
-//
-// 	wsChannel.addEventListener('close', e => {
-// 		console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason)
-//
-// 		setTimeout(connect, 1000)
-// 	})
-//
-// 	wsChannel.addEventListener('error', e => {
-// 		console.error('Socket encountered error: ', e, 'Closing socket')
-//
-// 		wsChannel.close()
-// 	})
-// }
-//
-// connect()
+const connect = () => {
+	wsChannel = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
+
+	wsChannel.onmessage = e => {
+		const messages: ChatMessageType[] = JSON.parse(e.data)
+
+		subscribers.forEach(subscriber => subscriber(messages))
+	}
+
+	wsChannel.onopen = () => {
+		console.log('Socket is open.')
+	}
+
+	wsChannel.onclose = e => {
+		console.log('Socket is closed.', e.reason)
+
+		//setTimeout(connect, 1000)
+	}
+
+	wsChannel.onerror = e => {
+		console.error('Socket encountered error: ', e, 'Closing socket')
+
+		wsChannel?.close()
+	}
+}
 
 export const chatAPI = {
+	start() {
+		connect()
+	},
+	stop() {
+		subscribers = []
+		wsChannel?.close()
+	},
 	subscribe(callback: SubscribeCallbackType) {
 		subscribers.push(callback)
 	},
 	unsubscribe(callback: SubscribeCallbackType) {
 		subscribers = subscribers.filter(subscriber => subscriber !== callback)
+	},
+	send(message: string) {
+		wsChannel?.send(message)
 	}
 }
 

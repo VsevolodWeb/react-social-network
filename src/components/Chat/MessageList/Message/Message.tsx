@@ -12,10 +12,10 @@ const Message: React.FC<PropsType> = props => {
 	const userProfile = useSelector(getUserProfile)
 
 	return (
-		<div className={s.item + (props.data.username === userProfile?.fullName ? ` ${s.altPosition}` : '')}>
+		<div className={s.item + (props.data.userName === userProfile?.fullName ? ` ${s.altPosition}` : '')}>
 			<img src={props.data.photo} className={s.img} alt=""/>
 			<div>
-				<b>{props.data.username}</b>: {props.data.message}
+				<b>{props.data.userName}</b>: {props.data.message}
 			</div>
 		</div>
 	)

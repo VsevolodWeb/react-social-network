@@ -21,7 +21,7 @@ export const Chat = () => {
 		return () => {
 			dispatch(stopMessageListening())
 		}
-	}, [])
+	}, [dispatch])
 
 	return (
 		<div className={s.template}>
@@ -33,7 +33,7 @@ export const Chat = () => {
 			<div>
 				<div className={s.messageList}>
 					<Route path={'/messages/0'} key={0}
-					       render={MessageList}
+					       render={() => <MessageList />}
 					/>
 					{/*{dialogsData*/}
 					{/*	.map(dialog => <Route path={'/messages/' + dialog.id} key={dialog.id}*/}

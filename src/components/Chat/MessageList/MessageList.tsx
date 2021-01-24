@@ -1,8 +1,8 @@
-import React, {FC, useEffect, useRef} from 'react'
+import React, {useEffect, useRef} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import Message from './Message/Message'
 import MessageForm from './MessageForm/MessageForm'
-import {actions} from '../../../redux/chat-reducer'
+import {actions, sendMessage} from '../../../redux/chat-reducer'
 import s from './MessageList.module.css'
 import {getChatMessages} from '../../../redux/chat-selectors'
 
@@ -20,8 +20,8 @@ const MessageList = React.memo(props => {
 	})
 
 	const addMessage = (data: MessageFormType) => {
-		//props.wsChannel?.send(data.message)
-		//dispatch(actions.resetMessage())
+		dispatch(sendMessage(data.message))
+		dispatch(actions.resetMessage())
 	}
 
 	useEffect(() => {
