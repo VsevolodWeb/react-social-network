@@ -1,10 +1,11 @@
 import {InferActionsTypes} from './redux-store'
 import {Dispatch} from 'redux'
-import {chatAPI, SubscribeCallbackType} from '../api/chat-api'
+import {chatAPI, SubscribeMessagesCallbackType, SubscribeStatusCallbackType} from '../api/chat-api'
 import {RESET_FORM} from './actions/actions'
 
 const initialState = {
-	messages: [] as ChatMessageType[]
+	messages: [] as ChatMessageType[],
+	statusCode: null as WsChannelStatusType | null
 }
 
 type InitialStateType = typeof initialState
@@ -30,6 +31,13 @@ const chatReducer = (state = initialState, action: ActionsTypes): InitialStateTy
 			}
 		}
 
+		case "chat/SET_STATUS": {
+			return {
+				...state,
+				statusCode: action.statusCode
+			}
+		}
+
 		default:
 			return state
 	}
@@ -38,27 +46,41 @@ const chatReducer = (state = initialState, action: ActionsTypes): InitialStateTy
 export const actions = {
 	setMessages: (messages: ChatMessageType[]) => ({type: 'chat/SET_MESSAGES', messages} as const),
 	resetMessages: () => ({type: 'chat/RESET_MESSAGES'} as const),
+	setStatus: (statusCode: WsChannelStatusType) => ({type: 'chat/SET_STATUS', statusCode} as const),
 	resetMessage: () => ({type: RESET_FORM} as const)
 }
 
-let subscribeHandler: SubscribeCallbackType | null = null
-const subscriberHandlerCreator = (dispatch: Dispatch<ActionsTypes>) => {
-	if (!subscribeHandler) {
-		subscribeHandler = (messages: ChatMessageType[]) => {
+let subscriberMessageHandler: SubscribeMessagesCallbackType | null = null
+const subscribeHandlerCreator = (dispatch: Dispatch<ActionsTypes>) => {
+	if (!subscriberMessageHandler) {
+		subscriberMessageHandler = (messages: ChatMessageType[]) => {
 			dispatch(actions.setMessages(messages))
 		}
 	}
 
-	return subscribeHandler
+	return subscriberMessageHandler
+}
+
+let subscribeStatusHandler: SubscribeStatusCallbackType | null = null
+const subscriberStatusHandlerCreator = (dispatch: Dispatch<ActionsTypes>) => {
+	if (!subscribeStatusHandler) {
+		subscribeStatusHandler = (statusCode: WsChannelStatusType) => {
+			dispatch(actions.setStatus(statusCode))
+		}
+	}
+
+	return subscribeStatusHandler
 }
 
 export const startMessageListening = () => async (dispatch: Dispatch<ActionsTypes>) => {
 	chatAPI.start()
-	chatAPI.subscribe(subscriberHandlerCreator(dispatch))
+	chatAPI.subscribeMessage(subscribeHandlerCreator(dispatch))
+	chatAPI.subscribeStatus(subscriberStatusHandlerCreator(dispatch))
 }
 
 export const stopMessageListening = () => async (dispatch: Dispatch<ActionsTypes>) => {
-	chatAPI.unsubscribe(subscriberHandlerCreator(dispatch))
+	chatAPI.unsubscribeMessage(subscribeHandlerCreator(dispatch))
+	chatAPI.unsubscribeStatus(subscriberStatusHandlerCreator(dispatch))
 	chatAPI.stop()
 	dispatch(actions.resetMessages())
 }
@@ -73,5 +95,11 @@ export type ChatMessageType = {
 	userId: number
 	userName: string
 }
+export type WsChannelStatusType =
+	typeof WebSocket.CONNECTING
+	| typeof WebSocket.OPEN
+	| typeof WebSocket.CLOSING
+	| typeof WebSocket.CLOSED
+
 
 export default chatReducer

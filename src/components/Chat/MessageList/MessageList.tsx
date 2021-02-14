@@ -10,7 +10,7 @@ export type MessageFormType = {
 	message: string
 }
 
-const MessageList = React.memo(props => {
+const MessageList = React.memo(() => {
 	const listRef = useRef<HTMLDivElement>(null)
 	const dispatch = useDispatch()
 	const messages = useSelector(getChatMessages)
@@ -26,9 +26,11 @@ const MessageList = React.memo(props => {
 
 	useEffect(() => {
 		if (listRef.current) {
-			listRef.current.scrollTop = listRef.current.scrollHeight
+			if(listRef.current.offsetHeight + listRef.current.scrollTop >= listRef.current.scrollHeight) {
+				listRef.current.scrollTop = listRef.current.scrollHeight
+			}
 		}
-	})
+	}, [messages])
 
 	return <>
 		<div className={s.list} ref={listRef}>
