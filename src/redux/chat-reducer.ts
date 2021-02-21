@@ -1,5 +1,6 @@
 import {InferActionsTypes} from './redux-store'
 import {Dispatch} from 'redux'
+import {v4} from 'uuid'
 import {chatAPI, SubscribeMessagesCallbackType, SubscribeStatusCallbackType} from '../api/chat-api'
 import {RESET_FORM} from './actions/actions'
 
@@ -19,8 +20,8 @@ const chatReducer = (state = initialState, action: ActionsTypes): InitialStateTy
 				...state,
 				messages: [
 					...state.messages,
-					...action.messages
-				]
+					...action.messages.map(message => ({...message, id: String(v4())}))
+				].filter((_, i, array) => i >= array.length - 100)
 			}
 		}
 
@@ -90,6 +91,7 @@ export const sendMessage = (message: string) => async () => {
 }
 
 export type ChatMessageType = {
+	id: string
 	message: string
 	photo: string
 	userId: number

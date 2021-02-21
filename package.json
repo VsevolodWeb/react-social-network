@@ -13,7 +13,8 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.2.0",
     "redux": "^4.0.4",
-    "redux-form": "^8.2.6"
+    "redux-form": "^8.2.6",
+    "uuid": "^8.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -39,21 +40,22 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.2.9",
+    "@types/jest": "^24.9.1",
     "@types/node": "^13.7.1",
     "@types/react": "^16.9.19",
     "@types/react-dom": "^16.9.5",
-    "@types/jest": "^24.9.1",
     "@types/react-redux": "^7.1.5",
     "@types/react-router-dom": "^5.1.2",
     "@types/react-test-renderer": "^16.9.2",
     "@types/redux-form": "^8.2.0",
+    "@types/uuid": "^8.3.0",
+    "classnames": "^2.2.6",
     "gh-pages": "^2.1.1",
+    "query-string": "^6.13.2",
     "react-test-renderer": "^16.12.0",
     "redux-thunk": "^2.3.0",
-    "classnames": "^2.2.6",
     "reselect": "^4.0.0",
     "typescript": "^3.7.5",
-    "use-query-params": "^1.1.7",
-    "query-string": "^6.13.2"
+    "use-query-params": "^1.1.7"
   }
 }

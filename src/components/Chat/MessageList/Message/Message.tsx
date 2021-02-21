@@ -8,9 +8,9 @@ type PropsType = {
 	data: ChatMessageType
 }
 
-const Message: React.FC<PropsType> = props => {
+const Message: React.FC<PropsType> = React.memo(props => {
 	const userProfile = useSelector(getUserProfile)
-
+	console.log(1)
 	return (
 		<div className={s.item + (props.data.userName === userProfile?.fullName ? ` ${s.altPosition}` : '')}>
 			<img src={props.data.photo} className={s.img} alt=""/>
@@ -19,6 +19,6 @@ const Message: React.FC<PropsType> = props => {
 			</div>
 		</div>
 	)
-}
+})
 
 export default Message
